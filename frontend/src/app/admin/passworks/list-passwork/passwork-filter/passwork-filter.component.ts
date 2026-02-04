@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-passwork-filter',
-  templateUrl: './passwork-filter.component.html',
-  styleUrls: ['./passwork-filter.component.scss'],
+    selector: 'app-passwork-filter',
+    templateUrl: './passwork-filter.component.html',
+    styleUrls: ['./passwork-filter.component.scss'],
+    standalone: false
 })
 export class PassworkFilterComponent implements OnInit {
   STATUS = ['active', 'inactive'];
@@ -15,7 +16,7 @@ export class PassworkFilterComponent implements OnInit {
   });
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
@@ -28,5 +29,15 @@ export class PassworkFilterComponent implements OnInit {
       queryParams: { ...this.FILTER_FORM.value },
       skipLocationChange: true,
     });
+  }
+
+  resetFilters() {
+    this.FILTER_FORM.reset({ filter: '', status: 'active' });
+    this.filter();
+  }
+
+  hasActiveFilters(): boolean {
+    const values = this.FILTER_FORM.value;
+    return values.filter !== '' || values.status !== 'active';
   }
 }

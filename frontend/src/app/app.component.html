@@ -1,9 +1,13 @@
-<ngx-spinner>
+<ngx-spinner type="ball-spin-clockwise">
   <h3>Loading...</h3>
 </ngx-spinner>
 
-<app-toolbar></app-toolbar>
-<section class="full-screen">
-  <router-outlet></router-outlet>
-</section>
-<app-footer class="bottom"></app-footer>
+<div class="app-layout" [class.has-sidebar]="showToolbar">
+  <app-toolbar *ngIf="showToolbar"></app-toolbar>
+  <div class="main-wrapper">
+    <section class="full-screen">
+      <router-outlet></router-outlet>
+    </section>
+    <app-footer class="bottom"></app-footer>
+  </div>
+</div>

@@ -1,14 +1,315 @@
-.card:hover{
-    background-color: lavender;
-    cursor : pointer;
+// ===================================
+// COMPANY CARD STYLES
+// ===================================
+
+.company-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+
+    .card-image-container img {
+      transform: scale(1.08);
+    }
+
+    .card-overlay {
+      opacity: 1;
+    }
+  }
 }
 
-img {
-    width: 150px;
+.card-image-container {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 20px;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+}
+
+.card-content {
+  padding: 20px;
+  background: #fff;
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.card-location {
+  display: flex;
+  align-items: center;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+    color: #03644e;
+  }
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(3, 100, 78, 0.85) 0%, rgba(3, 100, 78, 0.95) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  .view-details {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 24px;
+    border: 2px solid #fff;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #fff;
+      color: #03644e;
+    }
+  }
+}
+
+// ===================================
+// NO DATA STATE
+// ===================================
+
+.no-data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+
+  .no-data-image {
+    max-width: 500px;
+    height: auto;
+    opacity: 0.9;
+  }
+
+  .no-data-text {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #666;
+    font-weight: 500;
+  }
+}
+
+// ===================================
+// RESPONSIVE
+// ===================================
+
+@media only screen and (max-width: 768px) {
+  .company-card {
+    &:hover {
+      transform: translateY(-4px);
+    }
+  }
+
+  .card-image-container {
     height: 150px;
-    float: left;
+  }
+
+  .card-content {
+    padding: 16px;
+  }
+
+  .card-title {
+    font-size: 15px;
+  }
 }
 
-mat-card {
-    height: 180px;
+@media only screen and (max-width: 576px) {
+  .container-fluid .row {
+    justify-content: center !important;
+  }
+
+  .card-image-container {
+    height: 160px;
+  }
+}
+
+// ===================================
+// PAGINATION
+// ===================================
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.pagination-info {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+:host ::ng-deep {
+  .p-paginator {
+    background: transparent;
+    border: none;
+    padding: 0;
+
+    .p-paginator-first,
+    .p-paginator-prev,
+    .p-paginator-next,
+    .p-paginator-last {
+      min-width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 6px;
+      margin: 0 0.15rem;
+      color: #666;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+    .p-paginator-pages {
+      .p-paginator-page {
+        min-width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 6px;
+        margin: 0 0.15rem;
+        color: #666;
+        border: 1px solid #e0e0e0;
+        background-color: #fff;
+
+        &:hover {
+          background-color: #f0f0f0;
+        }
+
+        &.p-highlight,
+        &.p-paginator-page-selected,
+        &[aria-current="page"],
+        &[data-p-active="true"] {
+          background-color: #03644e !important;
+          border-color: #03644e !important;
+          color: #fff !important;
+        }
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+
+    .p-paginator-rpp-options,
+    .p-paginator-rpp-dropdown {
+      margin-left: 1rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      background-color: #fff;
+      min-width: 80px;
+
+      .p-dropdown-label,
+      .p-select-label {
+        padding: 0.5rem 0.75rem;
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .p-dropdown-trigger,
+      .p-select-dropdown {
+        color: #666;
+        width: 2rem;
+      }
+
+      &:hover {
+        border-color: #03644e;
+      }
+
+      &:focus,
+      &.p-focus {
+        box-shadow: none;
+        border-color: #03644e;
+        outline: none;
+      }
+    }
+  }
+
+  .p-dropdown-panel,
+  .p-select-overlay {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    .p-dropdown-items,
+    .p-select-list {
+      padding: 0.5rem 0;
+      background-color: #fff;
+
+      .p-dropdown-item,
+      .p-select-option {
+        padding: 0.5rem 1rem;
+        color: #666;
+        font-size: 0.9rem;
+
+        &:hover {
+          background-color: #f0f0f0;
+        }
+
+        &.p-highlight,
+        &.p-select-option-selected,
+        &[data-p-selected="true"] {
+          background-color: #03644e;
+          color: #fff;
+        }
+      }
+    }
+  }
 }

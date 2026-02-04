@@ -1,69 +1,77 @@
-<mat-card>
-  <img
-    mat-card-image
-    [src]="
-      association?.logo
-        ? host + association?.logo
-        : 'assets/no_picture_available.png'
-    "
-    [alt]="association?.raisonSocial"
-  />
-  <mat-card-content>
-    <mat-card-title class="text-center">{{
-      association?.raisonSocial | titlecase
-    }}</mat-card-title>
-    <mat-card-subtitle class="text-center">{{
-      association?.name | titlecase
-    }}</mat-card-subtitle>
-    <p>
+<div class="profile-card">
+  <!-- Logo Section -->
+  <div class="logo-section">
+    <div class="logo-wrapper">
+      <img
+        [src]="association?.logo ? host + association?.logo : 'assets/no_picture_available.png'"
+        [alt]="association?.raisonSocial"
+        class="logo-image"
+      />
+    </div>
+  </div>
+
+  <!-- Info Section -->
+  <div class="info-section">
+    <h2 class="association-name">{{ association?.raisonSocial | titlecase }}</h2>
+    <p class="association-manager">
+      <mat-icon>person</mat-icon>
+      {{ association?.name | titlecase }}
+    </p>
+
+    <p class="association-description" *ngIf="association?.description">
       {{ association?.description }}
     </p>
-  </mat-card-content>
-  <mat-card-actions class="text-center">
-    <a
-      mat-icon-button
-      matTooltip="Go to Facebook"
-      matTooltipPosition="above"
-      [href]="association?.socialMedia?.facebook"
-      target="_blank"
-    >
-      <i class="fab fa-facebook fa-2x"></i>
-    </a>
-    <a
-      mat-icon-button
-      matTooltip="Go to Twitter"
-      matTooltipPosition="above"
-      [href]="association?.socialMedia?.twitter"
-      target="_blank"
-    >
-      <i class="fab fa-twitter fa-2x"></i>
-    </a>
-    <a
-      mat-icon-button
-      matTooltip="Go to Instagram"
-      matTooltipPosition="above"
-      [href]="association?.socialMedia?.instagram"
-      target="_blank"
-    >
-      <i class="fab fa-instagram fa-2x"></i>
-    </a>
-    <a
-      mat-icon-button
-      matTooltip="Go to Linkedin"
-      matTooltipPosition="above"
-      [href]="association?.socialMedia?.linkedIn"
-      target="_blank"
-    >
-      <i class="fab fa-linkedin-in fa-2x"></i>
-    </a>
-    <a
-      mat-icon-button
-      matTooltip="Go to Website"
-      matTooltipPosition="above"
-      [href]="association?.webSite"
-      target="_blank"
-    >
-      <i class="fas fa-link fa-2x"></i>
-    </a>
-  </mat-card-actions>
-</mat-card>
+  </div>
+
+  <!-- Social Links -->
+  <div class="social-section">
+    <h4 class="social-title">Réseaux sociaux</h4>
+    <div class="social-links">
+      <a
+        *ngIf="association?.socialMedia?.facebook"
+        class="social-link facebook"
+        [href]="association?.socialMedia?.facebook"
+        target="_blank"
+        matTooltip="Facebook"
+      >
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a
+        *ngIf="association?.socialMedia?.twitter"
+        class="social-link twitter"
+        [href]="association?.socialMedia?.twitter"
+        target="_blank"
+        matTooltip="Twitter"
+      >
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a
+        *ngIf="association?.socialMedia?.instagram"
+        class="social-link instagram"
+        [href]="association?.socialMedia?.instagram"
+        target="_blank"
+        matTooltip="Instagram"
+      >
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a
+        *ngIf="association?.socialMedia?.linkedIn"
+        class="social-link linkedin"
+        [href]="association?.socialMedia?.linkedIn"
+        target="_blank"
+        matTooltip="LinkedIn"
+      >
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+      <a
+        *ngIf="association?.webSite"
+        class="social-link website"
+        [href]="association?.webSite"
+        target="_blank"
+        matTooltip="Site Web"
+      >
+        <i class="fas fa-globe"></i>
+      </a>
+    </div>
+  </div>
+</div>

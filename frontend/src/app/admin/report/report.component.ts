@@ -12,9 +12,10 @@ import { PrintService } from 'src/app/core/services/print.service';
 import { StatsService } from 'src/app/core/services/stats.service';
 
 @Component({
-  selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss'],
+    selector: 'app-report',
+    templateUrl: './report.component.html',
+    styleUrls: ['./report.component.scss'],
+    standalone: false
 })
 export class AdminReportComponent implements OnInit {
   numberOfYoungAddedStats$;

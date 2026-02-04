@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FileValidator } from 'ngx-material-file-input';
+import { MaxSizeValidator } from 'src/app/core/validators/file-validators';
 import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 import { catchError, first, tap } from 'rxjs/operators';
@@ -9,9 +9,10 @@ import { PhotoService } from 'src/app/core/helpers/photo.service';
 import { AssociationService } from 'src/app/core/services/association.service';
 
 @Component({
-  selector: 'app-edit-association-photos',
-  templateUrl: './edit-association-photos.component.html',
-  styleUrls: ['./edit-association-photos.component.scss'],
+    selector: 'app-edit-association-photos',
+    templateUrl: './edit-association-photos.component.html',
+    styleUrls: ['./edit-association-photos.component.scss'],
+    standalone: false
 })
 export class EditAssociationPhotosComponent implements OnInit {
   PHOTO_MAX_SIZE = 1024 * 1024; // 1Mb
@@ -20,14 +21,14 @@ export class EditAssociationPhotosComponent implements OnInit {
   PHOTO_FORM = this.fb.group({
     photo: [
       '',
-      [Validators.required, FileValidator.maxContentSize(this.PHOTO_MAX_SIZE)],
+      [Validators.required, MaxSizeValidator(this.PHOTO_MAX_SIZE)],
     ],
   });
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,
     public dialogRef: MatDialogRef<EditAssociationPhotosComponent>,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private associationService: AssociationService,
     private toastrService: ToastrService,
     private photoService: PhotoService

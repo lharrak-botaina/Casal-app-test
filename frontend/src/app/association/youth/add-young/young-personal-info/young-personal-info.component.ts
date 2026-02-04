@@ -1,8 +1,8 @@
-import { Component, OnInit, Self } from '@angular/core';
+import { Component, OnInit, Self, ViewEncapsulation } from '@angular/core';
 import {
   ControlContainer,
   ControlValueAccessor,
-  FormGroup,
+  UntypedFormGroup,
   NgControl,
 } from '@angular/forms';
 import { Data } from 'src/app/core/models/dropdown_data';
@@ -10,13 +10,15 @@ import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 
 @Component({
-  selector: 'app-young-personal-info',
-  templateUrl: './young-personal-info.component.html',
-  styleUrls: ['./young-personal-info.component.scss'],
+    selector: 'app-young-personal-info',
+    templateUrl: './young-personal-info.component.html',
+    styleUrls: ['./young-personal-info.component.scss'],
+    standalone: false,
+    encapsulation: ViewEncapsulation.None
 })
 export class YoungPersonalInfoComponent implements OnInit {
   public Data = Data;
-  public PERSONAL_INFO: FormGroup;
+  public PERSONAL_INFO: UntypedFormGroup;
   public hobbies = [];
   readonly separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
   public maxDate = new Date();
@@ -24,7 +26,7 @@ export class YoungPersonalInfoComponent implements OnInit {
   constructor(private controlContainer: ControlContainer) {}
 
   ngOnInit() {
-    this.PERSONAL_INFO = <FormGroup>this.controlContainer.control;
+    this.PERSONAL_INFO = <UntypedFormGroup>this.controlContainer.control;
   }
 
   hasAddiction() {

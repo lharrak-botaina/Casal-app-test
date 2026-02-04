@@ -11,6 +11,7 @@ const young = require('../routes/young');
 const stats = require('../routes/stats');
 const documents = require('../routes/document');
 const notifications = require('../routes/notification');
+const exportRoute = require('../routes/export');
 
 
 module.exports = function(app){
@@ -28,4 +29,5 @@ module.exports = function(app){
     app.use('/api/stats', stats);
     app.use('/api/documents', documents);
     app.use('/api/notifications', notifications);
+    app.use('/api/export', exportRoute);
 }

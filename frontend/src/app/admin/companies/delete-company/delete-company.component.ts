@@ -7,9 +7,10 @@ import { catchError, first, tap } from 'rxjs/operators';
 import { CompanyService } from 'src/app/core/services/company.service';
 
 @Component({
-  selector: 'app-delete-company',
-  templateUrl: './delete-company.component.html',
-  styleUrls: ['./delete-company.component.scss'],
+    selector: 'app-delete-company',
+    templateUrl: './delete-company.component.html',
+    styleUrls: ['./delete-company.component.scss'],
+    standalone: false
 })
 export class DeleteCompanyComponent implements OnInit {
   

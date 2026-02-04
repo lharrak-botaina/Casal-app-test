@@ -1,0 +1,79 @@
+<div class="container p-2">
+  <div class="row">
+    <div class="col-12 button--group">
+      <button
+        class="m-1 edit--button"
+        mat-stroked-button
+        color="accent"
+        [routerLink]="['./edit']" [state]="company"
+      >
+        Modifier<mat-icon>edit</mat-icon>
+      </button>
+      <button
+        class="m-1 delete--button"
+        mat-stroked-button
+        color="warn"
+        (click)="remove()"
+      >
+        Supprimer<mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-4 text-center p-3">
+      <img class="company-logo" src="{{company?.logo ? endpoint + company.logo : 'assets/no_picture_available.png'}}" alt="logo">
+      <h3>{{ company?.name | titlecase }}</h3>
+      <p *ngIf="company?.email"><mat-icon>email</mat-icon> {{ company?.email }}</p>
+      <p *ngIf="company?.city"><mat-icon>location_on</mat-icon> {{ company?.city }}</p>
+      <p *ngIf="company?.activity_area"><mat-icon>business</mat-icon> {{ company?.activity_area }}</p>
+    </div>
+    <div class="col-12 col-md-8">
+      <mat-card>
+        <mat-card-header class="header p-3">
+          <mat-card-title>Informations</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row p-2">
+            <div class="col-4"><strong>Nom :</strong></div>
+            <div class="col-8">{{ company?.name | titlecase }}</div>
+          </div>
+          <div class="row p-2">
+            <div class="col-4"><strong>Adresse :</strong></div>
+            <div class="col-8">{{ company?.address }}</div>
+          </div>
+          <div class="row p-2">
+            <div class="col-4"><strong>Ville :</strong></div>
+            <div class="col-8">{{ company?.city }}</div>
+          </div>
+          <div class="row p-2">
+            <div class="col-4"><strong>Secteur d'activité :</strong></div>
+            <div class="col-8">{{ company?.activity_area }}</div>
+          </div>
+          <div class="row p-2">
+            <div class="col-4"><strong>Email :</strong></div>
+            <div class="col-8">{{ company?.email }}</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="mt-3" *ngIf="company?.person_contacted">
+        <mat-card-header class="header p-3">
+          <mat-card-title>Représentant</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row p-2">
+            <div class="col-4"><strong>Nom et prénom :</strong></div>
+            <div class="col-8">{{ company?.person_contacted?.fullname }}</div>
+          </div>
+          <div class="row p-2">
+            <div class="col-4"><strong>Email :</strong></div>
+            <div class="col-8">{{ company?.person_contacted?.email }}</div>
+          </div>
+          <div class="row p-2">
+            <div class="col-4"><strong>Téléphone :</strong></div>
+            <div class="col-8">{{ company?.person_contacted?.phone }}</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

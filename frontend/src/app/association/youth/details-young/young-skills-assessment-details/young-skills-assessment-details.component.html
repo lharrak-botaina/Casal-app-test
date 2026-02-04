@@ -1,81 +1,156 @@
-<div class="row">
-  <div class="col-12 col-md-4 card card p-0 m-2">
-    <div class="header px-3 pt-3">
-      <h2>Education</h2>
+<!-- Education & Languages Row -->
+<div class="cards-row">
+  <div class="info-card">
+    <div class="card-header">
+      <mat-icon>school</mat-icon>
+      <h2>Éducation</h2>
     </div>
-    <div class="content p-4">
-      <p><strong>Niveau d'étude :</strong> {{skillsAssessment?.level_of_study?.level | titlecase}}</p>
-      <p><strong>Détails de la formation :</strong>{{skillsAssessment?.level_of_study?.description | titlecase}}</p>
+    <div class="card-body">
+      <div class="info-grid single-column">
+        <div class="info-item">
+          <span class="info-label">Niveau d'étude</span>
+          <span class="info-value">{{ skillsAssessment?.level_of_study?.level | titlecase }}</span>
+        </div>
+        <div class="info-item" *ngIf="skillsAssessment?.level_of_study?.description">
+          <span class="info-label">Détails de la formation</span>
+          <span class="info-value">{{ skillsAssessment?.level_of_study?.description | titlecase }}</span>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="col-12 col-md-7 card p-0 m-2">
-    <div class="header px-3 pt-3">
+
+  <div class="info-card flex-grow">
+    <div class="card-header">
+      <mat-icon>translate</mat-icon>
       <h2>Langues</h2>
     </div>
-    <div class="content p-4">
-      <ul>
-        <li *ngFor="let language of skillsAssessment?.languages">{{language | titlecase}}</li>
-        <li *ngIf="skillsAssessment?.languages_comment">{{skillsAssessment?.languages_comment | titlecase}}</li>
-      </ul>
+    <div class="card-body">
+      <div class="tags-container">
+        <span class="language-tag" *ngFor="let language of skillsAssessment?.languages">
+          {{ language | titlecase }}
+        </span>
+        <span class="language-tag other" *ngIf="skillsAssessment?.languages_comment">
+          {{ skillsAssessment?.languages_comment | titlecase }}
+        </span>
+      </div>
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-12 col-md-4 card p-0 m-2">
-    <div class="header px-3 pt-3">
+
+<!-- Training & Experience Row -->
+<div class="cards-row">
+  <div class="info-card">
+    <div class="card-header">
+      <mat-icon>workspace_premium</mat-icon>
       <h2>Formations</h2>
+      <span class="badge" *ngIf="skillsAssessment?.professional_training?.length">
+        {{ skillsAssessment?.professional_training?.length }}
+      </span>
     </div>
-    <div class="content p-4">
-      <ng-container  *ngFor="let training of skillsAssessment?.professional_training; index as i; last as last">
-        <h6 class="sub_subtitle"><strong>Formation {{i + 1}}</strong></h6>
-        <p><strong>Type de formation: </strong>{{training?.type_formation | titlecase}}</p>
-        <p><strong>Spécialité :</strong> {{training?.specialty | titlecase}}</p>
-        <p><strong>Etablissement :</strong> {{training?.institution | titlecase}}</p>
-        <p><strong>Certificat / Diplôme : </strong>{{training?.cetificate | titlecase}}</p>
-        <p><strong>Date début : </strong>{{training?.start_date | date: "dd-MM-yyyy"}}</p>
-        <p><strong>Date fin :</strong> {{training?.end_date | date: "dd-MM-yyyy"}}</p>
-        <p><strong>Commentaire :</strong> {{training?.comment | titlecase}}</p>
-        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-      </ng-container>
+    <div class="card-body">
+      <div class="timeline" *ngIf="skillsAssessment?.professional_training?.length > 0; else noTraining">
+        <div class="timeline-item" *ngFor="let training of skillsAssessment?.professional_training; index as i">
+          <div class="timeline-marker">{{ i + 1 }}</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">{{ training?.type_formation | titlecase }}</h4>
+            <div class="timeline-meta">
+              <span *ngIf="training?.start_date">{{ training?.start_date | date: "MM/yyyy" }}</span>
+              <span *ngIf="training?.start_date && training?.end_date"> - </span>
+              <span *ngIf="training?.end_date">{{ training?.end_date | date: "MM/yyyy" }}</span>
+            </div>
+            <div class="timeline-details">
+              <p *ngIf="training?.specialty"><strong>Spécialité:</strong> {{ training?.specialty | titlecase }}</p>
+              <p *ngIf="training?.institution"><strong>Établissement:</strong> {{ training?.institution | titlecase }}</p>
+              <p *ngIf="training?.cetificate"><strong>Certificat:</strong> {{ training?.cetificate | titlecase }}</p>
+              <p *ngIf="training?.comment" class="comment">{{ training?.comment | titlecase }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #noTraining>
+        <div class="empty-state">
+          <mat-icon>school</mat-icon>
+          <p>Aucune formation enregistrée</p>
+        </div>
+      </ng-template>
     </div>
   </div>
-  <div class="col-12 col-md-7 card p-0 m-2">
-    <div class="header px-3 pt-3">
+
+  <div class="info-card flex-grow">
+    <div class="card-header">
+      <mat-icon>work_history</mat-icon>
       <h2>Expériences professionnelles</h2>
+      <span class="badge" *ngIf="skillsAssessment?.professional_experience?.length">
+        {{ skillsAssessment?.professional_experience?.length }}
+      </span>
     </div>
-    <div class="content p-4">
-      <ng-container *ngFor="let experience of skillsAssessment?.professional_experience; index as i; last as last">
-        <h6 class="sub_subtitle"><strong>Expérience {{i + 1}}</strong></h6>
-        <p><strong>Type d'expérience : </strong>{{experience?.genre | titlecase}}</p>
-        <p><strong>Etablissement : </strong>{{experience?.institution | titlecase}}</p>
-        <p><strong>Poste (Domaine) : </strong>{{experience?.function | titlecase}}</p>
-        <p><strong>Date début : </strong>{{experience?.start_date | date: "dd-MM-yyyy"}}</p>
-        <p><strong>Date fin : </strong>{{experience?.end_date | date: "dd-MM-yyyy"}}</p>
-        <p><strong>Période d'experience : </strong>{{experience?.duration}}</p>
-        <p><strong>Commentaire (cause de départ) :</strong> {{experience?.comment | titlecase}}</p>
-        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-      </ng-container>
+    <div class="card-body">
+      <div class="timeline" *ngIf="skillsAssessment?.professional_experience?.length > 0; else noExperience">
+        <div class="timeline-item" *ngFor="let experience of skillsAssessment?.professional_experience; index as i">
+          <div class="timeline-marker">{{ i + 1 }}</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">{{ experience?.function | titlecase }}</h4>
+            <div class="timeline-meta">
+              <span *ngIf="experience?.start_date">{{ experience?.start_date | date: "MM/yyyy" }}</span>
+              <span *ngIf="experience?.start_date && experience?.end_date"> - </span>
+              <span *ngIf="experience?.end_date">{{ experience?.end_date | date: "MM/yyyy" }}</span>
+              <span class="duration-badge" *ngIf="experience?.duration">{{ experience?.duration }}</span>
+            </div>
+            <div class="timeline-details">
+              <p *ngIf="experience?.genre"><strong>Type:</strong> {{ experience?.genre | titlecase }}</p>
+              <p *ngIf="experience?.institution"><strong>Établissement:</strong> {{ experience?.institution | titlecase }}</p>
+              <p *ngIf="experience?.comment" class="comment">{{ experience?.comment | titlecase }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #noExperience>
+        <div class="empty-state">
+          <mat-icon>work_off</mat-icon>
+          <p>Aucune expérience enregistrée</p>
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-12 col-md-4 card p-0 m-2" *ngIf="!isCompany">
-    <div class="header px-3 pt-3">
+
+<!-- TIP Interview & Skills Row -->
+<div class="cards-row">
+  <div class="info-card" *ngIf="!isCompany">
+    <div class="card-header">
+      <mat-icon>record_voice_over</mat-icon>
       <h2>Entretien TIP</h2>
     </div>
-    <div class="content p-4">
-      <p><strong>Date d'entretien: </strong>{{skillsAssessment?.tip_interview?.date | date: "dd-MM-yyyy"}}</p>
-      <p><strong>Conclusion de l'entretien avec l'usage du TIP : </strong>{{skillsAssessment?.tip_interview?.comment | titlecase}}</p>
+    <div class="card-body">
+      <div class="info-grid single-column">
+        <div class="info-item">
+          <span class="info-label">Date d'entretien</span>
+          <span class="info-value">{{ skillsAssessment?.tip_interview?.date | date: "dd/MM/yyyy" }}</span>
+        </div>
+        <div class="info-item" *ngIf="skillsAssessment?.tip_interview?.comment">
+          <span class="info-label">Conclusion</span>
+          <span class="info-value">{{ skillsAssessment?.tip_interview?.comment | titlecase }}</span>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="col-12 col-md-7 card p-0 m-2">
-    <div class="header px-3 pt-3">
+
+  <div class="info-card flex-grow">
+    <div class="card-header">
+      <mat-icon>psychology</mat-icon>
       <h2>Compétences</h2>
     </div>
-    <div class="content p-4">
-      <p><strong>Compétences techniques: </strong>{{skillsAssessment?.skills?.hard_skills}}</p>
-      <p><strong>Compétences relationnelles : </strong>{{skillsAssessment?.skills?.soft_skills}}</p>
-      <p><strong>Compétences essentielles: </strong>{{skillsAssessment?.skills?.life_skills}}</p>
+    <div class="card-body">
+      <div class="skills-container">
+        <div class="skill-section" *ngIf="skillsAssessment?.skills?.hard_skills">
+          <h4><mat-icon>build</mat-icon> Compétences techniques</h4>
+          <p>{{ skillsAssessment?.skills?.hard_skills }}</p>
+        </div>
+        <div class="skill-section" *ngIf="skillsAssessment?.skills?.soft_skills">
+          <h4><mat-icon>people</mat-icon> Compétences relationnelles</h4>
+          <p>{{ skillsAssessment?.skills?.soft_skills }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

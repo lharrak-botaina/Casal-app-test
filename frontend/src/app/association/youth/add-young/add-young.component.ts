@@ -1,6 +1,6 @@
-import { FileValidator } from 'ngx-material-file-input';
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MaxSizeValidator } from 'src/app/core/validators/file-validators';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { YoungFormService } from 'src/app/core/helpers/young-form.service';
 import { PhotoService } from 'src/app/core/helpers/photo.service';
 import { YoungService } from 'src/app/core/services/young.service';
@@ -10,15 +10,17 @@ import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-add-young',
-  templateUrl: './add-young.component.html',
-  styleUrls: ['./add-young.component.scss'],
+    selector: 'app-add-young',
+    templateUrl: './add-young.component.html',
+    styleUrls: ['./add-young.component.scss'],
+    standalone: false,
+    encapsulation: ViewEncapsulation.None
 })
 export class AddYoungComponent implements OnInit {
-  YONG_FORM: FormGroup;
+  YONG_FORM: UntypedFormGroup;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private young: YoungFormService,
     private photoService: PhotoService,
     private youngService: YoungService,

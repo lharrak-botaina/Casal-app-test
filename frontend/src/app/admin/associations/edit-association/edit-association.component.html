@@ -1,67 +1,41 @@
-<div class="container">
-  <button
-    mat-icon-button
-    matTooltip="Back to detail page"
-    matTooltipPosition="right"
-    [routerLink]="['./..']"
-    class="back--button"
-  >
-    <mat-icon>keyboard_backspace</mat-icon>
-  </button>
+<div class="edit-association-container">
+  <form [formGroup]="ASSOCIATION_FORM" (submit)="this.ASSOCIATION_FORM.valid && this.ASSOCIATION_FORM.dirty && edit()">
+    <mat-horizontal-stepper #stepper [linear]="false">
+      <!-- Step 1: General Information -->
+      <mat-step>
+        <ng-template matStepLabel>Informations générales</ng-template>
+        <div class="step-content-card">
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <mat-icon>business</mat-icon>
+              </div>
+              <h3 class="section-title">Informations de l'association</h3>
+            </div>
 
-  <h2 class="text-center p-2">Modifier une association</h2>
-  <div class="row">
-    <div class="col-12">
-      <button mat-stroked-button class="mx-1 mb-1" (click)="editPassword()">
-        <mat-icon>vpn_key </mat-icon> Changer le mot de passe
-      </button>
-      <button mat-stroked-button class="mx-1 mb-1" (click)="editLogo()">
-        <mat-icon>add_photo_alternate</mat-icon> Changer Logo
-      </button>
-      <button mat-stroked-button class="mx-1 mb-1" (click)="editTipPhto()">
-        <mat-icon>add_photo_alternate</mat-icon>Changer photo TIP
-      </button>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-12">
-      <mat-card class="example-card">
-        <h4 class="subtitle"><strong>Informations générales</strong></h4>
-        <mat-card-content>
-          <form
-            id="associationFrom"
-            [formGroup]="ASSOCIATION_FORM"
-            (submit)="
-              this.ASSOCIATION_FORM.valid &&
-                this.ASSOCIATION_FORM.dirty &&
-                edit()
-            "
-            #form="ngForm"
-            autocomplete="off"
-          >
-            <div class="row">
-              <div class="col-12 col-md-6">
+            <div class="form-row">
+              <div class="form-field-half">
                 <app-text-input
                   [formControl]="ASSOCIATION_FORM.controls['raisonSocial']"
-                  [label]="'Raison Social*'"
+                  [label]="'Raison Sociale*'"
                 ></app-text-input>
               </div>
-              <div class="col-12 col-md-6">
+              <div class="form-field-half">
                 <app-text-input
                   [formControl]="ASSOCIATION_FORM.controls['name']"
-                  [label]="'Nom*'"
+                  [label]="'Responsable Juridique*'"
                 ></app-text-input>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12 col-md-6">
+
+            <div class="form-row">
+              <div class="form-field-half">
                 <app-text-input
                   [formControl]="ASSOCIATION_FORM.controls['address']"
                   [label]="'Adresse'"
                 ></app-text-input>
               </div>
-              <div class="col-12 col-md-6">
+              <div class="form-field-half">
                 <app-select-input
                   [formControl]="ASSOCIATION_FORM.controls['city']"
                   [label]="'Ville*'"
@@ -69,132 +43,239 @@
                 ></app-select-input>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12 col-md-6">
+
+            <div class="form-row">
+              <div class="form-field-half">
+                <app-text-input
+                  [formControl]="ASSOCIATION_FORM.controls['webSite']"
+                  [label]="'Site Internet'"
+                ></app-text-input>
+              </div>
+              <div class="form-field-half">
+                <!-- Empty for layout balance -->
+              </div>
+            </div>
+          </div>
+
+          <div class="step-navigation">
+            <button class="btn-back" type="button" [routerLink]="['./..']">
+              <mat-icon>arrow_back</mat-icon>
+              Retour
+            </button>
+            <button class="btn-next" type="button" matStepperNext>
+              Suivant
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-step>
+
+      <!-- Step 2: Social Media & Description -->
+      <mat-step>
+        <ng-template matStepLabel>Réseaux sociaux</ng-template>
+        <div class="step-content-card">
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <mat-icon>share</mat-icon>
+              </div>
+              <h3 class="section-title">Réseaux sociaux & Description</h3>
+            </div>
+
+            <ng-container formGroupName="socialMedia">
+              <div class="form-row">
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="ASSOCIATION_FORM.get('socialMedia')['controls']['facebook']"
+                    [label]="'Facebook'"
+                  ></app-text-input>
+                </div>
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="ASSOCIATION_FORM.get('socialMedia')['controls']['twitter']"
+                    [label]="'Twitter'"
+                  ></app-text-input>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="ASSOCIATION_FORM.get('socialMedia')['controls']['instagram']"
+                    [label]="'Instagram'"
+                  ></app-text-input>
+                </div>
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="ASSOCIATION_FORM.get('socialMedia')['controls']['linkedIn']"
+                    [label]="'LinkedIn'"
+                  ></app-text-input>
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="form-row">
+              <div class="form-field-half">
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Description</mat-label>
                   <textarea
                     matInput
                     placeholder="Mettez votre description ici..."
                     formControlName="description"
+                    rows="4"
                   ></textarea>
                 </mat-form-field>
               </div>
-              <div class="col-12 col-md-6">
-                <app-text-input
-                  [formControl]="ASSOCIATION_FORM.controls['webSite']"
-                  [label]="'Site Internet'"
-                ></app-text-input>
+              <div class="form-field-half">
+                <!-- Empty for layout balance -->
               </div>
             </div>
-            <ng-container formGroupName="socialMedia">
-              <div class="row">
-                <div class="col-12 col-md-6">
-                  <app-text-input
-                    [formControl]="
-                      ASSOCIATION_FORM.get('socialMedia')['controls'][
-                        'facebook'
-                      ]
-                    "
-                    [label]="'Facebook'"
-                  ></app-text-input>
-                </div>
-                <div class="col-12 col-md-6">
-                  <app-text-input
-                    [formControl]="
-                      ASSOCIATION_FORM.get('socialMedia')['controls']['twitter']
-                    "
-                    [label]="'Twitter'"
-                  ></app-text-input>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12 col-md-6">
-                  <app-text-input
-                    [formControl]="
-                      ASSOCIATION_FORM.get('socialMedia')['controls'][
-                        'instagram'
-                      ]
-                    "
-                    [label]="'Instagram'"
-                  ></app-text-input>
-                </div>
-                <div class="col-12 col-md-6">
-                  <app-text-input
-                    [formControl]="
-                      ASSOCIATION_FORM.get('socialMedia')['controls'][
-                        'linkedIn'
-                      ]
-                    "
-                    [label]="'Linkedin'"
-                  ></app-text-input>
-                </div>
-              </div>
-            </ng-container>
-            <div class="row">
-              <div class="col-12 col-md-6">
+
+            <div class="form-row">
+              <div class="form-field-half">
                 <app-date-input
                   [formControl]="ASSOCIATION_FORM.controls['collaborationDate']"
                   [label]="'Date de collaboration'"
                   [maxDate]="maxDate"
                 ></app-date-input>
               </div>
-              <div class="col-12 col-md-6">
+              <div class="form-field-half">
                 <app-date-input
                   [formControl]="ASSOCIATION_FORM.controls['creationDate']"
-                  [label]="'Date de creation'"
+                  [label]="'Date de création'"
                   [maxDate]="maxDate"
                 ></app-date-input>
               </div>
             </div>
+          </div>
+
+          <div class="step-navigation">
+            <button class="btn-back" type="button" matStepperPrevious>
+              <mat-icon>arrow_back</mat-icon>
+              Retour
+            </button>
+            <button class="btn-next" type="button" matStepperNext>
+              Suivant
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-step>
+
+      <!-- Step 3: TIP Information -->
+      <mat-step>
+        <ng-template matStepLabel>Informations TIP</ng-template>
+        <div class="step-content-card">
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <mat-icon>person</mat-icon>
+              </div>
+              <h3 class="section-title">Informations sur le TIP</h3>
+            </div>
+
             <ng-container formGroupName="tip">
-              <h4 class="subtitle"><strong>Informations TIP</strong></h4>
-              <div class="row">
-                <div class="col-12 col-md-6">
+              <div class="form-row">
+                <div class="form-field-half">
                   <app-text-input
-                    [formControl]="
-                      ASSOCIATION_FORM.get('tip')['controls']['fullname']
-                    "
-                    [label]="'Nom et prénom*'"
+                    [formControl]="ASSOCIATION_FORM.get('tip')['controls']['fullname']"
+                    [label]="'Nom et Prénom*'"
                   ></app-text-input>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="form-field-half">
                   <app-text-input
-                    [formControl]="
-                      ASSOCIATION_FORM.get('tip')['controls']['email']
-                    "
+                    [formControl]="ASSOCIATION_FORM.get('tip')['controls']['email']"
                     [label]="'Email*'"
                   ></app-text-input>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-12 col-md-6">
+
+              <div class="form-row">
+                <div class="form-field-half">
                   <app-text-input
-                    [formControl]="
-                      ASSOCIATION_FORM.get('tip')['controls']['phone']
-                    "
+                    [formControl]="ASSOCIATION_FORM.get('tip')['controls']['phone']"
                     [label]="'Téléphone*'"
                     [type]="'tel'"
                   ></app-text-input>
                 </div>
+                <div class="form-field-half">
+                  <!-- Empty for layout balance -->
+                </div>
               </div>
             </ng-container>
-          </form>
-        </mat-card-content>
-        <mat-card-actions class="submit-button" align="end">
-          <button
-            mat-raised-button
-            type="submit"
-            [disabled]="
-              !this.ASSOCIATION_FORM.valid || !this.ASSOCIATION_FORM.dirty
-            "
-            form="associationFrom"
-            color="primary"
-          >
-            Enregistrer
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
-  </div>
+          </div>
+
+          <div class="step-navigation">
+            <button class="btn-back" type="button" matStepperPrevious>
+              <mat-icon>arrow_back</mat-icon>
+              Retour
+            </button>
+            <button class="btn-next" type="button" matStepperNext>
+              Suivant
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-step>
+
+      <!-- Step 4: Settings & Finalization -->
+      <mat-step>
+        <ng-template matStepLabel>Finaliser</ng-template>
+        <div class="step-content-card">
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <mat-icon>settings</mat-icon>
+              </div>
+              <h3 class="section-title">Paramètres du compte</h3>
+            </div>
+
+            <div class="settings-actions">
+              <button type="button" class="settings-btn" (click)="editPassword()">
+                <mat-icon>vpn_key</mat-icon>
+                <span>Changer le mot de passe</span>
+              </button>
+              <button type="button" class="settings-btn" (click)="editLogo()">
+                <mat-icon>add_photo_alternate</mat-icon>
+                <span>Changer le logo</span>
+              </button>
+              <button type="button" class="settings-btn" (click)="editTipPhto()">
+                <mat-icon>add_photo_alternate</mat-icon>
+                <span>Changer la photo TIP</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="final-step">
+            <div class="success-icon-wrapper">
+              <div class="success-circle">
+                <mat-icon class="check-icon">task_alt</mat-icon>
+              </div>
+              <div class="decoration-dots"></div>
+            </div>
+
+            <h2 class="success-title">Prêt à enregistrer!</h2>
+            <p class="success-message">
+              Vérifiez vos modifications et enregistrez les changements.
+            </p>
+
+            <div class="final-actions">
+              <button class="btn-back" type="button" matStepperPrevious>
+                <mat-icon>arrow_back</mat-icon>
+                Retour
+              </button>
+              <button
+                class="btn-submit"
+                [disabled]="!ASSOCIATION_FORM.valid || !ASSOCIATION_FORM.dirty"
+                type="submit"
+              >
+                <mat-icon>check_circle</mat-icon>
+                Enregistrer
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </form>
 </div>

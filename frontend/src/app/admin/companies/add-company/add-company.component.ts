@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormGroupDirective, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FileValidator } from 'ngx-material-file-input';
+import { MaxSizeValidator } from 'src/app/core/validators/file-validators';
 import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 import { catchError, first, tap } from 'rxjs/operators';
@@ -12,9 +12,10 @@ import { Data } from 'src/app/core/models/dropdown_data';
 import { CompanyService } from 'src/app/core/services/company.service';
 
 @Component({
-  selector: 'app-add-company',
-  templateUrl: './add-company.component.html',
-  styleUrls: ['./add-company.component.scss'],
+    selector: 'app-add-company',
+    templateUrl: './add-company.component.html',
+    styleUrls: ['./add-company.component.scss'],
+    standalone: false
 })
 export class AddCompanyComponent implements OnInit {
   PHOTO_MAX_SIZE = 1024 * 1024; // 1Mb
@@ -43,7 +44,7 @@ export class AddCompanyComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     repeat_password: ['', [Validators.required, Validators.minLength(6)]],
-    logo: ['', FileValidator.maxContentSize(this.PHOTO_MAX_SIZE)],
+    logo: ['', MaxSizeValidator(this.PHOTO_MAX_SIZE)],
     activity_area: ['', [Validators.required]],
     person_contacted: this.PERSON_FORM,
     socialMedia: this.SOCIAL_MEDIA_FORM,
@@ -53,7 +54,7 @@ export class AddCompanyComponent implements OnInit {
   @ViewChild('form') form: FormGroupDirective;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private companyService: CompanyService,
     private toastrService: ToastrService,
     private router : Router,

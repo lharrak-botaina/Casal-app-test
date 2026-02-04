@@ -1,187 +1,205 @@
-<div class="row">
-  <div class="col-11 card m-2 text-center" *ngIf="isFull">
-    <h4> {{status ? 'Inséré(e)' : 'Non Inséré(e)'}} </h4>
-    <h4 *ngIf="!status && personalInfo?.isPriority">
-      <mat-icon>notifications_active </mat-icon>
-      <strong> Besoin d'insertion immédiat !</strong>
-    </h4>
+<!-- Status Banner -->
+<div class="status-banner" *ngIf="isFull">
+  <div class="status-badge" [class.inserted]="status" [class.not-inserted]="!status">
+    <mat-icon>{{ status ? 'check_circle' : 'pending' }}</mat-icon>
+    <span>{{ status ? 'Inséré(e)' : 'Non Inséré(e)' }}</span>
+  </div>
+  <div class="priority-alert" *ngIf="!status && personalInfo?.isPriority">
+    <mat-icon>priority_high</mat-icon>
+    <span>Besoin d'insertion immédiat !</span>
   </div>
 </div>
-<div class="row">
-  <div class="col-12 col-md-4 picture-container m-2">
-    <img
-      [src]="
-        personalInfo?.photo
-          ? host + personalInfo?.photo
-          : 'assets/no_picture_available.png'
-      "
-      alt=""
-    />
+
+<!-- Profile Header Card -->
+<div class="profile-section">
+  <div class="profile-card">
+    <div class="profile-photo-wrapper">
+      <div class="photo-container">
+        <img
+          [src]="personalInfo?.photo ? host + personalInfo?.photo : 'assets/no_picture_available.png'"
+          alt="Photo de profil"
+          class="profile-photo"
+        />
+      </div>
+      <h3 class="profile-name">{{ personalInfo?.fullname | titlecase }}</h3>
+      <span class="profile-id">ID: {{ personalInfo?.identifier }}</span>
+    </div>
   </div>
-  <div class="col-12 col-md-7 card p-0 m-2">
-    <div class="header px-3 pt-3">
+
+  <div class="info-card general-info">
+    <div class="card-header">
+      <mat-icon>info</mat-icon>
       <h2>Informations générales</h2>
     </div>
-    <div class="content p-4">
-      <p>
-        <strong>Nom et prénom :</strong>
-        {{ personalInfo?.fullname | titlecase }}
-      </p>
-      <p>
-        <strong>Identifiant :</strong>
-        {{ personalInfo?.identifier }}
-      </p>
-      <p>
-        <strong>Adresse : </strong>{{ personalInfo?.address | titlecase }} 
-        {{ personalInfo?.city | titlecase }}
-      </p>
-      <p>
-        <strong>Date de naissance : </strong
-        >{{ personalInfo?.birth_date | date: "dd-MM-yyyy" }}
-      </p>
-      <p *ngIf="isFull">
-        <strong>Date d'inscription : </strong
-        >{{ personalInfo?.inscription_date | date: "dd-MM-yyyy" }}
-      </p>
-      <p><strong>Genre : </strong>{{ personalInfo?.gendre | titlecase }}</p>
-      <p *ngIf="isFull"><strong>Téléphone : </strong>{{ personalInfo?.phone }}</p>
-      <p *ngIf="isFull"><strong>Numéro CIN :</strong> {{ personalInfo?.cin_id }}</p>
-      <p *ngIf="isFull"><strong>Numéro CNSS :</strong> {{ personalInfo?.cnss_id }}</p>
-      <p><strong>Nationalité :</strong> {{ personalInfo?.nationality }}</p>
-      <p><strong>Nationalité commentaire :</strong> {{ personalInfo?.nationality_comment }}</p>
-      <p *ngIf="isFull">
-        <strong>Comment il a connu notre service : </strong
-        >{{ personalInfo?.connectedBy | titlecase }}
-      </p>
-      <p><strong>Loisirs :</strong> {{ personalInfo?.hobbies }}</p>
-      <p *ngIf="isFull">
-        <strong>Activités associatives : </strong
-        >{{ personalInfo?.associative_activity | titlecase }}
-      </p>
-      <p *ngIf="!isFull">
-        <strong>Association : </strong
-        > <a [routerLink]="[ './association/', associationId]">{{ associationName | titlecase }} <mat-icon>open_in_new</mat-icon>
-        </a>
-      </p>
+    <div class="card-body">
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Adresse</span>
+          <span class="info-value">{{ personalInfo?.address | titlecase }} {{ personalInfo?.city | titlecase }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Date de naissance</span>
+          <span class="info-value">{{ personalInfo?.birth_date | date: "dd/MM/yyyy" }}</span>
+        </div>
+        <div class="info-item" *ngIf="isFull">
+          <span class="info-label">Date d'inscription</span>
+          <span class="info-value">{{ personalInfo?.inscription_date | date: "dd/MM/yyyy" }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Genre</span>
+          <span class="info-value">{{ personalInfo?.gendre | titlecase }}</span>
+        </div>
+        <div class="info-item" *ngIf="isFull">
+          <span class="info-label">Téléphone</span>
+          <span class="info-value">{{ personalInfo?.phone }}</span>
+        </div>
+        <div class="info-item" *ngIf="isFull">
+          <span class="info-label">Numéro CIN</span>
+          <span class="info-value">{{ personalInfo?.cin_id }}</span>
+        </div>
+        <div class="info-item" *ngIf="isFull">
+          <span class="info-label">Numéro CNSS</span>
+          <span class="info-value">{{ personalInfo?.cnss_id }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Nationalité</span>
+          <span class="info-value">{{ personalInfo?.nationality }}</span>
+        </div>
+        <div class="info-item" *ngIf="personalInfo?.nationality_comment">
+          <span class="info-label">Commentaire nationalité</span>
+          <span class="info-value">{{ personalInfo?.nationality_comment }}</span>
+        </div>
+        <div class="info-item" *ngIf="isFull">
+          <span class="info-label">Comment connu notre service</span>
+          <span class="info-value">{{ personalInfo?.connectedBy | titlecase }}</span>
+        </div>
+        <div class="info-item" *ngIf="personalInfo?.hobbies">
+          <span class="info-label">Loisirs</span>
+          <span class="info-value">{{ personalInfo?.hobbies }}</span>
+        </div>
+        <div class="info-item" *ngIf="!isFull">
+          <span class="info-label">Association</span>
+          <a [routerLink]="['./association/', associationId]" class="info-link">
+            {{ associationName | titlecase }}
+            <mat-icon>open_in_new</mat-icon>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-12 col-md-4 card p-0 m-2">
-    <div class="header px-3 pt-3">
+
+<!-- Secondary Info Cards -->
+<div class="cards-row">
+  <div class="info-card">
+    <div class="card-header">
+      <mat-icon>family_restroom</mat-icon>
       <h2>Situation matrimoniale</h2>
     </div>
-    <div class="content p-4">
-      <p>
-        <strong>Etat civil:</strong>
-        {{ personalInfo?.civil_status | titlecase }}
-      </p>
-      <p *ngIf="isFull"><strong>Nombre d'enfants : </strong>{{ personalInfo?.kids_nbr }}</p>
-      <p *ngIf="isFull"><strong>Logement : </strong>{{ personalInfo?.housing | titlecase }}</p>
+    <div class="card-body">
+      <div class="info-grid single-column">
+        <div class="info-item">
+          <span class="info-label">État civil</span>
+          <span class="info-value">{{ personalInfo?.civil_status | titlecase }}</span>
+        </div>
+        <div class="info-item" *ngIf="isFull">
+          <span class="info-label">Nombre d'enfants</span>
+          <span class="info-value">{{ personalInfo?.kids_nbr }}</span>
+        </div>
+        <div class="info-item" *ngIf="isFull">
+          <span class="info-label">Logement</span>
+          <span class="info-value">{{ personalInfo?.housing | titlecase }}</span>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="col-12 col-md-7 card p-0 m-2">
-    <div class="header px-3 pt-3">
-      <h2>Situation Socio Economique</h2>
+
+  <div class="info-card flex-grow">
+    <div class="card-header">
+      <mat-icon>account_balance_wallet</mat-icon>
+      <h2>Situation Socio Économique</h2>
     </div>
-    <div class="content p-4">
-      <p><strong>Situation Actuelle : </strong>{{ personalInfo?.current_function }}</p>
-      <p *ngIf="isFull">
-        <strong>Nombre de personne à charge : </strong
-        >{{ personalInfo?.people_in_charge_nbr }}
-      </p>
+    <div class="card-body">
+      <div class="info-grid single-column">
+        <div class="info-item">
+          <span class="info-label">Situation Actuelle</span>
+          <span class="info-value">{{ personalInfo?.current_function }}</span>
+        </div>
+        <div class="info-item" *ngIf="isFull">
+          <span class="info-label">Personnes à charge</span>
+          <span class="info-value">{{ personalInfo?.people_in_charge_nbr }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<div class="row" *ngIf="isFull">
-  <div class="col-12 col-md-11 card p-0 m-2">
-    <div class="header px-4 pt-3">
-      <h2>Etat Physique</h2>
-    </div>
-    <div class="content p-4">
-      <div class="row">
-        <div class="col-12 col-md-4">
-          <p>
-            <strong>Le bénéficaire souffre t-il d'une addiction :</strong>
 
-            {{
-              personalInfo?.physical_state?.addiction?.status ? "Oui" : "Non"
-            }}
-          </p>
+<!-- Physical State Card -->
+<div class="info-card full-width" *ngIf="isFull">
+  <div class="card-header">
+    <mat-icon>health_and_safety</mat-icon>
+    <h2>État Physique</h2>
+  </div>
+  <div class="card-body">
+    <div class="health-grid">
+      <div class="health-item">
+        <div class="health-question">
+          <mat-icon [class.yes]="personalInfo?.physical_state?.addiction?.status">
+            {{ personalInfo?.physical_state?.addiction?.status ? 'warning' : 'check_circle' }}
+          </mat-icon>
+          <div class="health-content">
+            <span class="health-label">Addiction</span>
+            <span class="health-status" [class.yes]="personalInfo?.physical_state?.addiction?.status">
+              {{ personalInfo?.physical_state?.addiction?.status ? 'Oui' : 'Non' }}
+            </span>
+          </div>
         </div>
-        <div
-          class="col-12 col-md-8"
-          *ngIf="personalInfo?.physical_state?.addiction?.status"
-        >
-          <p>
-            <strong>Détails :</strong>
-            {{
-              personalInfo?.physical_state?.addiction?.description | titlecase
-            }}
-          </p>
-        </div>
+        <p class="health-details" *ngIf="personalInfo?.physical_state?.addiction?.status">
+          {{ personalInfo?.physical_state?.addiction?.description | titlecase }}
+        </p>
       </div>
-      <div class="row">
-        <div class="col-12 col-md-4">
-          <p>
-            <strong
-              >Le bénéficaire souffre t-il d'un handicap quelconque :
-            </strong>
 
-            {{ personalInfo?.physical_state?.handicap?.status ? "Oui" : "Non" }}
-          </p>
+      <div class="health-item">
+        <div class="health-question">
+          <mat-icon [class.yes]="personalInfo?.physical_state?.handicap?.status">
+            {{ personalInfo?.physical_state?.handicap?.status ? 'accessible' : 'check_circle' }}
+          </mat-icon>
+          <div class="health-content">
+            <span class="health-label">Handicap</span>
+            <span class="health-status" [class.yes]="personalInfo?.physical_state?.handicap?.status">
+              {{ personalInfo?.physical_state?.handicap?.status ? 'Oui' : 'Non' }}
+            </span>
+          </div>
         </div>
-        <div
-          class="col-12 col-md-8"
-          *ngIf="personalInfo?.physical_state?.handicap?.status"
-        >
-          <p>
-            <strong>Détails : </strong>
-            {{
-              personalInfo?.physical_state?.handicap?.description | titlecase
-            }}
-          </p>
-        </div>
+        <p class="health-details" *ngIf="personalInfo?.physical_state?.handicap?.status">
+          {{ personalInfo?.physical_state?.handicap?.description | titlecase }}
+        </p>
       </div>
-      <div class="row">
-        <div class="col-12 col-md-4">
-          <p>
-            <strong>
-              Le bénéficaire souffre t-il d'une maladie chronique :</strong
-            >
 
-            {{
-              personalInfo?.physical_state?.health_issue?.status ? "Oui" : "Non"
-            }}
-          </p>
+      <div class="health-item">
+        <div class="health-question">
+          <mat-icon [class.yes]="personalInfo?.physical_state?.health_issue?.status">
+            {{ personalInfo?.physical_state?.health_issue?.status ? 'local_hospital' : 'check_circle' }}
+          </mat-icon>
+          <div class="health-content">
+            <span class="health-label">Maladie chronique</span>
+            <span class="health-status" [class.yes]="personalInfo?.physical_state?.health_issue?.status">
+              {{ personalInfo?.physical_state?.health_issue?.status ? 'Oui' : 'Non' }}
+            </span>
+          </div>
         </div>
-        <div
-          class="col-12 col-md-8"
-          *ngIf="personalInfo?.physical_state?.health_issue?.status"
-        >
-          <p>
-            <strong>Détails :</strong>
-
-            {{
-              personalInfo?.physical_state?.health_issue?.chronic_illness
-                | titlecase
-            }}
-          </p>
-        </div>
+        <p class="health-details" *ngIf="personalInfo?.physical_state?.health_issue?.status">
+          {{ personalInfo?.physical_state?.health_issue?.chronic_illness | titlecase }}
+        </p>
       </div>
-      <div class="row">
-        <div class="col-12">
-          <p>
-            <strong>
-              Le bénéficaire a t-il eu an antécedent médical qui pourrait
-              affecter son rendement au travail :
-            </strong>
 
-            {{
-              personalInfo?.physical_state?.health_issue?.ongoing_treatment
-                | titlecase
-            }}
-          </p>
+      <div class="health-item full-width-item" *ngIf="personalInfo?.physical_state?.health_issue?.ongoing_treatment">
+        <div class="health-question">
+          <mat-icon>medical_information</mat-icon>
+          <div class="health-content">
+            <span class="health-label">Antécédent médical affectant le travail</span>
+            <span class="health-value">{{ personalInfo?.physical_state?.health_issue?.ongoing_treatment | titlecase }}</span>
+          </div>
         </div>
       </div>
     </div>

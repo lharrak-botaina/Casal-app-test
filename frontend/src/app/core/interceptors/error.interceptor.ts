@@ -6,7 +6,9 @@ import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ErrorInterceptor implements HttpInterceptor {
     constructor(private authenticationService: AuthenticationService, private router : Router) { }
 

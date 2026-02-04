@@ -48,4 +48,33 @@ export class CompanyService {
   remove(id) {
     return this.http.delete(`companies/${id}`);
   }
+
+  addByAssociation(payload) {
+    return this.http.post('companies/association', payload);
+  }
+
+  findByAssociation(pageNumber = 0, pageSize = 10, filterQuery): Observable<CompanyResult> {
+    let params = {...filterQuery, pageNumber: pageNumber.toString(), pageSize: pageSize.toString()};
+    return this.http.get<CompanyResult>('companies/association', { params }).pipe(shareReplay());
+  }
+
+  findOneByAssociation(id): Observable<Company> {
+    return this.http.get<Company>(`companies/association/${id}`).pipe(shareReplay());
+  }
+
+  editByAssociation(id, payload) {
+    return this.http.put(`companies/association/${id}`, payload);
+  }
+
+  editPasswordByAssociation(id, payload) {
+    return this.http.put(`companies/association/${id}/password`, payload);
+  }
+
+  editLogoByAssociation(id, payload) {
+    return this.http.put(`companies/association/${id}/upload_photo`, payload);
+  }
+
+  removeByAssociation(id) {
+    return this.http.delete(`companies/association/${id}`);
+  }
 }

@@ -7,16 +7,17 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AssociationResult } from 'src/app/core/models/association';
 import { StatsData } from 'src/app/core/models/charts_data';
 import { PrintService } from 'src/app/core/services/print.service';
 
 @Component({
-  selector: 'app-pie-chart-one',
-  templateUrl: './pie-chart-one.component.html',
-  styleUrls: ['./pie-chart-one.component.scss'],
+    selector: 'app-pie-chart-one',
+    templateUrl: './pie-chart-one.component.html',
+    styleUrls: ['./pie-chart-one.component.scss'],
+    standalone: false
 })
 export class PieChartOneComponent implements OnInit {
   @Input() title: string;
@@ -44,7 +45,7 @@ export class PieChartOneComponent implements OnInit {
 
   @ViewChild('report') report: ElementRef;
 
-  constructor(private fb: FormBuilder, private printservice : PrintService) {}
+  constructor(private fb: UntypedFormBuilder, private printservice : PrintService) {}
 
   ngOnInit(): void {}
 

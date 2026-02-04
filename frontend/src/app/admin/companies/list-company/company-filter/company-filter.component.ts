@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActivityArea } from 'src/app/core/models/activity_area';
 import { Data } from 'src/app/core/models/dropdown_data';
 
 @Component({
-  selector: 'app-company-filter',
-  templateUrl: './company-filter.component.html',
-  styleUrls: ['./company-filter.component.scss'],
+    selector: 'app-company-filter',
+    templateUrl: './company-filter.component.html',
+    styleUrls: ['./company-filter.component.scss'],
+    standalone: false
 })
 export class CompanyFilterComponent implements OnInit {
   CITIES = Data.CITIES;
@@ -17,10 +18,12 @@ export class CompanyFilterComponent implements OnInit {
     filter: [''],
     city: [''],
     activity_area: [''],
+    dateFrom: [null],
+    dateTo: [null],
   });
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
@@ -28,10 +31,26 @@ export class CompanyFilterComponent implements OnInit {
   ngOnInit(): void {}
 
   filter() {
+    const formValue = this.FILTER_FORM.value;
+    const queryParams = {
+      ...formValue,
+      dateFrom: formValue.dateFrom ? new Date(formValue.dateFrom).toISOString() : null,
+      dateTo: formValue.dateTo ? new Date(formValue.dateTo).toISOString() : null,
+    };
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
-      queryParams: { ...this.FILTER_FORM.value },
+      queryParams,
       skipLocationChange: true,
     });
+  }
+
+  resetFilters() {
+    this.FILTER_FORM.reset();
+    this.filter();
+  }
+
+  hasActiveFilters(): boolean {
+    const values = this.FILTER_FORM.value;
+    return Object.values(values).some(v => v !== '' && v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0));
   }
 }

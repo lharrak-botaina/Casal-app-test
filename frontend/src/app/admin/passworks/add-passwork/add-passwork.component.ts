@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormGroupDirective, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FileValidator } from 'ngx-material-file-input';
+import { MaxSizeValidator } from 'src/app/core/validators/file-validators';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, first, tap } from 'rxjs/operators';
@@ -15,9 +15,10 @@ import { CompanyService } from 'src/app/core/services/company.service';
 import { PassworkService } from 'src/app/core/services/passwork.service';
 
 @Component({
-  selector: 'app-add-passwork',
-  templateUrl: './add-passwork.component.html',
-  styleUrls: ['./add-passwork.component.scss'],
+    selector: 'app-add-passwork',
+    templateUrl: './add-passwork.component.html',
+    styleUrls: ['./add-passwork.component.scss'],
+    standalone: false
 })
 export class AddPassworkComponent implements OnInit {
   FILE_MAX_SIZE = 1024 * 1024; // 1Mb
@@ -43,13 +44,13 @@ export class AddPassworkComponent implements OnInit {
     start_date: [''],
     end_date: [''],
     training_modules: [''],
-    training_planning: ['', FileValidator.maxContentSize(this.FILE_MAX_SIZE)],
+    training_planning: ['', MaxSizeValidator(this.FILE_MAX_SIZE)],
   });
 
   @ViewChild('form') form: FormGroupDirective;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private passworkService: PassworkService,
     private associationService: AssociationService,
     private companyService: CompanyService,

@@ -10,9 +10,10 @@ import { environment } from 'src/environments/environment';
 import { ArchivePassworkComponent } from '../archive-passwork/archive-passwork.component';
 
 @Component({
-  selector: 'app-details-passwork',
-  templateUrl: './details-passwork.component.html',
-  styleUrls: ['./details-passwork.component.scss'],
+    selector: 'app-details-passwork',
+    templateUrl: './details-passwork.component.html',
+    styleUrls: ['./details-passwork.component.scss'],
+    standalone: false
 })
 export class DetailsPassworkComponent implements OnInit, OnDestroy {
   passwork: Passwork = !window?.history?.state?._id ? null : window?.history?.state;

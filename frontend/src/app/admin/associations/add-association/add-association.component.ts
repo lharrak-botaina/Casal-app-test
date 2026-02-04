@@ -1,7 +1,7 @@
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-  FormBuilder,
+  UntypedFormBuilder,
   FormGroup,
   FormGroupDirective,
   Validators,
@@ -9,16 +9,17 @@ import {
 import { AssociationService } from 'src/app/core/services/association.service';
 import { catchError, first, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { FileValidator } from 'ngx-material-file-input';
+import { MaxSizeValidator } from 'src/app/core/validators/file-validators';
 import { Data } from 'src/app/core/models/dropdown_data';
 import { IsPasswordMatchService } from 'src/app/core/helpers/is-password-match.service';
 import { PhotoService } from 'src/app/core/helpers/photo.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-add-association',
-  templateUrl: './add-association.component.html',
-  styleUrls: ['./add-association.component.scss'],
+    selector: 'app-add-association',
+    templateUrl: './add-association.component.html',
+    styleUrls: ['./add-association.component.scss'],
+    standalone: false
 })
 export class AddAssociationComponent implements OnInit {
   PHOTO_MAX_SIZE = 1024 * 1024; // 1Mb
@@ -38,7 +39,7 @@ export class AddAssociationComponent implements OnInit {
     fullname: ['', [Validators.required]],
     email: ['', [Validators.required, , Validators.email]],
     phone: ['', [Validators.required]],
-    photo: ['', FileValidator.maxContentSize(this.PHOTO_MAX_SIZE)],
+    photo: ['', MaxSizeValidator(this.PHOTO_MAX_SIZE)],
   });
 
   ASSOCIATION_FORM = this.fb.group(
@@ -53,7 +54,7 @@ export class AddAssociationComponent implements OnInit {
       webSite: [''],
       socialMedia: this.SOCIAL_MEDIA_FORM,
       description: [''],
-      logo: ['', FileValidator.maxContentSize(this.PHOTO_MAX_SIZE)],
+      logo: ['', MaxSizeValidator(this.PHOTO_MAX_SIZE)],
       tip: this.TIP_FORM,
       collaborationDate: [''],
       creationDate: [''],
@@ -64,7 +65,7 @@ export class AddAssociationComponent implements OnInit {
   @ViewChild('form') form: FormGroupDirective;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private associationService: AssociationService,
     private toastrService: ToastrService,
     private isPasswordMatch : IsPasswordMatchService,

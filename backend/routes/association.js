@@ -2,6 +2,7 @@ const validation = require('../middleware/validate');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const company = require('../middleware/company');
+const associationMiddleware = require('../middleware/association');
 const checkCsrfToken = require('../middleware/csrf');
 const { Association, validate, validateUpdateBody, validateUpdatePhotoBody, validateUpdatePassword } = require("../models/association");
 const account = require("../services/account");
@@ -47,6 +48,17 @@ router.get('/', [auth, checkCsrfToken, admin], async (req, res) => {
 });
 
 router.get('/company', [auth, checkCsrfToken, company], async (req, res) => {
+    try {
+        const associations = await findLight();
+
+        return res.status(200).send(associations);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message);
+    }
+});
+
+router.get('/association', [auth, checkCsrfToken, associationMiddleware], async (req, res) => {
     try {
         const associations = await findLight();
 
@@ -268,9 +280,11 @@ async function remove(id) {
 }
 
 function deletePicture(pictureName) {
-    const picturePath = `${path.join(__dirname, '../public')}/associations`;
+    const picturePath = path.join(__dirname, '../public', 'associations', pictureName);
 
-    return fs.unlinkSync(picturePath + pictureName);
+    if (fs.existsSync(picturePath)) {
+        return fs.unlinkSync(picturePath);
+    }
 }
 
 module.exports = router;

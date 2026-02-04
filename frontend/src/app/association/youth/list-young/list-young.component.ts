@@ -1,26 +1,24 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { takeWhile, tap } from 'rxjs/operators';
 import { YoungResult } from 'src/app/core/models/young';
 import { YoungService } from 'src/app/core/services/young.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-list-young',
-  templateUrl: './list-young.component.html',
-  styleUrls: ['./list-young.component.scss'],
+    selector: 'app-list-young',
+    templateUrl: './list-young.component.html',
+    styleUrls: ['./list-young.component.scss'],
+    standalone: false
 })
 export class ListYoungComponent implements OnInit, OnDestroy {
-  PAGE_INDEX = 0;
-  PAGE_SIZE = 10;
+  first = 0;
+  pageSize = 10;
 
   filterQuery;
   youth$: Observable<YoungResult>;
   private alive: boolean = true;
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   constructor(
     private youngService: YoungService,
     private activatedRoute: ActivatedRoute
@@ -30,19 +28,11 @@ export class ListYoungComponent implements OnInit, OnDestroy {
     this.ListenToQueryParamsChange();
   }
 
-  ngAfterViewInit(): void {
-    this.paginator?.page
-      .pipe(
-        takeWhile(() => this.alive),
-        tap(() =>
-          this.loadYouth(
-            this.paginator.pageIndex,
-            this.paginator.pageSize,
-            this.filterQuery
-          )
-        )
-      )
-      .subscribe();
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.pageSize = event.rows;
+    const pageIndex = event.page;
+    this.loadYouth(pageIndex, this.pageSize, this.filterQuery);
   }
 
   loadYouth(page, limit, filterQuery) {
@@ -53,11 +43,11 @@ export class ListYoungComponent implements OnInit, OnDestroy {
     this.activatedRoute.queryParams
       .pipe(
         takeWhile(() => this.alive),
-        tap((_) => (this.paginator ? (this.paginator.pageIndex = 0) : 0))
+        tap((_) => (this.first = 0))
       )
       .subscribe((queryPrams) => {
         this.filterQuery = queryPrams;
-        this.loadYouth(this.PAGE_INDEX, this.PAGE_SIZE, queryPrams);
+        this.loadYouth(0, this.pageSize, queryPrams);
       });
   }
 

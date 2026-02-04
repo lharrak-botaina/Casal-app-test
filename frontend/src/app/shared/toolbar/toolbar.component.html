@@ -1,126 +1,268 @@
-<mat-toolbar color="primary">
-  <span class="fill-remaining-space for-mobile">
-    <button mat-icon-button [matMenuTriggerFor]="mobile">
-      <mat-icon>menu</mat-icon>
+<!-- Top Navbar -->
+<header class="top-navbar">
+  <div class="navbar-left">
+    <button class="mobile-toggle" (click)="toggleSidebar()">
+      <mat-icon>{{ sidebarOpen ? 'close' : 'menu' }}</mat-icon>
     </button>
-    <mat-menu #mobile="matMenu" [overlapTrigger]="false">
-      <ng-container>
-        <button *rbacAllow="['admin']" mat-menu-item [matMenuTriggerFor]="association"><mat-icon>groups</mat-icon> Associations</button>
-        <button *rbacAllow="['admin']" mat-menu-item [matMenuTriggerFor]="young"><mat-icon>account_box</mat-icon> Jeunes</button>
-        <button *rbacAllow="['admin']" mat-menu-item [matMenuTriggerFor]="companies"><mat-icon>business</mat-icon> Companies</button>
-        <button *rbacAllow="['admin']" mat-menu-item [matMenuTriggerFor]="jobs"><mat-icon>work</mat-icon> Jobs</button>
-        <button *rbacAllow="['admin']" mat-menu-item [matMenuTriggerFor]="passworks"><mat-icon>event</mat-icon> Passworks</button>
-        <button *rbacAllow="['admin']" [routerLink]="'casal/reports'" mat-menu-item>
-            <mat-icon>library_books</mat-icon> Rapports
-        </button>
-        <button *rbacAllow="['admin']" [routerLink]="'stats'" mat-menu-item>
-            <mat-icon>analytics</mat-icon> Statistiques
-        </button>
-        <button *rbacAllow="['admin']" mat-menu-item [matMenuTriggerFor]="printcenter"><mat-icon>print</mat-icon>Centre d'impression</button>
-      </ng-container>
+  </div>
 
-      <ng-container>
-        <button *rbacAllow="['association']" mat-menu-item [matMenuTriggerFor]="asc_young"><mat-icon>account_box</mat-icon> Jeunes</button>
-        <button *rbacAllow="['association']" [routerLink]="'association/jobs'" mat-menu-item><mat-icon>work</mat-icon> Jobs</button>
-        <button *rbacAllow="['association']" [routerLink]="'association/stats'" mat-menu-item>
-          <mat-icon>analytics</mat-icon> Statistiques
-        </button>
-        <button *rbacAllow="['association']" [routerLink]="'association/notification'" mat-menu-item>
-          <mat-icon>notifications</mat-icon> Centre de notifications
-        </button>
-      </ng-container>
+  <div class="navbar-right">
+    <ng-container *ngIf="isLoggedIn$ | async">
+      
 
-      <ng-container *rbacAllow="['company']" >
-        <button mat-menu-item [routerLink]="'company/young'"><mat-icon>account_box</mat-icon> Jeunes</button>
-        <button mat-menu-item [matMenuTriggerFor]="company_jobs"><mat-icon>work</mat-icon> Jobs</button>
-      </ng-container>
-  
-      <button *ngIf="isLoggedIn$ | async" mat-menu-item (click)="signOut()">
-        <mat-icon>exit_to_app</mat-icon>
-        <span>Se déconnecter</span>
+      <button class="icon-btn" [routerLink]="'casal/notification'" *rbacAllow="['admin']">
+        <mat-icon [matBadge]="(unreadCount$ | async) || null"
+                  [matBadgeHidden]="(unreadCount$ | async) === 0"
+                  matBadgeColor="warn"
+                  matBadgeSize="small">notifications_none</mat-icon>
       </button>
-      <button *ngIf="isLoggedOut$ | async" mat-menu-item>
+
+      <button class="icon-btn" [routerLink]="'association/notification'" *rbacAllow="['association']">
+        <mat-icon [matBadge]="(unreadCount$ | async) || null"
+                  [matBadgeHidden]="(unreadCount$ | async) === 0"
+                  matBadgeColor="warn"
+                  matBadgeSize="small">notifications_none</mat-icon>
+      </button>
+
+      <!-- Profile Section -->
+      <div class="profile-section" (click)="toggleProfileDropdown()">
+        <div class="profile-avatar">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div class="profile-info" *ngIf="user$ | async as user">
+          <span class="profile-name">{{ user.name || 'Utilisateur' }}</span>
+          <span class="profile-email">{{ user.email }}</span>
+        </div>
+        <mat-icon class="dropdown-arrow">{{ profileDropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+
+        <!-- Dropdown Menu -->
+        <div class="dropdown-menu" [class.open]="profileDropdownOpen">
+          <a class="dropdown-item" *ngIf="user$ | async as user">
+            <mat-icon>badge</mat-icon>
+            <span>{{ user.role }}</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item logout" (click)="signOut()">
+            <mat-icon>logout</mat-icon>
+            <span>Se déconnecter</span>
+          </a>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="isLoggedOut$ | async">
+      <a class="login-btn" [routerLink]="'/login'">
         <mat-icon>login</mat-icon>
         <span>S'identifier</span>
-      </button>
-    </mat-menu>
-  </span>
-  <span *rbacAllow="['admin']"  class="fill-remaining-space title text-center" [routerLink]="'casal/home'"><img src="assets/logo_yellow.png" alt="Casal dels infants" class="logo"></span>
-  <span *rbacAllow="['association']"  class="fill-remaining-space title text-center" ><img src="assets/logo_yellow.png" alt="Casal dels infants" class="logo"></span>
-  <span *rbacAllow="['company']"  class="fill-remaining-space title text-center" ><img src="assets/logo_yellow.png" alt="Casal dels infants" class="logo"></span>
-  <div class="for-desktop">
-    <ng-container #admin>
-      <button *rbacAllow="['admin']" mat-button [matMenuTriggerFor]="association"><mat-icon>groups</mat-icon> Associations</button>
-      <mat-menu #association="matMenu">
-        <button mat-menu-item [routerLink]="'casal/association'"><mat-icon>list</mat-icon>Liste Associations</button>
-        <button mat-menu-item [routerLink]="'casal/association/add'"><mat-icon>add</mat-icon>Ajouter Association</button>
-      </mat-menu>
-      <button *rbacAllow="['admin']" mat-button [matMenuTriggerFor]="young"><mat-icon>account_box</mat-icon> Jeunes</button>
-      <mat-menu #young="matMenu">
-        <button mat-menu-item [routerLink]="'casal/young'"><mat-icon>list</mat-icon>Liste Jeunes</button>
-      </mat-menu>
-      <button *rbacAllow="['admin']" mat-button [matMenuTriggerFor]="companies"><mat-icon>business</mat-icon> Entreprises</button>
-      <mat-menu #companies="matMenu">
-        <button mat-menu-item [routerLink]="'casal/company'"><mat-icon>list</mat-icon>Liste d'entreprises</button>
-        <button mat-menu-item [routerLink]="'casal/company/add'"><mat-icon>add</mat-icon>Ajouter entreprise</button>
-      </mat-menu>
-      <button *rbacAllow="['admin']" mat-button [matMenuTriggerFor]="jobs"><mat-icon>work</mat-icon> Offres d'emploi</button>
-      <mat-menu #jobs="matMenu">
-        <button mat-menu-item [routerLink]="'casal/job'" [queryParams]="{status: 'active'}"><mat-icon>list</mat-icon>Liste d'offres d'emploi</button>
-        <button mat-menu-item [routerLink]="'casal/job/add'"><mat-icon>add</mat-icon>Ajouter offre d'emploi</button>
-      </mat-menu>
-      <button *rbacAllow="['admin']" mat-button [matMenuTriggerFor]="passworks"><mat-icon>event</mat-icon> Passworks</button>
-      <mat-menu #passworks="matMenu">
-        <button mat-menu-item [routerLink]="'casal/passwork'" [queryParams]="{status: 'active'}"><mat-icon>list</mat-icon>Liste Passworks</button>
-        <button mat-menu-item [routerLink]="'casal/passwork/add'"><mat-icon>add</mat-icon>Ajouter Passwork</button>
-      </mat-menu>
-      <a *rbacAllow="['admin']" [routerLink]="'casal/reports'" mat-button>
-          <mat-icon>library_books</mat-icon> Rapports
-      </a>
-      <a *rbacAllow="['admin']" [routerLink]="'stats'" mat-button>
-          <mat-icon>analytics</mat-icon> Statistiques
-      </a>
-      <button *rbacAllow="['admin']" mat-button [matMenuTriggerFor]="printcenter"><mat-icon>print</mat-icon>Centre d'impression</button>
-      <mat-menu #printcenter="matMenu">
-        <button mat-menu-item [routerLink]="'casal/print'"><mat-icon>list</mat-icon>Liste documents</button>
-        <button mat-menu-item [routerLink]="'casal/print/add'"><mat-icon>add</mat-icon>Ajouter un document</button>
-      </mat-menu>
-    </ng-container>
-    <ng-container #association>
-      <button *rbacAllow="['association']" mat-button [matMenuTriggerFor]="asc_young"><mat-icon>account_box</mat-icon> Jeunes</button>
-      <mat-menu #asc_young="matMenu">
-        <button mat-menu-item [routerLink]="'association/young'"><mat-icon>list</mat-icon>Liste Jeunes</button>
-        <button mat-menu-item [routerLink]="'association/young/add'"><mat-icon>add</mat-icon>Ajouter Jeune</button>
-      </mat-menu>
-      <a *rbacAllow="['association']" [routerLink]="'association/jobs'" mat-button><mat-icon>work</mat-icon> Jobs</a>
-
-      <a *rbacAllow="['association']" [routerLink]="'association/stats'" mat-button>
-        <mat-icon>analytics</mat-icon> Statistiques
-      </a>
-      <a *rbacAllow="['association']" [routerLink]="'association/notification'" mat-button>
-        <mat-icon>notifications</mat-icon> Centre de notifications
       </a>
     </ng-container>
-
-    <ng-container #company>
-      <button *rbacAllow="['company']" mat-button [routerLink]="'company/young'"><mat-icon>account_box</mat-icon> Jeunes</button>
-      <button *rbacAllow="['company']" mat-button [matMenuTriggerFor]="company_jobs"><mat-icon>work</mat-icon> Offres d'emploi</button>
-      <mat-menu #company_jobs="matMenu">
-        <button mat-menu-item [routerLink]="'company/job'" [queryParams]="{status: 'active'}"><mat-icon>list</mat-icon>Liste d'offres d'emploi</button>
-        <button mat-menu-item [routerLink]="'company/job/add'"><mat-icon>add</mat-icon>Ajouter offre d'emploi</button>
-      </mat-menu>
-    </ng-container>
-
   </div>
-  <span class="fill-space"></span>
-  <div class="for-desktop">
-    <a *ngIf="isLoggedIn$ | async" mat-button (click)="signOut()">
-      <mat-icon>exit_to_app</mat-icon>
-      Se déconnecter
-    </a>
-    <a *ngIf="isLoggedOut$ | async" mat-button>
-      <mat-icon>login</mat-icon>
-      S'identifier
-    </a>
+</header>
+
+<!-- Sidebar -->
+<aside class="sidebar" [class.open]="sidebarOpen">
+  <!-- Logo Section -->
+  <div class="sidebar-logo">
+    <img src="assets/logo_yellow.png" alt="Casal dels infants" class="logo-img">
   </div>
-</mat-toolbar>
+
+  <!-- Menu Section -->
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <span class="nav-section-title">MENU</span>
+
+      <!-- Admin Menu Items -->
+      <ng-container *rbacAllow="['admin']">
+        <a class="nav-item" [routerLink]="'casal/home'" routerLinkActive="active">
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+        </a>
+
+        <div class="nav-item has-submenu" [class.expanded]="isMenuExpanded('associations')" (click)="toggleMenu('associations')">
+          <mat-icon>groups</mat-icon>
+          <span>Associations</span>
+          <mat-icon class="submenu-arrow">{{ isMenuExpanded('associations') ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </div>
+        <div class="submenu" *ngIf="isMenuExpanded('associations')">
+          <a class="nav-item submenu-item" [routerLink]="'casal/association'" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>list</mat-icon>
+            <span>Liste Associations</span>
+          </a>
+          <a class="nav-item submenu-item" [routerLink]="'casal/association/add'" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>add</mat-icon>
+            <span>Ajouter Association</span>
+          </a>
+        </div>
+
+        <div class="nav-item has-submenu" [class.expanded]="isMenuExpanded('young')" (click)="toggleMenu('young')">
+          <mat-icon>account_box</mat-icon>
+          <span>Jeunes</span>
+          <mat-icon class="submenu-arrow">{{ isMenuExpanded('young') ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </div>
+        <div class="submenu" *ngIf="isMenuExpanded('young')">
+          <a class="nav-item submenu-item" [routerLink]="'casal/young'" routerLinkActive="active" >
+            <mat-icon>list</mat-icon>
+            <span>Liste Jeunes</span>
+          </a>
+        </div>
+
+        <div class="nav-item has-submenu" [class.expanded]="isMenuExpanded('companies')" (click)="toggleMenu('companies')">
+          <mat-icon>business</mat-icon>
+          <span>Entreprises</span>
+          <mat-icon class="submenu-arrow">{{ isMenuExpanded('companies') ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </div>
+        <div class="submenu" *ngIf="isMenuExpanded('companies')">
+          <a class="nav-item submenu-item" [routerLink]="'casal/company'" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>list</mat-icon>
+            <span>Liste d'entreprises</span>
+          </a>
+          <a class="nav-item submenu-item" [routerLink]="'casal/company/add'" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>add</mat-icon>
+            <span>Ajouter entreprise</span>
+          </a>
+        </div>
+
+        <div class="nav-item has-submenu" [class.expanded]="isMenuExpanded('jobs')" (click)="toggleMenu('jobs')">
+          <mat-icon>work</mat-icon>
+          <span>Offres d'emploi</span>
+          <mat-icon class="submenu-arrow">{{ isMenuExpanded('jobs') ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </div>
+        <div class="submenu" *ngIf="isMenuExpanded('jobs')">
+          <a class="nav-item submenu-item" [routerLink]="'casal/job'" [queryParams]="{status: 'active'}" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>list</mat-icon>
+            <span>Liste d'offres</span>
+          </a>
+          <a class="nav-item submenu-item" [routerLink]="'casal/job/add'" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>add</mat-icon>
+            <span>Ajouter offre</span>
+          </a>
+        </div>
+
+        <div class="nav-item has-submenu" [class.expanded]="isMenuExpanded('passworks')" (click)="toggleMenu('passworks')">
+          <mat-icon>event</mat-icon>
+          <span>Passworks</span>
+          <mat-icon class="submenu-arrow">{{ isMenuExpanded('passworks') ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </div>
+        <div class="submenu" *ngIf="isMenuExpanded('passworks')">
+          <a class="nav-item submenu-item" [routerLink]="'casal/passwork'" [queryParams]="{status: 'active'}" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>list</mat-icon>
+            <span>Liste Passworks</span>
+          </a>
+          <a class="nav-item submenu-item" [routerLink]="'casal/passwork/add'" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>add</mat-icon>
+            <span>Ajouter Passwork</span>
+          </a>
+        </div>
+
+        <a class="nav-item" [routerLink]="'casal/reports'" routerLinkActive="active">
+          <mat-icon>library_books</mat-icon>
+          <span>Rapports</span>
+        </a>
+
+        <a class="nav-item" [routerLink]="'stats'" routerLinkActive="active">
+          <mat-icon>analytics</mat-icon>
+          <span>Statistiques</span>
+        </a>
+
+        <div class="nav-item has-submenu" [class.expanded]="isMenuExpanded('print')" (click)="toggleMenu('print')">
+          <mat-icon>print</mat-icon>
+          <span>Centre d'impression</span>
+          <mat-icon class="submenu-arrow">{{ isMenuExpanded('print') ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </div>
+        <div class="submenu" *ngIf="isMenuExpanded('print')">
+          <a class="nav-item submenu-item" [routerLink]="'casal/print'" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>list</mat-icon>
+            <span>Liste documents</span>
+          </a>
+          <a class="nav-item submenu-item" [routerLink]="'casal/print/add'" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>add</mat-icon>
+            <span>Ajouter document</span>
+          </a>
+        </div>
+      </ng-container>
+
+      <!-- Association Menu Items -->
+      <ng-container *rbacAllow="['association']">
+        <div class="nav-item has-submenu" [class.expanded]="isMenuExpanded('ascYoung')" (click)="toggleMenu('ascYoung')">
+          <mat-icon>account_box</mat-icon>
+          <span>Jeunes</span>
+          <mat-icon class="submenu-arrow">{{ isMenuExpanded('ascYoung') ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </div>
+        <div class="submenu" *ngIf="isMenuExpanded('ascYoung')">
+         <a class="nav-item submenu-item" [routerLink]="'association/young'" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>list</mat-icon>
+            <span>Liste Jeunes</span>
+          </a>
+          <a class="nav-item submenu-item" [routerLink]="'association/young/add'" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>add</mat-icon>
+            <span>Ajouter Jeune</span>
+          </a>
+        </div>
+
+        <div class="nav-item has-submenu" [class.expanded]="isMenuExpanded('ascJobs')" (click)="toggleMenu('ascJobs')">
+          <mat-icon>work</mat-icon>
+          <span>Offres d'emploi</span>
+          <mat-icon class="submenu-arrow">{{ isMenuExpanded('ascJobs') ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </div>
+        <div class="submenu" *ngIf="isMenuExpanded('ascJobs')">
+          <a class="nav-item submenu-item" [routerLink]="'association/jobs'" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>list</mat-icon>
+            <span>Liste d'offres</span>
+          </a>
+          <a class="nav-item submenu-item" [routerLink]="'association/jobs/add'" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>add</mat-icon>
+            <span>Ajouter offre</span>
+          </a>
+        </div>
+
+        <div class="nav-item has-submenu" [class.expanded]="isMenuExpanded('ascCompanies')" (click)="toggleMenu('ascCompanies')">
+          <mat-icon>business</mat-icon>
+          <span>Entreprises</span>
+          <mat-icon class="submenu-arrow">{{ isMenuExpanded('ascCompanies') ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </div>
+        <div class="submenu" *ngIf="isMenuExpanded('ascCompanies')">
+          <a class="nav-item submenu-item" [routerLink]="'association/companies'" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>list</mat-icon>
+            <span>Liste d'entreprises</span>
+          </a>
+          <a class="nav-item submenu-item" [routerLink]="'association/companies/add'" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>add</mat-icon>
+            <span>Ajouter entreprise</span>
+          </a>
+        </div>
+
+        <a class="nav-item" [routerLink]="'association/stats'" routerLinkActive="active">
+          <mat-icon>analytics</mat-icon>
+          <span>Statistiques</span>
+        </a>
+      </ng-container>
+
+      <!-- Company Menu Items -->
+      <ng-container *rbacAllow="['company']">
+        <a class="nav-item" [routerLink]="'company/young'" routerLinkActive="active">
+          <mat-icon>account_box</mat-icon>
+          <span>Jeunes</span>
+        </a>
+
+        <div class="nav-item has-submenu" [class.expanded]="isMenuExpanded('companyJobs')" (click)="toggleMenu('companyJobs')">
+          <mat-icon>work</mat-icon>
+          <span>Offres d'emploi</span>
+          <mat-icon class="submenu-arrow">{{ isMenuExpanded('companyJobs') ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </div>
+        <div class="submenu" *ngIf="isMenuExpanded('companyJobs')">
+          <a class="nav-item submenu-item" [routerLink]="'company/job'" [queryParams]="{status: 'active'}" routerLinkActive="active">
+            <mat-icon>list</mat-icon>
+            <span>Liste d'offres</span>
+          </a>
+          <a class="nav-item submenu-item" [routerLink]="'company/job/add'" routerLinkActive="active">
+            <mat-icon>add</mat-icon>
+            <span>Ajouter offre</span>
+          </a>
+        </div>
+      </ng-container>
+    </div>
+  </nav>
+</aside>
+
+<!-- Mobile Overlay -->
+<div class="sidebar-overlay" [class.visible]="sidebarOpen" (click)="toggleSidebar()"></div>

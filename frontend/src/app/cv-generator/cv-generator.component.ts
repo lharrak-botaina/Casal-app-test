@@ -17,9 +17,10 @@ import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-cv-generator',
-  templateUrl: './cv-generator.component.html',
-  styleUrls: ['./cv-generator.component.scss'],
+    selector: 'app-cv-generator',
+    templateUrl: './cv-generator.component.html',
+    styleUrls: ['./cv-generator.component.scss'],
+    standalone: false
 })
 export class CvGeneratorComponent implements OnInit {
   young: Young = !window?.history?.state?._id ? null : window?.history?.state;

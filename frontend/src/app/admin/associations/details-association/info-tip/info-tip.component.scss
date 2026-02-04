@@ -1,14 +1,173 @@
-.image-tip {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+// ===================================
+// INFO TIP - MODERN UI
+// ===================================
 
-  object-fit: cover;
-  object-position: center right;
+$primary-color: #03644e;
+$primary-light: #e1ecea;
+$text-dark: #1a1a2e;
+$text-muted: #6c757d;
+$border-color: #e0e0e0;
+$white: #ffffff;
+
+.tip-card {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
 }
 
-@media only screen and (max-width: 575px) {
-  .align--text {
+// ===================================
+// PHOTO SECTION
+// ===================================
+
+.tip-photo-section {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.photo-wrapper {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 4px solid $white;
+}
+
+.tip-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tip-badge {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: $primary-color;
+  color: $white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(3, 100, 78, 0.3);
+
+  mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+// ===================================
+// INFO SECTION
+// ===================================
+
+.tip-info-section {
+  flex: 1;
+  padding-top: 8px;
+}
+
+.tip-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: $text-dark;
+  margin: 0 0 24px 0;
+}
+
+.tip-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tip-detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: $primary-light;
+  }
+}
+
+.detail-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 10px;
+  background: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+    color: $primary-color;
+  }
+}
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: $text-dark;
+
+  &.link {
+    color: $primary-color;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// ===================================
+// RESPONSIVE
+// ===================================
+
+@media (max-width: 768px) {
+  .tip-card {
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+  }
+
+  .tip-info-section {
+    padding-top: 24px;
+    width: 100%;
+  }
+
+  .tip-name {
+    text-align: center;
+  }
+
+  .tip-detail-item {
+    text-align: left;
   }
 }

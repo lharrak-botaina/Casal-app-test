@@ -24,6 +24,10 @@ export class AssociationService {
     return this.http.get<Association[]>('associations/company').pipe(shareReplay());
   }
 
+  findLightForAssociation(): Observable<Association[]> {
+    return this.http.get<Association[]>('associations/association').pipe(shareReplay());
+  }
+
   findOne(id): Observable<Association> {
     return this.http.get<Association>(`associations/${id}`).pipe(shareReplay());
   }

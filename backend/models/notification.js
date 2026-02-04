@@ -7,22 +7,31 @@ const notificationSchema = new mongoose.Schema({
     },
     jobId : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'Job' 
+        ref : 'Job'
     },
     date: {
         type: Date,
     },
     createdBy: {
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'User' 
+        ref : 'User'
+    },
+    actionType: {
+        type: String,
+        enum: ['created', 'updated', 'archived'],
+        default: 'created'
     },
     sharedWith: [{
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'Association' 
+        ref : 'Association'
     }],
     viewedBy: [{
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'Association' 
+        ref : 'Association'
+    }],
+    viewedByAdmin: [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'User'
     }]
 }, { timestamps: true });
 

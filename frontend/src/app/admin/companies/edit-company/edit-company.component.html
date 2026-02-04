@@ -1,153 +1,232 @@
-<div class="container">
-  <button
-    mat-icon-button
-    matTooltip="Back to detail page"
-    matTooltipPosition="right"
-    [routerLink]="['./..']"
-    class="back--button"
-  >
-    <mat-icon>keyboard_backspace</mat-icon>
-  </button>
-  <h2 class="text-center p-2">Modifier l'entreprise</h2>
-  <div class="row">
-    <div class="col-12">
-      <button mat-stroked-button class="mx-1 mb-1" (click)="editPassword()">
-        <mat-icon>vpn_key </mat-icon> Changer le mot de passe
-      </button>
-      <button mat-stroked-button class="mx-1 mb-1" (click)="editLogo()">
-        <mat-icon>add_photo_alternate</mat-icon> Changer Logo
-      </button>
-    </div>
-  </div>
-  <mat-card class="example-card">
-    <h4 class="subtitle"><strong>Informations générales</strong></h4>
-    <mat-card-content>
-      <form
-        id="companyForm"
-        [formGroup]="COMPANY_FORM"
-        (submit)="COMPANY_FORM.valid && edit()"
-        #form="ngForm"
-        autocomplete="off"
-      >
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <app-text-input
-              [formControl]="COMPANY_FORM.controls['name']"
-              [label]="'Nom*'"
-            ></app-text-input>
-          </div>
-          <div class="col-12 col-md-6">
-            <app-select-input
-              [formControl]="COMPANY_FORM.controls['activity_area']"
-              [label]="'Secteur d\'activité*'"
-              [options]="ACTIVITY_AREA"
-            ></app-select-input>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <app-text-input
-              [formControl]="COMPANY_FORM.controls['address']"
-              [label]="'Adresse'"
-            ></app-text-input>
-          </div>
-          <div class="col-12 col-md-6">
-            <app-select-input
-              [formControl]="COMPANY_FORM.controls['city']"
-              [label]="'Ville*'"
-              [options]="CITIES"
-            ></app-select-input>
-          </div>
-        </div>
-        <ng-container formGroupName="socialMedia">
-          <div class="row">
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="
-                  COMPANY_FORM.get('socialMedia')['controls'][
-                    'facebook'
-                  ]
-                "
-                [label]="'Facebook'"
-              ></app-text-input>
+<div class="edit-company-container">
+  <form [formGroup]="COMPANY_FORM" (submit)="COMPANY_FORM.valid && COMPANY_FORM.dirty && edit()">
+    <mat-horizontal-stepper #stepper [linear]="false">
+      <!-- Step 1: General Information -->
+      <mat-step>
+        <ng-template matStepLabel>Informations générales</ng-template>
+        <div class="step-content-card">
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <mat-icon>business</mat-icon>
+              </div>
+              <h3 class="section-title">Informations de l'entreprise</h3>
             </div>
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="
-                  COMPANY_FORM.get('socialMedia')['controls']['twitter']
-                "
-                [label]="'Twitter'"
-              ></app-text-input>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="
-                  COMPANY_FORM.get('socialMedia')['controls'][
-                    'instagram'
-                  ]
-                "
-                [label]="'Instagram'"
-              ></app-text-input>
-            </div>
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="
-                  COMPANY_FORM.get('socialMedia')['controls'][
-                    'linkedIn'
-                  ]
-                "
-                [label]="'Linkedin'"
-              ></app-text-input>
-            </div>
-          </div>
-        </ng-container>
 
-        <ng-container formGroupName="person_contacted">
-          <h4 class="subtitle"><strong>Personne contactée</strong></h4>
-          <div class="row">
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="
-                  COMPANY_FORM.get('person_contacted')['controls']['fullname']
-                "
-                [label]="'Nom et prénom*'"
-              ></app-text-input>
+            <div class="form-row">
+              <div class="form-field-half">
+                <app-text-input
+                  [formControl]="COMPANY_FORM.controls['name']"
+                  [label]="'Nom*'"
+                ></app-text-input>
+              </div>
+              <div class="form-field-half">
+                <app-select-input
+                  [formControl]="COMPANY_FORM.controls['activity_area']"
+                  [label]="'Secteur d\'activité*'"
+                  [options]="ACTIVITY_AREA"
+                ></app-select-input>
+              </div>
             </div>
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="
-                  COMPANY_FORM.get('person_contacted')['controls']['email']
-                "
-                [label]="'Email*'"
-              ></app-text-input>
+
+            <div class="form-row">
+              <div class="form-field-half">
+                <app-text-input
+                  [formControl]="COMPANY_FORM.controls['address']"
+                  [label]="'Adresse'"
+                ></app-text-input>
+              </div>
+              <div class="form-field-half">
+                <app-select-input
+                  [formControl]="COMPANY_FORM.controls['city']"
+                  [label]="'Ville*'"
+                  [options]="CITIES"
+                ></app-select-input>
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="
-                  COMPANY_FORM.get('person_contacted')['controls']['phone']
-                "
-                [label]="'Téléphone*'"
-                [type]="'tel'"
-              ></app-text-input>
+
+          <div class="step-navigation">
+            <button class="btn-back" type="button" [routerLink]="['./..']">
+              <mat-icon>arrow_back</mat-icon>
+              Retour
+            </button>
+            <button class="btn-next" type="button" matStepperNext>
+              Suivant
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-step>
+
+      <!-- Step 2: Social Media -->
+      <mat-step>
+        <ng-template matStepLabel>Réseaux sociaux</ng-template>
+        <div class="step-content-card">
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <mat-icon>share</mat-icon>
+              </div>
+              <h3 class="section-title">Réseaux sociaux</h3>
+            </div>
+
+            <ng-container formGroupName="socialMedia">
+              <div class="form-row">
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="COMPANY_FORM.get('socialMedia')['controls']['facebook']"
+                    [label]="'Facebook'"
+                  ></app-text-input>
+                </div>
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="COMPANY_FORM.get('socialMedia')['controls']['twitter']"
+                    [label]="'Twitter'"
+                  ></app-text-input>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="COMPANY_FORM.get('socialMedia')['controls']['instagram']"
+                    [label]="'Instagram'"
+                  ></app-text-input>
+                </div>
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="COMPANY_FORM.get('socialMedia')['controls']['linkedIn']"
+                    [label]="'LinkedIn'"
+                  ></app-text-input>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+          <div class="step-navigation">
+            <button class="btn-back" type="button" matStepperPrevious>
+              <mat-icon>arrow_back</mat-icon>
+              Retour
+            </button>
+            <button class="btn-next" type="button" matStepperNext>
+              Suivant
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-step>
+
+      <!-- Step 3: Person Contacted -->
+      <mat-step>
+        <ng-template matStepLabel>Représentant</ng-template>
+        <div class="step-content-card">
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <mat-icon>person</mat-icon>
+              </div>
+              <h3 class="section-title">Personne contactée</h3>
+            </div>
+
+            <ng-container formGroupName="person_contacted">
+              <div class="form-row">
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="COMPANY_FORM.get('person_contacted')['controls']['fullname']"
+                    [label]="'Nom et Prénom*'"
+                  ></app-text-input>
+                </div>
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="COMPANY_FORM.get('person_contacted')['controls']['email']"
+                    [label]="'Email*'"
+                  ></app-text-input>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="COMPANY_FORM.get('person_contacted')['controls']['phone']"
+                    [label]="'Téléphone*'"
+                    [type]="'tel'"
+                  ></app-text-input>
+                </div>
+                <div class="form-field-half">
+                  <!-- Empty for layout balance -->
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+          <div class="step-navigation">
+            <button class="btn-back" type="button" matStepperPrevious>
+              <mat-icon>arrow_back</mat-icon>
+              Retour
+            </button>
+            <button class="btn-next" type="button" matStepperNext>
+              Suivant
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-step>
+
+      <!-- Step 4: Settings & Finalization -->
+      <mat-step>
+        <ng-template matStepLabel>Finaliser</ng-template>
+        <div class="step-content-card">
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <mat-icon>settings</mat-icon>
+              </div>
+              <h3 class="section-title">Paramètres du compte</h3>
+            </div>
+
+            <div class="settings-actions">
+              <button type="button" class="settings-btn" (click)="editPassword()">
+                <mat-icon>vpn_key</mat-icon>
+                <span>Changer le mot de passe</span>
+              </button>
+              <button type="button" class="settings-btn" (click)="editLogo()">
+                <mat-icon>add_photo_alternate</mat-icon>
+                <span>Changer le logo</span>
+              </button>
             </div>
           </div>
-        </ng-container>
-      </form>
-    </mat-card-content>
-    <mat-card-actions class="submit-button" align="right">
-      <button
-        mat-raised-button
-        type="submit"
-        [disabled]="!COMPANY_FORM.valid"
-        form="companyForm"
-        color="primary"
-      >
-        Enregistrer
-      </button>
-    </mat-card-actions>
-  </mat-card>
+
+          <div class="final-step">
+            <div class="success-icon-wrapper">
+              <div class="success-circle">
+                <mat-icon class="check-icon">task_alt</mat-icon>
+              </div>
+              <div class="decoration-dots"></div>
+            </div>
+
+            <h2 class="success-title">Prêt à enregistrer!</h2>
+            <p class="success-message">
+              Vérifiez vos modifications et enregistrez les changements.
+            </p>
+
+            <div class="final-actions">
+              <button class="btn-back" type="button" matStepperPrevious>
+                <mat-icon>arrow_back</mat-icon>
+                Retour
+              </button>
+              <button
+                class="btn-submit"
+                [disabled]="!COMPANY_FORM.valid || !COMPANY_FORM.dirty"
+                type="submit"
+              >
+                <mat-icon>check_circle</mat-icon>
+                Enregistrer
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </form>
 </div>

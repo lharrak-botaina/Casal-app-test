@@ -38,6 +38,10 @@ const companySchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId
     },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     person_contacted: new mongoose.Schema({
         fullname: {
             type: String,
@@ -145,6 +149,55 @@ function validate(company) {
     return schema.validate(company);
 }
 
+function validateUpdateBody(company) {
+    const schema = Joi.object({
+        name: Joi.string()
+            .required()
+            .min(1),
+
+        address: Joi.string()
+            .optional()
+            .allow(''),
+
+        city: Joi.string()
+            .required(),
+
+        activity_area: Joi.string()
+            .required(),
+
+        person_contacted: Joi.object({
+            fullname: Joi.string()
+                .required(),
+
+            email: Joi.string()
+                .required(),
+
+            phone: Joi.string()
+                .required(),
+        }),
+
+        socialMedia: Joi.object({
+            facebook: Joi.string()
+                .optional()
+                .allow(''),
+
+            instagram: Joi.string()
+                .optional()
+                .allow(''),
+
+            linkedIn: Joi.string()
+                .optional()
+                .allow(''),
+
+            twitter: Joi.string()
+                .optional()
+                .allow(''),
+        }),
+    });
+
+    return schema.validate(company);
+}
+
 function validateUpdatePassword(association) {
     const schema = Joi.object({
         password: Joi.string()
@@ -174,6 +227,7 @@ function validateUpdateColaboration(company) {
 
 module.exports.Company = Company;
 module.exports.validate = validate;
+module.exports.validateUpdateBody = validateUpdateBody;
 module.exports.validateUpdatePassword = validateUpdatePassword;
 module.exports.validateUpdateLogo = validateUpdateLogo;
 module.exports.validateUpdateColaboration = validateUpdateColaboration;

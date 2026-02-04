@@ -7,9 +7,10 @@ import { catchError, first, tap } from 'rxjs/operators';
 import { PassworkService } from 'src/app/core/services/passwork.service';
 
 @Component({
-  selector: 'app-archive-passwork',
-  templateUrl: './archive-passwork.component.html',
-  styleUrls: ['./archive-passwork.component.scss'],
+    selector: 'app-archive-passwork',
+    templateUrl: './archive-passwork.component.html',
+    styleUrls: ['./archive-passwork.component.scss'],
+    standalone: false
 })
 export class ArchivePassworkComponent implements OnInit {
   constructor(

@@ -1,16 +1,34 @@
-<mat-form-field appearance="outline" class="w-100" >
+<mat-form-field appearance="outline" class="w-100">
   <mat-label>{{label}}</mat-label>
-  <mat-select [formControl]="ngControl.control" [multiple]="multiple" (selectionChange)="valueChanged($event)">
+  <mat-select [formControl]="ngControl.control"  [multiple]="multiple" (selectionChange)="valueChanged($event)">
     <ng-container *ngIf="!isGrouped">
       <ng-container *ngIf="!isObservable">
         <mat-option *ngIf="displayDefaultOption" value="">All</mat-option>
         <mat-option *ngIf="deselectValue && !multiple" value="">- - - - -</mat-option>
-        <mat-option *ngFor="let value of options" [value]="optionValue(value)">{{value | titlecase}} </mat-option>
+        <ng-container *ngFor="let value of options">
+          <mat-option [value]="optionValue(value)" [class.bold-option]="bold">
+            <ng-container [ngSwitch]="textTransform">
+              <ng-container *ngSwitchCase="'uppercase'">{{value | uppercase}}</ng-container>
+              <ng-container *ngSwitchCase="'lowercase'">{{value | lowercase}}</ng-container>
+              <ng-container *ngSwitchCase="'none'">{{value}}</ng-container>
+              <ng-container *ngSwitchDefault>{{value | titlecase}}</ng-container>
+            </ng-container>
+          </mat-option>
+        </ng-container>
       </ng-container>
       <ng-container *ngIf="isObservable">
         <mat-option *ngIf="displayDefaultOption" value="">All</mat-option>
         <mat-option *ngIf="deselectValue && !multiple" value="">- - - - -</mat-option>
-        <mat-option *ngFor="let value of options" [value]="value?._id">{{value[optionDisplay] | titlecase}} </mat-option>
+        <ng-container *ngFor="let value of options">
+          <mat-option [value]="value?._id">
+            <ng-container [ngSwitch]="textTransform">
+              <ng-container *ngSwitchCase="'uppercase'">{{value[optionDisplay] | uppercase}}</ng-container>
+              <ng-container *ngSwitchCase="'lowercase'">{{value[optionDisplay] | lowercase}}</ng-container>
+              <ng-container *ngSwitchCase="'none'">{{value[optionDisplay]}}</ng-container>
+              <ng-container *ngSwitchDefault>{{value[optionDisplay] | titlecase}}</ng-container>
+            </ng-container>
+          </mat-option>
+        </ng-container>
       </ng-container>
     </ng-container>
     <ng-container *ngIf="isGrouped">

@@ -3,9 +3,10 @@ import { Insertion } from 'src/app/core/models/young';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-young-insertion-details',
-  templateUrl: './young-insertion-details.component.html',
-  styleUrls: ['./young-insertion-details.component.scss']
+    selector: 'app-young-insertion-details',
+    templateUrl: './young-insertion-details.component.html',
+    styleUrls: ['./young-insertion-details.component.scss'],
+    standalone: false
 })
 export class YoungInsertionDetailsComponent implements OnInit {
   @Input() insertions : Insertion

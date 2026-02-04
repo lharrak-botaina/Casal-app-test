@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
@@ -8,9 +8,10 @@ import { Data } from 'src/app/core/models/dropdown_data';
 import { CompanyService } from 'src/app/core/services/company.service';
 
 @Component({
-  selector: 'app-colaboration-type',
-  templateUrl: './colaboration-type.component.html',
-  styleUrls: ['./colaboration-type.component.scss'],
+    selector: 'app-colaboration-type',
+    templateUrl: './colaboration-type.component.html',
+    styleUrls: ['./colaboration-type.component.scss'],
+    standalone: false
 })
 export class ColaborationTypeComponent implements OnInit {
   COLABORATION_FORM = this.fb.group({
@@ -21,7 +22,7 @@ export class ColaborationTypeComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ColaborationTypeComponent>,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private companyService: CompanyService,
     private toastrService: ToastrService
   ) {}

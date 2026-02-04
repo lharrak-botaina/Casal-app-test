@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Company } from 'src/app/core/models/company';
 
 @Component({
-  selector: 'app-person-contacted-company',
-  templateUrl: './person-contacted-company.component.html',
-  styleUrls: ['./person-contacted-company.component.scss']
+    selector: 'app-person-contacted-company',
+    templateUrl: './person-contacted-company.component.html',
+    styleUrls: ['./person-contacted-company.component.scss'],
+    standalone: false
 })
 export class PersonContactedCompanyComponent implements OnInit {
   @Input() company : Company;

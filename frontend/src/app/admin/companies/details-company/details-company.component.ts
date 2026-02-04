@@ -10,9 +10,10 @@ import { CompanyService } from 'src/app/core/services/company.service';
 import { DeleteCompanyComponent } from '../delete-company/delete-company.component';
 
 @Component({
-  selector: 'app-details-company',
-  templateUrl: './details-company.component.html',
-  styleUrls: ['./details-company.component.scss'],
+    selector: 'app-details-company',
+    templateUrl: './details-company.component.html',
+    styleUrls: ['./details-company.component.scss'],
+    standalone: false
 })
 export class DetailsCompanyComponent implements OnInit, OnDestroy {
   company: Company = !window?.history?.state?._id

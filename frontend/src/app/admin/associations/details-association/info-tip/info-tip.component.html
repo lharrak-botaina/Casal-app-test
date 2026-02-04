@@ -1,38 +1,49 @@
-<div class="container">
-  <div class="row p-4 align--text">
-    <div class="col-12 col-sm-4">
+<div class="tip-card">
+  <!-- Photo Section -->
+  <div class="tip-photo-section">
+    <div class="photo-wrapper">
       <img
-        [src]="
-          association?.tip?.photo
-            ? host + association?.tip?.photo
-            : 'assets/no_picture_available.png'
-        "
-        class="image-tip"
+        [src]="association?.tip?.photo ? host + association?.tip?.photo : 'assets/no_picture_available.png'"
+        [alt]="association?.tip?.fullname"
+        class="tip-photo"
       />
     </div>
-    <div class="col-12 col-sm-8">
-      <div class="row my-2">
-        <div class="col-md-5">
-          <strong>Nom et Prénom :</strong>
+    <div class="tip-badge">
+      <mat-icon>verified_user</mat-icon>
+      <span>TIP</span>
+    </div>
+  </div>
+
+  <!-- Info Section -->
+  <div class="tip-info-section">
+    <h3 class="tip-name">{{ association?.tip?.fullname || '-' }}</h3>
+
+    <div class="tip-details">
+      <!-- Email -->
+      <div class="tip-detail-item">
+        <div class="detail-icon">
+          <mat-icon>email</mat-icon>
         </div>
-        <div class="col-md-7">
-          <strong>{{ association?.tip?.fullname }}</strong>
+        <div class="detail-content">
+          <span class="detail-label">Email</span>
+          <a *ngIf="association?.tip?.email" [href]="'mailto:' + association?.tip?.email" class="detail-value link">
+            {{ association?.tip?.email }}
+          </a>
+          <span *ngIf="!association?.tip?.email" class="detail-value">-</span>
         </div>
       </div>
-      <div class="row my-2">
-        <div class="col-md-5">
-          <strong>Email :</strong>
+
+      <!-- Phone -->
+      <div class="tip-detail-item">
+        <div class="detail-icon">
+          <mat-icon>phone</mat-icon>
         </div>
-        <div class="col-md-7">
-          <strong>{{ association?.tip?.email }}</strong>
-        </div>
-      </div>
-      <div class="row my-2">
-        <div class="col-md-5">
-          <strong>Téléphone:</strong>
-        </div>
-        <div class="col-md-7">
-          <strong>{{ association?.tip?.phone }}</strong>
+        <div class="detail-content">
+          <span class="detail-label">Téléphone</span>
+          <a *ngIf="association?.tip?.phone" [href]="'tel:' + association?.tip?.phone" class="detail-value link">
+            {{ association?.tip?.phone }}
+          </a>
+          <span *ngIf="!association?.tip?.phone" class="detail-value">-</span>
         </div>
       </div>
     </div>

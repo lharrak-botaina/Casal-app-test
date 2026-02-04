@@ -43,24 +43,26 @@ export abstract class Data {
   ];
   public static ASSOCIATIVE_ACTIVITY = ['Bénificiaire', 'Membre'];
   public static LEVEL_OF_STUDY = [
+    'Technicien Spécialisé',
+    'Technicien',
     'Initiation Professionnelle',
     'Apprentissage',
     'Qualification',
-    'Technicien',
-    'Technicien Spécialisé'
+    'Primaire',
+    'Sans',
   ];
 
   public static LEVEL_OF_STUDIES = [
-    'Sans',
-    'Primaire',
-    'College',
-    'Lycée',
+    'Université',
     'Bac',
-    'Université'
+    'Lycée',
+    'College',
+    'Primaire',
+    'Sans',
   ];
-  
+
   public static LANGUAGES = ['Arabe', 'Français', 'Anglais', 'Espagnole', 'Autre'];
-  public static WORK_TYPE = ['CDI', 'CDD', 'ANAPEC', 'STAGE', 'TEMPORAIRE', 'Autre (Informel)'];
+  public static WORK_TYPE = ['STAGE', 'CDI', 'CDD', 'ANAPEC', 'TEMPORAIRE','INFORMEL','AUTRE'];
   public static SOFT_SKILLS = [
     'Présentation orale',
     'Présentation claire des idées',
@@ -206,7 +208,8 @@ export abstract class Data {
   ];
   public static STATUS = ['en cours', 'terminé'];
   public static PASSWORK_TYPES = ['Stage', 'Emploi', 'Formation courte durée'];
-  public static CONTRACT_TYPES = ['Stage', 'Cdi', 'CTT', 'Cdd', 'Anapec'];
+  public static CONTRACT_TYPES = ['STAGE', 'CDI', 'CDD', 'ANAPEC', 'INFORMEL', 'TEMPORAIRE', 'AUTRE'
+  ];
   public static CATEGORIES = ['Formelle', 'Informelle'];
   public static JOB_DURATION = [
     '1 - 3 mois',
@@ -256,13 +259,13 @@ export abstract class Data {
     'Declaration CNSS',
   ];
 
-  public static FORMELLE_CONTRACT = ['CDD', 'CDI', 'CTT', 'Anapec', 'Interim'];
+  public static FORMELLE_CONTRACT = ['CDD', 'CDI', 'Anapec', 'Interim'];
   public static INFORMELLE_CONTRACT = ['Fiche d\'insertion', 'Autre'];
   public static NATIONALITIES = ['Marocaine', 'Autre'];
-  public static COLABORATION_TYPE = ['Accueil de jeunes pour stages pratiques', 
-                                    'Proposition d\'offres d\'emploi décent', 
-                                    'Participation à la formation professionnelle', 
-                                    'Animation d\'ateliers pour les jeunes', 
-                                    'Participation à des rencontres organisées par le réseau',
-                                    'Participation à des activités citoyenne'];
+  public static COLABORATION_TYPE = ['Accueil de jeunes pour stages pratiques',
+    'Proposition d\'offres d\'emploi décent',
+    'Participation à la formation professionnelle',
+    'Animation d\'ateliers pour les jeunes',
+    'Participation à des rencontres organisées par le réseau',
+    'Participation à des activités citoyenne'];
 }

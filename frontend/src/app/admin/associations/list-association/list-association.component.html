@@ -1,32 +1,48 @@
 <div class="container-fluid p-4">
     <div class="row">
         <div class="col">
+            
             <app-association-filter></app-association-filter>
         </div>
     </div>
     <div class="row justify-content-start" *ngIf="associations$ | async as result">
-        <div class="col-auto p-2" *ngFor="let association of result.associations">
-            <mat-card class="card">
-                <mat-card-header>
-                  <mat-card-title class="card-title">{{association?.raisonSocial | titlecase}} </mat-card-title>
-                  <mat-card-subtitle>
-                      <p><mat-icon>location_on</mat-icon>{{association?.city}}</p>
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <img mat-card-image src="{{association?.logo ?  endpoint + association.logo : 'assets/no_picture_available.png'}}">
-                <mat-card-actions class="text-center">
-                    <button mat-stroked-button color="primary" class="mat-button" [routerLink]="[ './',association._id]" [state]="association">Voir les détails</button>
-                </mat-card-actions>
-              </mat-card>
+        <!-- No Data State -->
+        <div class="col-12" *ngIf="!result.associations || result.associations.length === 0">
+          <div class="no-data-container">
+            <img src="assets/noData.png" alt="No data available" class="no-data-image" />
+            <p class="no-data-text">Aucune donnée disponible</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3 p-2" *ngFor="let association of result.associations">
+            <div class="association-card" [routerLink]="['./', association._id]" [state]="association">
+                <div class="card-image-container">
+                    <img [src]="association?.logo ? endpoint + association.logo : 'assets/no_picture_available.png'" [alt]="association?.raisonSocial">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">{{association?.raisonSocial | titlecase}}</h3>
+                    <div class="card-location">
+                        <mat-icon>location_on</mat-icon>
+                        <span>{{association?.city}}</span>
+                    </div>
+                </div>
+                <div class="card-overlay">
+                    <span class="view-details">Voir les détails</span>
+                </div>
+            </div>
         </div>  
     </div>
-    <div class="row" [class.hidden]="(associations$ | async) ? false : true">
-        <div class="col align-self-end p-2">
-            <mat-paginator
-            [length]="(associations$ | async)?.totalCount"
-            [pageSize]="PAGE_SIZE"
-            [pageSizeOptions]="[7, 14, 28, 42]">
-        </mat-paginator>
+    <div class="pagination-container" *ngIf="(associations$ | async)?.totalCount > 0">
+        <div class="pagination-info">
+            Total: {{ (associations$ | async)?.totalCount }}
         </div>
-    </div>  
+        <p-paginator
+            [rows]="pageSize"
+            [totalRecords]="(associations$ | async)?.totalCount"
+            [rowsPerPageOptions]="[7, 14, 28, 42]"
+            [first]="first"
+            (onPageChange)="onPageChange($event)"
+            [showCurrentPageReport]="false"
+        ></p-paginator>
+    </div>
 </div>

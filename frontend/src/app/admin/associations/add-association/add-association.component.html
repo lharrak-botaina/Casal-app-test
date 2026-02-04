@@ -1,216 +1,282 @@
-<div class="container">
-  <h2 class="text-center p-2">Ajouter une nouvelle association</h2>
-  <mat-card class="example-card">
-    <h4 class="subtitle"><strong>informations générales</strong></h4>
-    <mat-card-content>
-      <form
-        id="associationFrom"
-        [formGroup]="ASSOCIATION_FORM"
-        (submit)="this.ASSOCIATION_FORM.valid && add()"
-        #form="ngForm"
-        autocomplete="off"
-      >
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <app-text-input
-              [formControl]="ASSOCIATION_FORM.controls['raisonSocial']"
-              [label]="'Raison Sociale*'"
-            ></app-text-input>
-          </div>
-          <div class="col-12 col-md-6">
-            <app-text-input
-              [formControl]="ASSOCIATION_FORM.controls['name']"
-              [label]="'Responsable Juridique*'"
-            ></app-text-input>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <app-text-input
-              [formControl]="ASSOCIATION_FORM.controls['email']"
-              [label]="'Email*'"
-            ></app-text-input>
-          </div>
-          <div class="col-12 col-md-6">
-            <app-text-input
-              [formControl]="ASSOCIATION_FORM.controls['address']"
-              [label]="'Adresse'"
-            ></app-text-input>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <app-text-input
-              [formControl]="ASSOCIATION_FORM.controls['password']"
-              [type]="'password'"
-              [label]="'Mot de passe*'"
-            ></app-text-input>
-          </div>
-          <div class="col-12 col-md-6">
-            <app-text-input
-              [formControl]="ASSOCIATION_FORM.controls['repeat_password']"
-              [type]="'password'"
-              [label]="'Répéter le mot de passe*'"
-            ></app-text-input>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <app-select-input
-              [formControl]="ASSOCIATION_FORM.controls['city']"
-              [label]="'Ville*'"
-              [options]="CITIES"
-            ></app-select-input>
-          </div>
-          <div class="col-12 col-md-6">
-            <app-text-input
-              [formControl]="ASSOCIATION_FORM.controls['webSite']"
-              [label]="'Site Internet'"
-            ></app-text-input>
-          </div>
-        </div>
-        <ng-container formGroupName="socialMedia">
-          <div class="row">
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="
-                  ASSOCIATION_FORM.get('socialMedia')['controls']['facebook']
-                "
-                [label]="'Facebook'"
-              ></app-text-input>
+<div class="add-association-container">
+  <form [formGroup]="ASSOCIATION_FORM" (submit)="this.ASSOCIATION_FORM.valid && add()">
+    <mat-horizontal-stepper #stepper [linear]="false">
+      <!-- Step 1: General Information -->
+      <mat-step>
+        <ng-template matStepLabel>Informations générales</ng-template>
+        <div class="step-content-card">
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <mat-icon>business</mat-icon>
+              </div>
+              <h3 class="section-title">Informations de l'association</h3>
             </div>
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="
-                  ASSOCIATION_FORM.get('socialMedia')['controls']['twitter']
-                "
-                [label]="'Twitter'"
-              ></app-text-input>
+
+            <div class="form-row">
+              <div class="form-field-half">
+                <app-text-input
+                  [formControl]="ASSOCIATION_FORM.controls['raisonSocial']"
+                  [label]="'Raison Sociale*'"
+                ></app-text-input>
+              </div>
+              <div class="form-field-half">
+                <app-text-input
+                  [formControl]="ASSOCIATION_FORM.controls['name']"
+                  [label]="'Responsable Juridique*'"
+                ></app-text-input>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field-half">
+                <app-text-input
+                  [formControl]="ASSOCIATION_FORM.controls['email']"
+                  [label]="'Email*'"
+                ></app-text-input>
+              </div>
+              <div class="form-field-half">
+                <app-text-input
+                  [formControl]="ASSOCIATION_FORM.controls['address']"
+                  [label]="'Adresse'"
+                ></app-text-input>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field-half">
+                <app-text-input
+                  [formControl]="ASSOCIATION_FORM.controls['password']"
+                  [type]="'password'"
+                  [label]="'Mot de passe*'"
+                ></app-text-input>
+              </div>
+              <div class="form-field-half">
+                <app-text-input
+                  [formControl]="ASSOCIATION_FORM.controls['repeat_password']"
+                  [type]="'password'"
+                  [label]="'Répéter le mot de passe*'"
+                ></app-text-input>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field-half">
+                <app-select-input
+                  [formControl]="ASSOCIATION_FORM.controls['city']"
+                  [label]="'Ville*'"
+                  [options]="CITIES"
+                ></app-select-input>
+              </div>
+              <div class="form-field-half">
+                <app-text-input
+                  [formControl]="ASSOCIATION_FORM.controls['webSite']"
+                  [label]="'Site Internet'"
+                ></app-text-input>
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="
-                  ASSOCIATION_FORM.get('socialMedia')['controls']['instagram']
-                "
-                [label]="'Instagram'"
-              ></app-text-input>
+
+          <div class="step-navigation">
+            <span></span>
+            <button class="btn-next" type="button" matStepperNext>
+              Suivant
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-step>
+
+      <!-- Step 2: Social Media & Description -->
+      <mat-step>
+        <ng-template matStepLabel>Réseaux sociaux</ng-template>
+        <div class="step-content-card">
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <mat-icon>share</mat-icon>
+              </div>
+              <h3 class="section-title">Réseaux sociaux & Description</h3>
             </div>
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="
-                  ASSOCIATION_FORM.get('socialMedia')['controls']['linkedIn']
-                "
-                [label]="'Linkedin'"
-              ></app-text-input>
+
+            <ng-container formGroupName="socialMedia">
+              <div class="form-row">
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="ASSOCIATION_FORM.get('socialMedia')['controls']['facebook']"
+                    [label]="'Facebook'"
+                  ></app-text-input>
+                </div>
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="ASSOCIATION_FORM.get('socialMedia')['controls']['twitter']"
+                    [label]="'Twitter'"
+                  ></app-text-input>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="ASSOCIATION_FORM.get('socialMedia')['controls']['instagram']"
+                    [label]="'Instagram'"
+                  ></app-text-input>
+                </div>
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="ASSOCIATION_FORM.get('socialMedia')['controls']['linkedIn']"
+                    [label]="'LinkedIn'"
+                  ></app-text-input>
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="form-row">
+              <div class="form-field-half">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Description</mat-label>
+                  <textarea
+                    matInput
+                    placeholder="Mettez votre description ici..."
+                    formControlName="description"
+                    rows="4"
+                  ></textarea>
+                </mat-form-field>
+              </div>
+              <div class="form-field-half">
+                <app-file-input
+                  [formControl]="ASSOCIATION_FORM.controls['logo']"
+                  [label]="'Logo'"
+                  [accept]="accept"
+                ></app-file-input>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field-half">
+                <app-date-input
+                  [formControl]="ASSOCIATION_FORM.controls['collaborationDate']"
+                  [label]="'Date de collaboration'"
+                  [maxDate]="maxDate"
+                ></app-date-input>
+              </div>
+              <div class="form-field-half">
+                <app-date-input
+                  [formControl]="ASSOCIATION_FORM.controls['creationDate']"
+                  [label]="'Date de création'"
+                  [maxDate]="maxDate"
+                ></app-date-input>
+              </div>
             </div>
           </div>
-        </ng-container>
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Description</mat-label>
-              <textarea
-                matInput
-                placeholder="Mettez votre description ici..."
-                formControlName="description"
-              ></textarea>
-            </mat-form-field>
+
+          <div class="step-navigation">
+            <button class="btn-back" type="button" matStepperPrevious>
+              <mat-icon>arrow_back</mat-icon>
+              Retour
+            </button>
+            <button class="btn-next" type="button" matStepperNext>
+              Suivant
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
           </div>
-          <div class="col-12 col-md-6">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Logo</mat-label>
-              <ngx-mat-file-input formControlName="logo" [accept]="accept">
-              </ngx-mat-file-input>
-              <mat-icon matSuffix>attach_file</mat-icon>
-              <mat-hint align="start"
-                ><strong>Nous n'acceptons que les fichiers PNG ou JPEG</strong></mat-hint
+        </div>
+      </mat-step>
+
+      <!-- Step 3: TIP Information -->
+      <mat-step>
+        <ng-template matStepLabel>Informations TIP</ng-template>
+        <div class="step-content-card">
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-icon">
+                <mat-icon>person</mat-icon>
+              </div>
+              <h3 class="section-title">Informations sur le TIP</h3>
+            </div>
+
+            <ng-container formGroupName="tip">
+              <div class="form-row">
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="ASSOCIATION_FORM.get('tip')['controls']['fullname']"
+                    [label]="'Nom et Prénom*'"
+                  ></app-text-input>
+                </div>
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="ASSOCIATION_FORM.get('tip')['controls']['email']"
+                    [label]="'Email*'"
+                  ></app-text-input>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field-half">
+                  <app-text-input
+                    [formControl]="ASSOCIATION_FORM.get('tip')['controls']['phone']"
+                    [label]="'Téléphone*'"
+                    [type]="'tel'"
+                  ></app-text-input>
+                </div>
+                <div class="form-field-half">
+                  <app-file-input
+                    [formControl]="ASSOCIATION_FORM.get('tip')['controls']['photo']"
+                    [label]="'Photo'"
+                    [accept]="accept"
+                  ></app-file-input>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+          <div class="step-navigation">
+            <button class="btn-back" type="button" matStepperPrevious>
+              <mat-icon>arrow_back</mat-icon>
+              Retour
+            </button>
+            <button class="btn-next" type="button" matStepperNext>
+              Suivant
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-step>
+
+      <!-- Step 4: Finalization -->
+      <mat-step>
+        <ng-template matStepLabel>Finaliser</ng-template>
+        <div class="step-content-card">
+          <div class="final-step">
+            <div class="success-icon-wrapper">
+              <div class="success-circle">
+                <mat-icon class="check-icon">task_alt</mat-icon>
+              </div>
+              <div class="decoration-dots"></div>
+            </div>
+
+            <h2 class="success-title">Prêt à soumettre!</h2>
+            <p class="success-message">
+              Vous avez complété toutes les étapes. Vérifiez vos informations et soumettez le formulaire.
+            </p>
+
+            <div class="final-actions">
+              <button class="btn-back" type="button" matStepperPrevious>
+                <mat-icon>arrow_back</mat-icon>
+                Retour
+              </button>
+              <button
+                class="btn-submit"
+                [disabled]="!ASSOCIATION_FORM.valid"
+                type="submit"
               >
-              <mat-error
-                *ngIf="ASSOCIATION_FORM.get('logo').hasError('maxSize')"
-              >
-                La taille d'image doit être inférieure à <strong>2 Mb</strong>
-              </mat-error>
-            </mat-form-field>
+                <mat-icon>check_circle</mat-icon>
+                Enregistrer
+              </button>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <app-date-input
-              [formControl]="ASSOCIATION_FORM.controls['collaborationDate']"
-              [label]="'Date de collaboration'"
-              [maxDate]="maxDate"
-            ></app-date-input>
-          </div>
-          <div class="col-12 col-md-6">
-            <app-date-input
-              [formControl]="ASSOCIATION_FORM.controls['creationDate']"
-              [label]="'Date de création'"
-              [maxDate]="maxDate"
-            ></app-date-input>
-          </div>
-        </div>
-        <ng-container formGroupName="tip">
-          <h4 class="subtitle"><strong>Informations sur le TIP</strong></h4>
-          <div class="row">
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="
-                  ASSOCIATION_FORM.get('tip')['controls']['fullname']
-                "
-                [label]="'Nom et Prénom*'"
-              ></app-text-input>
-            </div>
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="ASSOCIATION_FORM.get('tip')['controls']['email']"
-                [label]="'Email*'"
-              ></app-text-input>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12 col-md-6">
-              <app-text-input
-                [formControl]="ASSOCIATION_FORM.get('tip')['controls']['phone']"
-                [label]="'Téléphone*'"
-                [type]="'tel'"
-              ></app-text-input>
-            </div>
-            <div class="col-12 col-md-6">
-              <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Photo</mat-label>
-                <ngx-mat-file-input formControlName="photo" [accept]="accept">
-                </ngx-mat-file-input>
-                <mat-icon matSuffix>attach_file</mat-icon>
-                <mat-hint align="start"
-                  ><strong>Nous n'acceptons que les fichiers PNG ou JPEG</strong></mat-hint
-                >
-                <mat-error
-                  *ngIf="
-                    ASSOCIATION_FORM.get('tip')['controls']['photo'].hasError(
-                      'maxSize'
-                    )
-                  "
-                >
-                  La taille d'image doit être inférieure à <strong>2 Mb</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-        </ng-container>
-      </form>
-    </mat-card-content>
-    <mat-card-actions class="submit-button">
-      <button
-        mat-raised-button
-        type="submit"
-        [disabled] = "!this.ASSOCIATION_FORM.valid"
-        form="associationFrom"
-        color="primary"
-      >
-        Enregister
-      </button>
-    </mat-card-actions>
-  </mat-card>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </form>
 </div>

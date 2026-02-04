@@ -1,52 +1,73 @@
-<div class="container-fluid p-2">
-  <div class="row">
-    <div *ngIf="!isSmallScreen" class="col-12 col-md-4">
-      <app-profile-association
-        [association]="association"
-      ></app-profile-association>
+<div class="details-container">
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="header-content">
+      <button mat-icon-button class="back-button" routerLink="../">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-info">
+        <h1 class="page-title">{{ association?.raisonSocial | titlecase }}</h1>
+        <p class="page-subtitle">
+          <mat-icon>location_on</mat-icon>
+          {{ association?.city }}
+        </p>
+      </div>
     </div>
-    <div class="col-12 col-md-8">
-      <div class="row">
-        <div class="col-12 button--group">
-          <button
-            class="m-1 edit--button"
-            mat-stroked-button
-            *rbacAllow="['admin']"
-            color="accent"
-            [routerLink]="[ './edit']" [state]="association"
-          >
-            Modifier<mat-icon>edit</mat-icon>
-          </button>
-          <button
-            class="m-1 delete--button"
-            mat-stroked-button
-            *rbacAllow="['admin']"
-            color="warn"
-            (click)="remove()"
-          >
-            Supprimer<mat-icon>delete</mat-icon>
-          </button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <mat-tab-group backgroundColor="primary">
-            <mat-tab label="Profile" class="p-2" *ngIf="isSmallScreen">
-              <app-profile-association
-                [association]="association"
-              ></app-profile-association>
-            </mat-tab>
-            <mat-tab label="Informations générales" class="p-2">
-              <app-info-association
-                [association]="association"
-              ></app-info-association>
-            </mat-tab>
-            <mat-tab label="TIP information">
-              <app-info-tip [association]="association"></app-info-tip>
-            </mat-tab>
-          </mat-tab-group>
-        </div>
-      </div>
+    <div class="header-actions" *rbacAllow="['admin']">
+      <button mat-stroked-button class="btn-edit" [routerLink]="['./edit']" [state]="association">
+        <mat-icon>edit</mat-icon>
+        Modifier
+      </button>
+      <button mat-stroked-button class="btn-delete" (click)="remove()">
+        <mat-icon>delete</mat-icon>
+        Supprimer
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content-wrapper">
+    <!-- Profile Card - Desktop -->
+    <div class="profile-sidebar" *ngIf="!isSmallScreen">
+      <app-profile-association [association]="association"></app-profile-association>
+    </div>
+
+    <!-- Details Section -->
+    <div class="details-content">
+      <mat-tab-group class="custom-tabs" animationDuration="300ms">
+        <!-- Profile Tab - Mobile Only -->
+        <mat-tab *ngIf="isSmallScreen">
+          <ng-template mat-tab-label>
+            <mat-icon>account_circle</mat-icon>
+            <span>Profil</span>
+          </ng-template>
+          <div class="tab-content">
+            <app-profile-association [association]="association"></app-profile-association>
+          </div>
+        </mat-tab>
+
+        <!-- General Info Tab -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>info</mat-icon>
+            <span>Informations</span>
+          </ng-template>
+          <div class="tab-content">
+            <app-info-association [association]="association"></app-info-association>
+          </div>
+        </mat-tab>
+
+        <!-- TIP Info Tab -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>person</mat-icon>
+            <span>TIP</span>
+          </ng-template>
+          <div class="tab-content">
+            <app-info-tip [association]="association"></app-info-tip>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </div>

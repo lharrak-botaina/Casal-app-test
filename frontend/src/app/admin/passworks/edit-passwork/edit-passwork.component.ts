@@ -1,6 +1,6 @@
 import { EditPassworkTrainingModulesComponent } from './edit-passwork-training-modules/edit-passwork-training-modules.component';
 import { ActivityArea } from 'src/app/core/models/activity_area';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { AssociationResult } from 'src/app/core/models/association';
@@ -17,9 +17,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditPassworkTrainingPlanningComponent } from './edit-passwork-training-planning/edit-passwork-training-planning.component';
 
 @Component({
-  selector: 'app-edit-passwork',
-  templateUrl: './edit-passwork.component.html',
-  styleUrls: ['./edit-passwork.component.scss']
+    selector: 'app-edit-passwork',
+    templateUrl: './edit-passwork.component.html',
+    styleUrls: ['./edit-passwork.component.scss'],
+    standalone: false
 })
 export class EditPassworkComponent implements OnInit, AfterViewInit{
   passwork: Passwork = !window?.history?.state?._id ? null : window?.history?.state;
@@ -57,7 +58,7 @@ export class EditPassworkComponent implements OnInit, AfterViewInit{
     private toastrService: ToastrService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialog: MatDialog
   ) {}
 

@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -17,19 +17,21 @@ import {
 import { YoungService } from 'src/app/core/services/young.service';
 
 @Component({
-  selector: 'app-edit-young',
-  templateUrl: './edit-young.component.html',
-  styleUrls: ['./edit-young.component.scss'],
+    selector: 'app-edit-young',
+    templateUrl: './edit-young.component.html',
+    styleUrls: ['./edit-young.component.scss'],
+    standalone: false,
+    encapsulation: ViewEncapsulation.None
 })
 export class EditYoungComponent implements OnInit, AfterViewInit {
   young: Young = !window?.history?.state?._id ? null : window?.history?.state;
   currentId;
-  YONG_FORM: FormGroup;
+  YONG_FORM: UntypedFormGroup;
 
   @ViewChild('stepper') stepper: MatStepper;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private youngForm: YoungFormService,
     private youngService: YoungService,
     private toastr: ToastrService,
@@ -145,7 +147,7 @@ export class EditYoungComponent implements OnInit, AfterViewInit {
     for (let i = 1; i < passwork?.trainings.length; i++) {
       (this.YONG_FORM.controls['passwork']['controls']['trainings'][
         'controls'
-      ] as FormArray).push(this.youngForm.passworkTrainingForm());
+      ] as UntypedFormArray).push(this.youngForm.passworkTrainingForm());
     }
   }
 
@@ -153,7 +155,7 @@ export class EditYoungComponent implements OnInit, AfterViewInit {
     for (let i = 1; i < skills_assessment?.professional_training.length; i++) {
       (this.YONG_FORM.controls['skills_assessment']['controls'][
         'professional_training'
-      ] as FormArray).push(this.youngForm.professionalTrainingForm());
+      ] as UntypedFormArray).push(this.youngForm.professionalTrainingForm());
     }
   }
 
@@ -165,7 +167,7 @@ export class EditYoungComponent implements OnInit, AfterViewInit {
     ) {
       (this.YONG_FORM.controls['skills_assessment']['controls'][
         'professional_experience'
-      ] as FormArray).push(this.youngForm.professionalExperienceForm());
+      ] as UntypedFormArray).push(this.youngForm.professionalExperienceForm());
     }
   }
 
@@ -173,7 +175,7 @@ export class EditYoungComponent implements OnInit, AfterViewInit {
     for (let i = 1; i < capacity_building?.training.length; i++) {
       (this.YONG_FORM.controls['capacity_building']['controls'][
         'training'
-      ] as FormArray).push(this.youngForm.capacityBuildingTrainingForm());
+      ] as UntypedFormArray).push(this.youngForm.capacityBuildingTrainingForm());
     }
   }
 
@@ -182,7 +184,7 @@ export class EditYoungComponent implements OnInit, AfterViewInit {
       if (i != 0) {
         (this.YONG_FORM.controls['insertion']['controls'][
           'list'
-        ] as FormArray).push(this.youngForm.trackingsForm());
+        ] as UntypedFormArray).push(this.youngForm.trackingsForm());
       }
 
       this.addBeforeInsertion(insertion?.list[i], i);
@@ -193,7 +195,7 @@ export class EditYoungComponent implements OnInit, AfterViewInit {
     for (let i = 1; i < insertionList.tracking_before.length; i++) {
       (this.YONG_FORM.controls['insertion']['controls']['list']['controls'][
         index
-      ]['controls']['tracking_before'] as FormArray).push(
+      ]['controls']['tracking_before'] as UntypedFormArray).push(
         this.youngForm.trackingBeforeForm()
       );
     }

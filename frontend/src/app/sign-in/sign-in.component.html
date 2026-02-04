@@ -1,30 +1,67 @@
-<div class="container h-100 pt-5">
-    <div class="row h-100 align-items-center">
-        <div class="col-12 col-md-6 pt-5">
-          <img src="assets/logo_yellow.png" alt="Casal" class="logo">
+<div class="signin-container">
+  <!-- Left Section - Form -->
+  <div class="form-section ">
+    <div class="form-content">
+      <!-- Logo -->
+      <div class="logo">
+        <img src="assets/Incorpora Color_Pos.jpg" alt="Select Success" class="logo-img">
+      </div>
+
+      <!-- Header -->
+      <!-- <h1 class="title">Bon retour</h1> -->
+      <p class="subtitle"> Veuillez saisir vos informations ci-dessous.</p>
+
+      <!-- Form -->
+      <form [formGroup]="LOGIN_FORM" (submit)="signIn()">
+        <!-- Username/Email Field -->
+        <div class="form-group">
+          <label class="form-label">Nom d'utilisateur / Email *</label>
+          <input type="email" class="form-input" placeholder="Nom d'utilisateur / Email" formControlName="email"
+            autocomplete="off" [class.error]="LOGIN_FORM.get('email').invalid && LOGIN_FORM.get('email').touched">
+          <span class="error-message"
+            *ngIf="LOGIN_FORM.get('email').hasError('required') && LOGIN_FORM.get('email').touched">
+            L'email est requis
+          </span>
+          <span class="error-message"
+            *ngIf="LOGIN_FORM.get('email').hasError('email') && !LOGIN_FORM.get('email').hasError('required')">
+            Veuillez entrer un email valide
+          </span>
         </div>
-        <div class="col-12 col-md-6 pt-5">
-            <mat-card class="signin-card">
-                <mat-card-content>
-                <form [formGroup] = "LOGIN_FORM" (submit) ="signIn()"> 
-                  <p>
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Email</mat-label>
-                        <input matInput type="email" placeholder="Entrer votre email" autocomplete="off" formControlName="email">
-                        <mat-icon matPrefix>account_circle</mat-icon>
-                      </mat-form-field>
-                  </p>
-                  <p>
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Mot de passe</mat-label>
-                        <input matInput type="password" placeholder="Entrer votre mot de passe" autocomplete="off" formControlName="password">
-                        <mat-icon matPrefix>vpn_key</mat-icon>
-                      </mat-form-field>
-                  </p>
-                  <button type="submit" mat-raised-button color="primary" class="button w-100">S'identifier</button>
-                </form>
-                </mat-card-content>
-              </mat-card>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <div class="password-header">
+            <label class="form-label">Mot de passe *</label>
+            <!-- <a href="#" class="forgot-link">Mot de passe oublié</a> -->
+          </div>
+          <div class="password-wrapper">
+            <input [type]="hidePassword ? 'password' : 'text'" class="form-input" placeholder="Mot de passe"
+              formControlName="password" autocomplete="off"
+              [class.error]="LOGIN_FORM.get('password').invalid && LOGIN_FORM.get('password').touched">
+            <button type="button" class="toggle-password" (click)="hidePassword = !hidePassword">
+              <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </div>
+          <span class="error-message"
+            *ngIf="LOGIN_FORM.get('password').hasError('required') && LOGIN_FORM.get('password').touched">
+            Le mot de passe est requis
+          </span>
         </div>
+
+        <!-- Sign In Button -->
+        <button type="submit" class="btn-signin">
+          Se connecter
+          <mat-icon>login</mat-icon>
+        </button>
+      </form>
+
     </div>
+  </div>
+
+  <!-- Right Section - Testimonial -->
+  <div class="testimonial-section">
+    <div class="testimonial-image">
+      <img src="assets/Jeune en entretien.jpg" alt="Témoignage" class="hero-image">
+    </div>
+  </div>
 </div>

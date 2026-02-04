@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MultiSelect } from 'primeng/multiselect';
@@ -13,9 +13,10 @@ import { AssociationService } from 'src/app/core/services/association.service';
 import { JobService } from 'src/app/core/services/job.service';
 
 @Component({
-  selector: 'app-company-edit-job',
-  templateUrl: './company-edit-job.component.html',
-  styleUrls: ['./company-edit-job.component.scss']
+    selector: 'app-company-edit-job',
+    templateUrl: './company-edit-job.component.html',
+    styleUrls: ['./company-edit-job.component.scss'],
+    standalone: false
 })
 export class CompanyEditJobComponent implements OnInit {
   job: Job = !window?.history?.state?._id ? null : window?.history?.state;
@@ -43,7 +44,7 @@ export class CompanyEditJobComponent implements OnInit {
     private toastrService: ToastrService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit(): void {

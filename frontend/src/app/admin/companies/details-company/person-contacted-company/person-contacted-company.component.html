@@ -1,29 +1,48 @@
-<div class="container">
-  <div class="row p-4 align--text">
-    <div class="col-12">
-      <div class="row my-2">
-        <div class="col-sm-5">
-          <strong>Nom et prénom :</strong>
-        </div>
-        <div class="col-sm-7">
-          <strong>{{ company?.person_contacted?.fullname }}</strong>
-        </div>
+<div class="contact-card">
+  <div class="section-header">
+    <div class="section-icon">
+      <mat-icon>person</mat-icon>
+    </div>
+    <h3 class="section-title">Personne contactée</h3>
+  </div>
+
+  <div class="info-grid">
+    <!-- Fullname -->
+    <div class="info-item">
+      <div class="info-icon">
+        <mat-icon>badge</mat-icon>
       </div>
-      <div class="row my-2">
-        <div class="col-sm-5">
-          <strong>Email :</strong>
-        </div>
-        <div class="col-sm-7">
-          <strong>{{ company?.person_contacted?.email }}</strong>
-        </div>
+      <div class="info-content">
+        <span class="info-label">Nom et prénom</span>
+        <span class="info-value">{{ company?.person_contacted?.fullname || '-' }}</span>
       </div>
-      <div class="row my-2">
-        <div class="col-sm-5">
-          <strong>Téléphone:</strong>
-        </div>
-        <div class="col-sm-7">
-          <strong>{{ company?.person_contacted?.phone }}</strong>
-        </div>
+    </div>
+
+    <!-- Email -->
+    <div class="info-item">
+      <div class="info-icon">
+        <mat-icon>email</mat-icon>
+      </div>
+      <div class="info-content">
+        <span class="info-label">Email</span>
+        <a *ngIf="company?.person_contacted?.email" [href]="'mailto:' + company?.person_contacted?.email" class="info-value link">
+          {{ company?.person_contacted?.email }}
+        </a>
+        <span *ngIf="!company?.person_contacted?.email" class="info-value">-</span>
+      </div>
+    </div>
+
+    <!-- Phone -->
+    <div class="info-item">
+      <div class="info-icon">
+        <mat-icon>phone</mat-icon>
+      </div>
+      <div class="info-content">
+        <span class="info-label">Téléphone</span>
+        <a *ngIf="company?.person_contacted?.phone" [href]="'tel:' + company?.person_contacted?.phone" class="info-value link">
+          {{ company?.person_contacted?.phone }}
+        </a>
+        <span *ngIf="!company?.person_contacted?.phone" class="info-value">-</span>
       </div>
     </div>
   </div>

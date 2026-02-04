@@ -1,64 +1,93 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-12 button--group">
-      <button
-        class="m-1 edit--button"
-        mat-stroked-button
-        color="accent"
-        [routerLink]="['./edit']"
-        [state]="young"
-      >
-        Modifier<mat-icon>edit</mat-icon>
+<div class="details-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <button mat-icon-button class="back-button" routerLink="../">
+        <mat-icon>arrow_back</mat-icon>
       </button>
-      <button
-        *rbacAllow="['admin']"
-        class="m-1 delete--button"
-        mat-stroked-button
-        color="warn"
-        (click)="remove()"
-      >
-        Supprimer<mat-icon>delete</mat-icon>
+      <div class="header-info">
+        <h1 class="page-title">{{ young?.personal_info?.firstName | titlecase }} {{ young?.personal_info?.lastName | titlecase }}</h1>
+        <p class="page-subtitle">
+          <mat-icon>location_on</mat-icon>
+          {{ young?.personal_info?.city || 'Non spécifié' }}
+        </p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button mat-stroked-button class="btn-edit" [routerLink]="['./edit']" [state]="young">
+        <mat-icon>edit</mat-icon>
+        Modifier
       </button>
-      <button
-        class="m-1 cv--button"
-        mat-stroked-button
-        [routerLink]="['./cv']"
-        [state]="young"
-      >
-      Générer CV<mat-icon>camera_front</mat-icon>
+      <button mat-stroked-button class="btn-cv" [routerLink]="['./cv']" [state]="young">
+        <mat-icon>description</mat-icon>
+        Générer CV
+      </button>
+      <button mat-stroked-button class="btn-delete" *rbacAllow="['admin']" (click)="remove()">
+        <mat-icon>delete</mat-icon>
+        Supprimer
       </button>
     </div>
   </div>
-  <div class="row my-1">
-    <div class="col-12">
-      <mat-tab-group color="primary" backgroundColor="primary">
-        <mat-tab label="Informations personnelles">
+
+  <!-- Tab Content -->
+  <div class="tab-container">
+    <mat-tab-group class="custom-tabs" animationDuration="300ms">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>person</mat-icon>
+          <span>Informations personnelles</span>
+        </ng-template>
+        <div class="tab-content">
           <app-young-personal-info-details
             [personalInfo]="young?.personal_info"
             [status]="young?.status"
           ></app-young-personal-info-details>
-        </mat-tab>
-        <mat-tab label="Bilan Compétances">
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>assessment</mat-icon>
+          <span>Bilan Compétences</span>
+        </ng-template>
+        <div class="tab-content">
           <app-young-skills-assessment-details
             [skillsAssessment]="young?.skills_assessment"
-          ></app-young-skills-assessment-details
-        ></mat-tab>
-        <mat-tab label="Ateliers de renforcement">
+          ></app-young-skills-assessment-details>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>school</mat-icon>
+          <span>Ateliers</span>
+        </ng-template>
+        <div class="tab-content">
           <app-young-capacity-building-details
             [capacityBuilding]="young?.capacity_building"
-          ></app-young-capacity-building-details
-        ></mat-tab>
-        <mat-tab label="Formations Passwork">
+          ></app-young-capacity-building-details>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>work</mat-icon>
+          <span>Passwork</span>
+        </ng-template>
+        <div class="tab-content">
           <app-young-passwork-details
             [passwork]="young?.passwork"
           ></app-young-passwork-details>
-        </mat-tab>
-        <mat-tab label="Insertion">
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>trending_up</mat-icon>
+          <span>Insertion</span>
+        </ng-template>
+        <div class="tab-content">
           <app-young-insertion-details
             [insertions]="young?.insertion"
-          ></app-young-insertion-details
-        ></mat-tab>
-      </mat-tab-group>
-    </div>
+          ></app-young-insertion-details>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>

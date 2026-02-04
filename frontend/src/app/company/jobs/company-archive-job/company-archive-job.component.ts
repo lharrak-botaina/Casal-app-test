@@ -8,9 +8,10 @@ import { ArchiveJobComponent } from 'src/app/admin/jobs/archive-job/archive-job.
 import { JobService } from 'src/app/core/services/job.service';
 
 @Component({
-  selector: 'app-company-archive-job',
-  templateUrl: './company-archive-job.component.html',
-  styleUrls: ['./company-archive-job.component.scss'],
+    selector: 'app-company-archive-job',
+    templateUrl: './company-archive-job.component.html',
+    styleUrls: ['./company-archive-job.component.scss'],
+    standalone: false
 })
 export class CompanyArchiveJobComponent implements OnInit {
   constructor(

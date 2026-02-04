@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 
@@ -10,11 +11,13 @@ import { DropdownModule } from 'primeng/dropdown';
   imports: [
     CommonModule,
     MultiSelectModule,
-    DropdownModule
+    DropdownModule,
+    PaginatorModule
   ],
   exports : [
     MultiSelectModule,
-    DropdownModule
+    DropdownModule,
+    PaginatorModule
   ]
 })
 export class PrimeNgModule { }

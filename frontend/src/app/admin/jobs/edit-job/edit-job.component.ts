@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { ActivityArea } from 'src/app/core/models/activity_area';
 import { AssociationResult } from 'src/app/core/models/association';
 import { Job } from 'src/app/core/models/job';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { JobService } from 'src/app/core/services/job.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,9 +15,10 @@ import { Company, CompanyResult } from 'src/app/core/models/company';
 import { CompanyService } from 'src/app/core/services/company.service';
 
 @Component({
-  selector: 'app-edit-job',
-  templateUrl: './edit-job.component.html',
-  styleUrls: ['./edit-job.component.scss'],
+    selector: 'app-edit-job',
+    templateUrl: './edit-job.component.html',
+    styleUrls: ['./edit-job.component.scss'],
+    standalone: false
 })
 export class EditJobComponent implements OnInit , AfterViewInit{
   job: Job = !window?.history?.state?._id ? null : window?.history?.state;
@@ -53,7 +54,7 @@ export class EditJobComponent implements OnInit , AfterViewInit{
     private toastrService: ToastrService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit(): void {

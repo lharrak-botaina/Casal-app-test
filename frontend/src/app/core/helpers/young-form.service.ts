@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { FileValidator } from 'ngx-material-file-input';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { MaxSizeValidator } from '../validators/file-validators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ import { FileValidator } from 'ngx-material-file-input';
 export class YoungFormService {
   PHOTO_MAX_SIZE = 1024 * 1024; // 1Mb
 
-  constructor(private fb : FormBuilder) { }
+  constructor(private fb : UntypedFormBuilder) { }
 
   healthIssueForm(){
     return this.fb.group({
@@ -48,7 +48,7 @@ export class YoungFormService {
       gendre: ['', [Validators.required]],
       birth_date: ['', [Validators.required]],
       inscription_date: ['', [Validators.required]],
-      photo: ['', FileValidator.maxContentSize(this.PHOTO_MAX_SIZE)],
+      photo: ['', MaxSizeValidator(this.PHOTO_MAX_SIZE)],
       phone: ['', []],
       cin_id: ['', []],
       cnss_id: ['', []],

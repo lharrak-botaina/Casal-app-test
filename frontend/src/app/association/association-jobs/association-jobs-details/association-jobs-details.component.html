@@ -1,4 +1,25 @@
 <div class="container p-2">
+    <div class="row" *ngIf="isOwner">
+      <div class="col-12 button--group">
+        <button
+          class="m-1 edit--button"
+          mat-stroked-button
+          color="accent"
+          [routerLink]="['./edit']"
+          [state]="job"
+        >
+          Modifier<mat-icon>edit</mat-icon>
+        </button>
+        <button
+          class="m-1 delete--button"
+          mat-stroked-button
+          color="warn"
+          (click)="archive()"
+        >
+          Archiver<mat-icon>work_off</mat-icon>
+        </button>
+      </div>
+    </div>
     <div class="row">
       <div class="col-12">
         <mat-card>

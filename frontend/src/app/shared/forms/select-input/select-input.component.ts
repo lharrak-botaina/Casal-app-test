@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-select-input',
-  templateUrl: './select-input.component.html',
-  styleUrls: ['./select-input.component.scss'],
+    selector: 'app-select-input',
+    templateUrl: './select-input.component.html',
+    styleUrls: ['./select-input.component.scss'],
+    standalone: false
 })
 export class SelectInputComponent implements ControlValueAccessor {
   @Input() label: string;
@@ -15,6 +16,8 @@ export class SelectInputComponent implements ControlValueAccessor {
   @Input() optionDisplay : string = 'name';
   @Input() displayDefaultOption : boolean = false;
   @Input() deselectValue : boolean = true;
+  @Input() textTransform : 'titlecase' | 'uppercase' | 'lowercase' | 'none' = 'titlecase';
+  @Input() bold : boolean = false;
   @Output() valueChange = new EventEmitter();
 
   constructor(@Self() public ngControl: NgControl) {

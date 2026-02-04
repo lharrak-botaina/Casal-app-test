@@ -1,26 +1,53 @@
-<div class="row">
-  <div class="col-12 card p-0 m-2">
-    <div class="header px-3 pt-3">
-      <h2>Ateliers</h2>
-    </div>
-    <div class="row content p-4">
-      <div class="col-12 col-sm-6" *ngFor="let training of capacityBuilding?.training; index as i">
-        <h6 class="sub_subtitle"><strong>Atelier {{i + 1}}</strong></h6>
-        <p><strong>Type d'atelier: </strong>{{training?.title | titlecase}}</p>
-        <p><strong>Date début :</strong> {{training?.start_date | date: "dd-MM-yyyy"}}</p>
-        <p><strong>Status : </strong>{{training?.status | titlecase}}</p>
-        <mat-divider [inset]="true"></mat-divider>
+<!-- Workshops Card -->
+<div class="info-card">
+  <div class="card-header">
+    <mat-icon>build_circle</mat-icon>
+    <h2>Ateliers de renforcement</h2>
+    <span class="badge" *ngIf="capacityBuilding?.training?.length">
+      {{ capacityBuilding?.training?.length }}
+    </span>
+  </div>
+  <div class="card-body">
+    <div class="workshops-grid" *ngIf="capacityBuilding?.training?.length > 0; else noWorkshops">
+      <div class="workshop-card" *ngFor="let training of capacityBuilding?.training; index as i">
+        <div class="workshop-number">{{ i + 1 }}</div>
+        <div class="workshop-content">
+          <h4 class="workshop-title">{{ training?.title | titlecase }}</h4>
+          <div class="workshop-meta">
+            <div class="meta-item">
+              <mat-icon>event</mat-icon>
+              <span>{{ training?.start_date | date: "dd/MM/yyyy" }}</span>
+            </div>
+            <div class="status-chip" [ngClass]="{
+              'completed': training?.status?.toLowerCase() === 'terminé',
+              'in-progress': training?.status?.toLowerCase() === 'en cours',
+              'pending': training?.status?.toLowerCase() === 'en attente'
+            }">
+              {{ training?.status | titlecase }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <ng-template #noWorkshops>
+      <div class="empty-state">
+        <mat-icon>event_busy</mat-icon>
+        <p>Aucun atelier enregistré</p>
+      </div>
+    </ng-template>
   </div>
 </div>
-<div class="row">
-  <div class="col-12 card p-0 m-2">
-    <div class="header px-3 pt-3">
-      <h2>Commentaire global</h2>
-    </div>
-    <div class="content p-4">
-      <p><strong>Commentaire: </strong>{{capacityBuilding?.comment | titlecase}}</p>
+
+<!-- Global Comment Card -->
+<div class="info-card comment-card" *ngIf="capacityBuilding?.comment">
+  <div class="card-header">
+    <mat-icon>comment</mat-icon>
+    <h2>Commentaire global</h2>
+  </div>
+  <div class="card-body">
+    <div class="comment-content">
+      <mat-icon>format_quote</mat-icon>
+      <p>{{ capacityBuilding?.comment | titlecase }}</p>
     </div>
   </div>
 </div>

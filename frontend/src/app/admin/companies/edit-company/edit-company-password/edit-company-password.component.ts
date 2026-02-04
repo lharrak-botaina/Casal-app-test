@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
@@ -8,9 +8,10 @@ import { IsPasswordMatchService } from 'src/app/core/helpers/is-password-match.s
 import { CompanyService } from 'src/app/core/services/company.service';
 
 @Component({
-  selector: 'app-edit-company-password',
-  templateUrl: './edit-company-password.component.html',
-  styleUrls: ['./edit-company-password.component.scss'],
+    selector: 'app-edit-company-password',
+    templateUrl: './edit-company-password.component.html',
+    styleUrls: ['./edit-company-password.component.scss'],
+    standalone: false
 })
 export class EditCompanyPasswordComponent implements OnInit {
   PASSWORD_FORM = this.fb.group(
@@ -24,7 +25,7 @@ export class EditCompanyPasswordComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,
     public dialogRef: MatDialogRef<EditCompanyPasswordComponent>,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private isPasswordMatch: IsPasswordMatchService,
     private companyService: CompanyService,
     private toastrService: ToastrService

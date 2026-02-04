@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "NODE_ENV=development node seeders/devSeeder.js",
+    "seed:clear": "NODE_ENV=development node -e \"const config = require('./seeders/devSeeder.js'); config.SEED_CONFIG.clearDatabase = true; config.connectToDatabase().then(() => config.runSeeder());\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
+    "archiver": "^6.0.1",
     "bcrypt": "^5.0.0",
     "config": "^3.3.3",
     "cookie-parser": "^1.4.5",

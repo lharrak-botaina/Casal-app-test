@@ -10,13 +10,14 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AssociationResult } from 'src/app/core/models/association';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { PrintService } from 'src/app/core/services/print.service';
 
 @Component({
-  selector: 'app-pie-chart-two',
-  templateUrl: './pie-chart-two.component.html',
-  styleUrls: ['./pie-chart-two.component.scss'],
+    selector: 'app-pie-chart-two',
+    templateUrl: './pie-chart-two.component.html',
+    styleUrls: ['./pie-chart-two.component.scss'],
+    standalone: false
 })
 export class PieChartTwoComponent implements OnInit {
   @Input() title: string;
@@ -44,7 +45,7 @@ export class PieChartTwoComponent implements OnInit {
 
   @ViewChild('report') report: ElementRef;
 
-  constructor(private fb: FormBuilder, private printService : PrintService) {}
+  constructor(private fb: UntypedFormBuilder, private printService : PrintService) {}
 
   ngOnInit(): void {}
 

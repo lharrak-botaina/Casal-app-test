@@ -1,42 +1,70 @@
-<div class="container p-4 align--text">
-  <div class="row my-2">
-    <div class="col-sm-5">
-      <strong>Email :</strong>
+<div class="info-grid">
+  <!-- Email -->
+  <div class="info-item">
+    <div class="info-icon">
+      <mat-icon>email</mat-icon>
     </div>
-    <div class="col-sm-7">
-      <strong>{{ association?.email }}</strong>
-    </div>
-  </div>
-  <div class="row my-2">
-    <div class="col-sm-5">
-      <strong>Adresse :</strong>
-    </div>
-    <div class="col-sm-7">
-      <strong>{{ association?.address }}</strong>
+    <div class="info-content">
+      <span class="info-label">Email</span>
+      <span class="info-value">{{ association?.email || '-' }}</span>
     </div>
   </div>
-  <div class="row my-2">
-    <div class="col-sm-5">
-      <strong>Ville :</strong>
+
+  <!-- Address -->
+  <div class="info-item">
+    <div class="info-icon">
+      <mat-icon>home</mat-icon>
     </div>
-    <div class="col-sm-7">
-      <strong>{{ association?.city }}</strong>
-    </div>
-  </div>
-  <div class="row my-2">
-    <div class="col-sm-5">
-      <strong>Date de collaboration :</strong>
-    </div>
-    <div class="col-sm-7">
-      <strong>{{ association?.collaborationDate | date: "dd-MM-yyyy" }}</strong>
+    <div class="info-content">
+      <span class="info-label">Adresse</span>
+      <span class="info-value">{{ association?.address || '-' }}</span>
     </div>
   </div>
-  <div class="row my-2">
-    <div class="col-sm-5">
-      <strong>Date de creation :</strong>
+
+  <!-- City -->
+  <div class="info-item">
+    <div class="info-icon">
+      <mat-icon>location_city</mat-icon>
     </div>
-    <div class="col-sm-7">
-      <strong>{{ association?.creationDate | date: "dd-MM-yyyy" }}</strong>
+    <div class="info-content">
+      <span class="info-label">Ville</span>
+      <span class="info-value">{{ association?.city || '-' }}</span>
+    </div>
+  </div>
+
+  <!-- Website -->
+  <div class="info-item">
+    <div class="info-icon">
+      <mat-icon>language</mat-icon>
+    </div>
+    <div class="info-content">
+      <span class="info-label">Site Internet</span>
+      <a *ngIf="association?.webSite" [href]="association?.webSite" target="_blank" class="info-value link">
+        {{ association?.webSite }}
+      </a>
+      <span *ngIf="!association?.webSite" class="info-value">-</span>
+    </div>
+  </div>
+
+  <!-- Collaboration Date -->
+  <div class="info-item">
+    <div class="info-icon">
+      <mat-icon>handshake</mat-icon>
+    </div>
+    <div class="info-content">
+      <span class="info-label">Date de collaboration</span>
+      <span class="info-value">{{ association?.collaborationDate ? (association?.collaborationDate | date: 'dd MMM yyyy') : '-' }}</span>
+    </div>
+  </div>
+
+  <!-- Creation Date -->
+  <div class="info-item">
+    <div class="info-icon">
+      <mat-icon>event</mat-icon>
+    </div>
+    <div class="info-content">
+      <span class="info-label">Date de création</span>
+      <span class="info-value">{{ association?.creationDate ? (association?.creationDate | date: 'dd MMM yyyy') : '-' }}</span>
     </div>
   </div>
 </div>

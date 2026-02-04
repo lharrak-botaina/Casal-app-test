@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   ControlContainer,
   FormGroup,
-  FormArray,
+  UntypedFormArray,
   FormBuilder,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -14,13 +14,15 @@ import { CompanyService } from 'src/app/core/services/company.service';
 import { PassworkService } from 'src/app/core/services/passwork.service';
 
 @Component({
-  selector: 'app-young-passwork',
-  templateUrl: './young-passwork.component.html',
-  styleUrls: ['./young-passwork.component.scss'],
+    selector: 'app-young-passwork',
+    templateUrl: './young-passwork.component.html',
+    styleUrls: ['./young-passwork.component.scss'],
+    standalone: false,
+    encapsulation: ViewEncapsulation.None
 })
 export class YoungPassworkComponent implements OnInit {
   public Data = Data;
-  public PASSWORK: FormArray;
+  public PASSWORK: UntypedFormArray;
   public passworks$: Observable<Passwork>;
 
   constructor(
@@ -30,7 +32,7 @@ export class YoungPassworkComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.PASSWORK = <FormArray>this.controlContainer.control;
+    this.PASSWORK = <UntypedFormArray>this.controlContainer.control;
     this.passworks$ = this.getAssociationPassworks();
   }
 
@@ -47,12 +49,12 @@ export class YoungPassworkComponent implements OnInit {
   }
 
   addPassworkTraining() {
-    (this.PASSWORK.controls['trainings'] as FormArray).push(
+    (this.PASSWORK.controls['trainings'] as UntypedFormArray).push(
       this.young.passworkTrainingForm()
     );
   }
 
   removePassworkTraining(index) {
-    (this.PASSWORK.controls['trainings'] as FormArray).removeAt(index);
+    (this.PASSWORK.controls['trainings'] as UntypedFormArray).removeAt(index);
   }
 }

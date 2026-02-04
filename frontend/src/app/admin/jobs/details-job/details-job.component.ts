@@ -9,9 +9,10 @@ import { JobService } from 'src/app/core/services/job.service';
 import { ArchiveJobComponent } from '../archive-job/archive-job.component';
 
 @Component({
-  selector: 'app-details-job',
-  templateUrl: './details-job.component.html',
-  styleUrls: ['./details-job.component.scss'],
+    selector: 'app-details-job',
+    templateUrl: './details-job.component.html',
+    styleUrls: ['./details-job.component.scss'],
+    standalone: false
 })
 export class DetailsJobComponent implements OnInit, OnDestroy {
   job: Job = !window?.history?.state?._id

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Data } from 'src/app/core/models/dropdown_data';
 
 @Component({
-  selector: 'app-young-filter',
-  templateUrl: './young-filter.component.html',
-  styleUrls: ['./young-filter.component.scss'],
+    selector: 'app-young-filter',
+    templateUrl: './young-filter.component.html',
+    styleUrls: ['./young-filter.component.scss'],
+    standalone: false
 })
 export class YoungFilterComponent implements OnInit {
   FILTER_FORM = this.fb.group({
@@ -19,7 +20,7 @@ export class YoungFilterComponent implements OnInit {
 
   
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
@@ -32,5 +33,15 @@ export class YoungFilterComponent implements OnInit {
       queryParams: { ...this.FILTER_FORM.value },
       skipLocationChange: true,
     });
+  }
+
+  resetFilters() {
+    this.FILTER_FORM.reset();
+    this.filter();
+  }
+
+  hasActiveFilters(): boolean {
+    const values = this.FILTER_FORM.value;
+    return Object.values(values).some(v => v !== '' && v !== null && v !== undefined);
   }
 }

@@ -1,49 +1,146 @@
-<div class="container-fluid" *ngFor="let insertion of insertions?.list; index as i">
-  <div class="row" >
-    <div class="col-12 card p-0 m-2">
-      <div class="header px-3 pt-3">
-        <h2>Entretien d'embauche {{i + 1}}</h2>
+<div class="insertions-container" *ngIf="insertions?.list?.length > 0; else noInsertions">
+  <div class="insertion-block" *ngFor="let insertion of insertions?.list; index as i">
+    <!-- Insertion Header -->
+    <div class="insertion-header">
+      <div class="insertion-number">{{ i + 1 }}</div>
+      <h3>Parcours d'insertion {{ i + 1 }}</h3>
+    </div>
+
+    <!-- Interviews Card -->
+    <div class="info-card interviews-card" *ngIf="insertion?.tracking_before?.length > 0">
+      <div class="card-header">
+        <mat-icon>record_voice_over</mat-icon>
+        <h2>Entretiens d'embauche</h2>
+        <span class="badge">{{ insertion?.tracking_before?.length }}</span>
       </div>
-      <div class="row content p-4">
-        <div class="col-12 col-sm-6" *ngFor="let beforeInsertion of insertion?.tracking_before; index as j">
-          <h6 class="sub_subtitle"><strong>Entretien {{j + 1}}</strong></h6>
-          <p><strong>Date d'entretien: </strong>{{beforeInsertion?.interview_date | date: "dd-MM-yyyy"}}</p>
-          <p><strong>Employer: </strong>{{beforeInsertion?.companyName | titlecase}}</p>
-          <p><strong>Post : </strong>{{beforeInsertion?.job_position | titlecase}}</p>
-          <p><strong>Commentaire : </strong>{{beforeInsertion?.comment | titlecase}}</p>
-          <mat-divider [inset]="true"></mat-divider>
+      <div class="card-body">
+        <div class="interviews-grid">
+          <div class="interview-card" *ngFor="let beforeInsertion of insertion?.tracking_before; index as j">
+            <div class="interview-number">{{ j + 1 }}</div>
+            <div class="interview-content">
+              <div class="interview-main">
+                <h4>{{ beforeInsertion?.job_position | titlecase }}</h4>
+                <span class="company-name">{{ beforeInsertion?.companyName | titlecase }}</span>
+              </div>
+              <div class="interview-meta">
+                <div class="meta-item">
+                  <mat-icon>event</mat-icon>
+                  <span>{{ beforeInsertion?.interview_date | date: "dd/MM/yyyy" }}</span>
+                </div>
+              </div>
+              <p class="interview-comment" *ngIf="beforeInsertion?.comment">
+                {{ beforeInsertion?.comment | titlecase }}
+              </p>
+            </div>
+          </div>
         </div>
-  
+      </div>
+    </div>
+
+    <!-- Insertion Details Card -->
+    <div class="info-card insertion-card">
+      <div class="card-header success-header">
+        <mat-icon>check_circle</mat-icon>
+        <h2>Détails de l'insertion</h2>
+      </div>
+      <div class="card-body">
+        <div class="insertion-summary">
+          <div class="summary-main">
+            <h4 class="position-title">{{ insertion?.tracking_after?.function | titlecase }}</h4>
+            <span class="company-badge">
+              <mat-icon>business</mat-icon>
+              {{ insertion?.tracking_after?.companyName | titlecase }}
+            </span>
+          </div>
+          <div class="contract-badge">
+            {{ insertion?.tracking_after?.contract_type | titlecase }}
+          </div>
+        </div>
+
+        <div class="info-sections">
+          <div class="info-section">
+            <h5><mat-icon>work</mat-icon> Informations du poste</h5>
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Type d'insertion</span>
+                <span class="info-value">{{ insertion?.tracking_after?.insertion_type | titlecase }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Type de poste</span>
+                <span class="info-value">{{ insertion?.tracking_after?.function_type | titlecase }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Catégorie</span>
+                <span class="info-value">{{ insertion?.tracking_after?.category | titlecase }}</span>
+              </div>
+              <div class="info-item" *ngIf="insertion?.tracking_after?.isJobExists">
+                <span class="info-label">Offre d'emploi</span>
+                <span class="info-value">{{ insertion?.tracking_after?.jobName | titlecase }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-section">
+            <h5><mat-icon>date_range</mat-icon> Période & Conditions</h5>
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Date de début</span>
+                <span class="info-value">{{ insertion?.tracking_after?.start_date | date: "dd/MM/yyyy" }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Date de fin</span>
+                <span class="info-value">{{ insertion?.tracking_after?.end_date | date: "dd/MM/yyyy" }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Durée</span>
+                <span class="info-value">{{ insertion?.tracking_after?.duration | titlecase }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Salaire</span>
+                <span class="info-value highlight">{{ insertion?.tracking_after?.salary | titlecase }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-section">
+            <h5><mat-icon>verified</mat-icon> Statut & Justificatifs</h5>
+            <div class="status-row">
+              <div class="status-item" [class.active]="insertion?.tracking_after?.cnss">
+                <mat-icon>{{ insertion?.tracking_after?.cnss ? 'check_circle' : 'cancel' }}</mat-icon>
+                <span>CNSS</span>
+              </div>
+              <div class="status-item" [class.active]="insertion?.tracking_after?.isJobExists">
+                <mat-icon>{{ insertion?.tracking_after?.isJobExists ? 'check_circle' : 'cancel' }}</mat-icon>
+                <span>Offre existante</span>
+              </div>
+              <div class="status-item" [class.active]="insertion?.tracking_after?.justification">
+                <mat-icon>{{ insertion?.tracking_after?.justification ? 'check_circle' : 'cancel' }}</mat-icon>
+                <span>Justificatif</span>
+              </div>
+            </div>
+            <div class="justification-info" *ngIf="insertion?.tracking_after?.justificative_type">
+              <span class="info-label">Type de justification:</span>
+              <span class="info-value">{{ insertion?.tracking_after?.justificative_type }}</span>
+            </div>
+            <a class="pdf-link" *ngIf="insertion?.tracking_after?.justification"
+               href="{{ host + insertion?.tracking_after?.justification }}" target="_blank">
+              <mat-icon>picture_as_pdf</mat-icon>
+              <span>Voir le justificatif</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12 card p-0 m-2">
-      <div class="header px-3 pt-3">
-        <h2>Insertion {{ i + 1}}</h2>
-      </div>
-      <div class="content p-4">
-        <p><strong>Type de contrat: </strong>{{insertion?.tracking_after.contract_type | titlecase}}</p>
-        <p><strong>Entreprise : </strong>{{insertion?.tracking_after.companyName | titlecase}}</p>
-        <p><strong>Insertion : </strong>{{insertion?.tracking_after?.insertion_type | titlecase}}</p>
-        <p><strong>Offre existante : </strong>{{insertion?.tracking_after?.isJobExists ?  "Oui" : "Non"}}</p>
-        <p *ngIf="insertion?.tracking_after?.isJobExists"><strong>Offre d'emploi : </strong>{{insertion?.tracking_after?.jobName | titlecase}}</p>
-        <p><strong>Date début : </strong>{{insertion?.tracking_after.start_date | date: "dd-MM-yyyy"}}</p>
-        <p><strong>Date fin : </strong>{{insertion?.tracking_after.end_date | date: "dd-MM-yyyy"}}</p>
-        <p><strong>Type de post : </strong>{{insertion?.tracking_after.function_type | titlecase}}</p>
-        <p><strong>Post : </strong>{{insertion?.tracking_after.function | titlecase}}</p>
-        <p><strong>Catégorie : </strong>{{insertion?.tracking_after.category | titlecase}}</p>
-        <p><strong>Durée : </strong>{{insertion?.tracking_after.duration | titlecase}}</p>
-        <p><strong>Salaire : </strong>{{insertion?.tracking_after.salary | titlecase}}</p>
-        <p><strong>CNSS : </strong>{{insertion?.tracking_after.cnss ? "Oui" : "Non"}}</p>
-        <p><strong>Type de justification : </strong>{{insertion?.tracking_after?.justificative_type }}</p>
-        <p><strong>Justification : </strong>{{insertion?.tracking_after.justification ? "Oui" : "Non"}}</p>
-        <p *ngIf="insertion?.tracking_after.justification">
-          <a href="{{ host + insertion?.tracking_after.justification }}" target="_blank"
-            ><mat-icon> picture_as_pdf </mat-icon></a
-          >
-        </p>
+</div>
+
+<ng-template #noInsertions>
+  <div class="info-card">
+    <div class="card-body">
+      <div class="empty-state">
+        <mat-icon>work_off</mat-icon>
+        <p>Aucune insertion enregistrée</p>
       </div>
     </div>
-  </div>  
-</div>
+  </div>
+</ng-template>

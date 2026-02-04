@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -12,9 +12,10 @@ import { EditAssociationPasswordComponent } from './edit-association-password/ed
 import { EditAssociationPhotosComponent } from './edit-association-photos/edit-association-photos.component';
 
 @Component({
-  selector: 'app-edit-association',
-  templateUrl: './edit-association.component.html',
-  styleUrls: ['./edit-association.component.scss'],
+    selector: 'app-edit-association',
+    templateUrl: './edit-association.component.html',
+    styleUrls: ['./edit-association.component.scss'],
+    standalone: false
 })
 export class EditAssociationComponent implements OnInit {
   association: Association =
@@ -61,7 +62,7 @@ export class EditAssociationComponent implements OnInit {
     private toastrService: ToastrService,
     private activatedRoute: ActivatedRoute,
     private router : Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialog: MatDialog
   ) {}
 

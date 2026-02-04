@@ -3,9 +3,10 @@ import { PersonalInfo } from 'src/app/core/models/young';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-young-personal-info-details',
-  templateUrl: './young-personal-info-details.component.html',
-  styleUrls: ['./young-personal-info-details.component.scss']
+    selector: 'app-young-personal-info-details',
+    templateUrl: './young-personal-info-details.component.html',
+    styleUrls: ['./young-personal-info-details.component.scss'],
+    standalone: false
 })
 export class YoungPersonalInfoDetailsComponent implements OnInit {
   @Input() personalInfo : PersonalInfo;

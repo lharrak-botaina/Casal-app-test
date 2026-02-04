@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
@@ -7,18 +7,20 @@ import { catchError, first, tap } from 'rxjs/operators';
 import { AuthenticationService } from '../core/services/authentication.service';
 
 @Component({
-  selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss'],
+    selector: 'app-sign-in',
+    templateUrl: './sign-in.component.html',
+    styleUrls: ['./sign-in.component.scss'],
+    standalone: false
 })
 export class SignInComponent implements OnInit {
+  hidePassword = true;
   LOGIN_FORM = this.fb.group({
     email: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private authService: AuthenticationService,
     private router: Router,
     private _snackBar: MatSnackBar,

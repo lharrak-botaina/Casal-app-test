@@ -19,6 +19,7 @@ export interface Company {
     colaboration_type? : string;
     socialMedia?: SocialMedia;
     userId?: string;
+    createdBy?: string;
     createdAt?: Date;
     updatedAt?: Date;
     __v?: number;

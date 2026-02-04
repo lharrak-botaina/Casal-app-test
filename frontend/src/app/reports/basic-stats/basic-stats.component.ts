@@ -7,16 +7,17 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import jsPDF, { CellConfig } from 'jspdf';
 import { Observable } from 'rxjs';
 import { AssociationResult } from 'src/app/core/models/association';
 import { PrintService } from 'src/app/core/services/print.service';
 
 @Component({
-  selector: 'app-basic-stats',
-  templateUrl: './basic-stats.component.html',
-  styleUrls: ['./basic-stats.component.scss'],
+    selector: 'app-basic-stats',
+    templateUrl: './basic-stats.component.html',
+    styleUrls: ['./basic-stats.component.scss'],
+    standalone: false
 })
 export class BasicStatsComponent implements OnInit, OnChanges {
   @Input() title: string;
@@ -36,7 +37,7 @@ export class BasicStatsComponent implements OnInit, OnChanges {
 
   statsValue: number;
 
-  constructor(private fb: FormBuilder, private printService : PrintService) {}
+  constructor(private fb: UntypedFormBuilder, private printService : PrintService) {}
 
   ngOnInit(): void {}
 

@@ -1,47 +1,68 @@
-<mat-accordion>
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title> Filters </mat-panel-title>
-    </mat-expansion-panel-header>
-    <form
-      [formGroup]="FILTER_FORM"
-      (submit)="FILTER_FORM.dirty && filter()"
-      autocomplete="off"
+<div class="filter-bar">
+  <form
+    [formGroup]="FILTER_FORM"
+    (submit)="FILTER_FORM.dirty && filter()"
+    autocomplete="off"
+    class="filter-form"
+  >
+    <!-- Search Input -->
+    <div class="filter-item search-input">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input
+        type="text"
+        [formControl]="FILTER_FORM.controls['filter']"
+        placeholder="Nom / CIN"
+        class="search-field"
+      />
+    </div>
+
+    <!-- Status Dropdown -->
+    <div class="filter-item dropdown">
+      <mat-select
+        [formControl]="FILTER_FORM.controls['youngStatus']"
+        placeholder="Inséré(e)"
+        panelClass="filter-dropdown-panel"
+      >
+        
+        <mat-option [value]="true">Oui</mat-option>
+        <mat-option [value]="false">Non</mat-option>
+      </mat-select>
+    </div>
+
+    <!-- Level of Study Dropdown -->
+    <div class="filter-item dropdown">
+      <mat-select
+        [formControl]="FILTER_FORM.controls['level_of_study']"
+        placeholder="Niveau d'études"
+        panelClass="filter-dropdown-panel"
+      >
+        <mat-option *ngFor="let option of Data.LEVEL_OF_STUDIES" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-select>
+    </div>
+
+    <!-- Search Button -->
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      class="search-button"
     >
-      <div class="container">
-        <div class="row justify-content-between">
-          <div class="col">
-            <app-text-input
-              [formControl]="FILTER_FORM.controls['filter']"
-              [label]="'Nom / CIN'"
-            ></app-text-input>
-          </div>
-          <div class="col">
-            <app-select-input
-              [formControl]="FILTER_FORM.controls['youngStatus']"
-              [label]="'Inséré(e)'"
-              [options]="Data.YES_OR_NO"
-            ></app-select-input>
-          </div>
-          <div class="col">
-            <app-select-input
-              [formControl]="FILTER_FORM.controls['level_of_study']"
-              [label]="'Niveau d\'études'"
-              [options]="Data.LEVEL_OF_STUDIES"
-            ></app-select-input>
-          </div>
-          <div class="col mt-2">
-            <button
-              mat-raised-button
-              class="w-100"
-              color="primary"
-              type="submit"
-            >
-              Rechercher
-            </button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </mat-expansion-panel>
-</mat-accordion>
+      <mat-icon>search</mat-icon>
+      Rechercher
+    </button>
+
+    <!-- Reset Button -->
+    <button
+      mat-button
+      type="button"
+      class="reset-button"
+      (click)="resetFilters()"
+      *ngIf="hasActiveFilters()"
+    >
+      <mat-icon>close</mat-icon>
+      Réinitialiser
+    </button>
+  </form>
+</div>

@@ -48,6 +48,18 @@ function generateFilterQuery(query) {
         filterQuery.$and.push({ 'skills_assessment.level_of_study.level' :  query.level_of_study })
     }
 
+    // Date range filter
+    if (query.dateFrom || query.dateTo) {
+        let dateFilter = {};
+        if (query.dateFrom) {
+            dateFilter.$gte = new Date(query.dateFrom);
+        }
+        if (query.dateTo) {
+            dateFilter.$lte = new Date(query.dateTo);
+        }
+        filterQuery.$and.push({ createdAt: dateFilter });
+    }
+
     if (filterQuery.$and.length === 0)
         return {}
 

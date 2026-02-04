@@ -185,8 +185,7 @@ router.put('/:id/photo', [auth, checkCsrfToken], async (req, res) => {
             return res.status(404).send({ message: `Not found.` });
 
         if (OldPhoto) {
-            const filePath = `${path.join(__dirname, '../public')}/youth/photos/${OldPhoto}`;
-            fileManager.deleteFile(filePath, YOUNG_PHOTO_PATH);
+            fileManager.deleteFile(OldPhoto, YOUNG_PHOTO_PATH);
         }
 
         return res.status(204).send({ message: 'Updated' });
@@ -223,7 +222,11 @@ router.put('/:id/insertion', [auth, checkCsrfToken, validation(validateInsertion
 
 router.put('/:id/justification', [auth, checkCsrfToken], async (req, res) => {
     try {
-        if (req.body.index < 0 || !req.body.file) return res.status(400).send({ message: `No file provided.` });
+        if (req.body.index < 0 || req.body.index === undefined || req.body.index === null)
+            return res.status(400).send({ message: `Invalid index provided.` });
+
+        if (!req.body.file)
+            return res.status(400).send({ message: `No file provided.` });
 
         let filter = { $and: [{ _id: req.params.id }] };
 
@@ -237,19 +240,20 @@ router.put('/:id/justification', [auth, checkCsrfToken], async (req, res) => {
         const young = await findYoung(filter);
         if (!young) return res.status(404).send({ message: 'Not found' });
 
-        const OldJustification = young?.insertion?.list[req.body.index]?.tracking_after?.justification;
+        if (!young.insertion || !young.insertion.list || young.insertion.list.length === 0)
+            return res.status(400).send({ message: `No insertions found for this youth.` });
 
         if (req.body.index >= young.insertion.list.length)
-            return res.status(400).send({ message: `Justification can't be updated.` });
+            return res.status(400).send({ message: `Insertion index ${req.body.index} not found. Youth has ${young.insertion.list.length} insertion(s).` });
+
+        const OldJustification = young?.insertion?.list[req.body.index]?.tracking_after?.justification;
 
         const result = await updateYoungInsertionJustification(req.params.id, req.body, young);
         if (result.n <= 0)
             return res.status(404).send({ message: `Not found.` });
 
         if (OldJustification) {
-            const filePath = `${path.join(__dirname, '../public')}/youth/justifications/${OldJustification}`;
-            fileManager.deleteFile(filePath, YOUNG_JUSTIFICATION_PATH);
-
+            fileManager.deleteFile(OldJustification, YOUNG_JUSTIFICATION_PATH);
         } 
 
         return res.status(204).send({ message: 'Updated' });

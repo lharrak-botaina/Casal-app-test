@@ -5,9 +5,10 @@ import { DefaultStat, StatsData } from 'src/app/core/models/charts_data';
 import { StatsService } from 'src/app/core/services/stats.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    standalone: false
 })
 export class HomeComponent implements OnInit {
   numberOfYoungAddedStats$;

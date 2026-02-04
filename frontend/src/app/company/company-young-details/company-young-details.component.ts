@@ -7,9 +7,10 @@ import { Young } from 'src/app/core/models/young';
 import { YoungService } from 'src/app/core/services/young.service';
 
 @Component({
-  selector: 'app-company-young-details',
-  templateUrl: './company-young-details.component.html',
-  styleUrls: ['./company-young-details.component.scss']
+    selector: 'app-company-young-details',
+    templateUrl: './company-young-details.component.html',
+    styleUrls: ['./company-young-details.component.scss'],
+    standalone: false
 })
 export class CompanyYoungDetailsComponent implements OnInit {
   young: Young = !window?.history?.state?._id ? null : window?.history?.state;

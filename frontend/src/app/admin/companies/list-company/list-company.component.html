@@ -5,28 +5,43 @@
     </div>
   </div>
   <div class="row justify-content-start" *ngIf="companies$ | async as result">
-    <div class="col-12 col-sm-6 p-2" *ngFor="let company of result.companies">
-      <mat-card class="card" matTooltip="Show details" [routerLink]="[ './',company._id]" [state]="company">
-        <img src="{{company?.logo ?  endpoint + company.logo : 'assets/no_picture_available.png'}}">
-        <mat-card-header>
-          <mat-card-title class="card-title pointer"
-            >{{ company?.name | titlecase }}
-          </mat-card-title>
-          <mat-card-subtitle>
-            <p><mat-icon>location_on</mat-icon> {{ company?.city }}</p>
-          </mat-card-subtitle>
-        </mat-card-header>
-      </mat-card>
+    <!-- No Data State -->
+    <div class="col-12" *ngIf="!result.companies || result.companies.length === 0">
+      <div class="no-data-container">
+        <img src="assets/noData.png" alt="No data available" class="no-data-image" />
+        <p class="no-data-text">Aucune donnée disponible</p>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-lg-4 col-xl-3 p-2" *ngFor="let company of result.companies">
+      <div class="company-card" [routerLink]="['./', company._id]" [state]="company">
+        <div class="card-image-container">
+          <img [src]="company?.logo ? endpoint + company.logo : 'assets/no_picture_available.png'" [alt]="company?.name">
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">{{ company?.name | titlecase }}</h3>
+          <div class="card-location">
+            <mat-icon>location_on</mat-icon>
+            <span>{{ company?.city }}</span>
+          </div>
+        </div>
+        <div class="card-overlay">
+          <span class="view-details">Voir les détails</span>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row" [class.hidden]="(companies$ | async) ? false : true">
-    <div class="col align-self-end p-2">
-      <mat-paginator
-        [length]="(companies$ | async)?.totalCount"
-        [pageSize]="PAGE_SIZE"
-        [pageSizeOptions]="[5, 10, 20, 50]"
-      >
-      </mat-paginator>
+  <div class="pagination-container" *ngIf="(companies$ | async)?.totalCount > 0">
+    <div class="pagination-info">
+      Total: {{ (companies$ | async)?.totalCount }}
     </div>
+    <p-paginator
+      [rows]="pageSize"
+      [totalRecords]="(companies$ | async)?.totalCount"
+      [rowsPerPageOptions]="[8, 16, 32, 64]"
+      [first]="first"
+      (onPageChange)="onPageChange($event)"
+      [showCurrentPageReport]="false"
+    ></p-paginator>
   </div>
 </div>

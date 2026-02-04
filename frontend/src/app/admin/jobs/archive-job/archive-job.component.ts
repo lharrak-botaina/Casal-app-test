@@ -7,9 +7,10 @@ import { catchError, first, tap } from 'rxjs/operators';
 import { JobService } from 'src/app/core/services/job.service';
 
 @Component({
-  selector: 'app-archive-job',
-  templateUrl: './archive-job.component.html',
-  styleUrls: ['./archive-job.component.scss'],
+    selector: 'app-archive-job',
+    templateUrl: './archive-job.component.html',
+    styleUrls: ['./archive-job.component.scss'],
+    standalone: false
 })
 export class ArchiveJobComponent implements OnInit {
   constructor(

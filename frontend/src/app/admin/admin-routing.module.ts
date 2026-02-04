@@ -26,6 +26,7 @@ import { HomeComponent } from './home/home.component';
 import { CvGeneratorComponent } from '../cv-generator/cv-generator.component';
 import { PrintCenterComponent } from './print-center/print-center.component';
 import { AddDocumentComponent } from './print-center/add-document/add-document.component';
+import { AdminNotificationComponent } from './admin-notification/admin-notification.component';
 
 const routes: Routes = [
   {
@@ -167,6 +168,10 @@ const routes: Routes = [
           }
         ]
       },
+      {
+        path: 'notification',
+        component: AdminNotificationComponent
+      }
     ],
   },
 ];

@@ -5,9 +5,10 @@ import { Young, YoungResult } from 'src/app/core/models/young';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-young-card',
-  templateUrl: './young-card.component.html',
-  styleUrls: ['./young-card.component.scss'],
+    selector: 'app-young-card',
+    templateUrl: './young-card.component.html',
+    styleUrls: ['./young-card.component.scss'],
+    standalone: false
 })
 export class YoungCardComponent implements OnInit {
   @Input() youth$: Observable<YoungResult>;

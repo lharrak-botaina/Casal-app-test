@@ -30,6 +30,16 @@ import { StatsComponent } from './stats/stats.component';
 import { NotificationComponent } from './notification/notification.component';
 import { AssociationJobsComponent } from './association-jobs/association-jobs.component';
 import { AssociationJobsDetailsComponent } from './association-jobs/association-jobs-details/association-jobs-details.component';
+import { AssociationAddJobComponent } from './association-jobs/association-add-job/association-add-job.component';
+import { AssociationEditJobComponent } from './association-jobs/association-edit-job/association-edit-job.component';
+import { AssociationArchiveJobComponent } from './association-jobs/association-archive-job/association-archive-job.component';
+import { AssociationListCompanyComponent } from './association-companies/association-list-company/association-list-company.component';
+import { AssociationAddCompanyComponent } from './association-companies/association-add-company/association-add-company.component';
+import { AssociationDetailsCompanyComponent } from './association-companies/association-details-company/association-details-company.component';
+import { AssociationEditCompanyComponent } from './association-companies/association-edit-company/association-edit-company.component';
+import { AssociationDeleteCompanyComponent } from './association-companies/association-delete-company/association-delete-company.component';
+import { AssociationEditCompanyPasswordComponent } from './association-companies/association-edit-company/association-edit-company-password/association-edit-company-password.component';
+import { AssociationEditCompanyLogoComponent } from './association-companies/association-edit-company/association-edit-company-logo/association-edit-company-logo.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +67,16 @@ import { AssociationJobsDetailsComponent } from './association-jobs/association-
     NotificationComponent,
     AssociationJobsComponent,
     AssociationJobsDetailsComponent,
+    AssociationAddJobComponent,
+    AssociationEditJobComponent,
+    AssociationArchiveJobComponent,
+    AssociationListCompanyComponent,
+    AssociationAddCompanyComponent,
+    AssociationDetailsCompanyComponent,
+    AssociationEditCompanyComponent,
+    AssociationDeleteCompanyComponent,
+    AssociationEditCompanyPasswordComponent,
+    AssociationEditCompanyLogoComponent,
   ],
   imports: [CommonModule, AssociationRoutingModule, SharedModule],
 })

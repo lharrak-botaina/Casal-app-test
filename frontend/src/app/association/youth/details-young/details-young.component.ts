@@ -9,9 +9,10 @@ import { Young } from 'src/app/core/models/young';
 import { YoungService } from 'src/app/core/services/young.service';
 
 @Component({
-  selector: 'app-details-young',
-  templateUrl: './details-young.component.html',
-  styleUrls: ['./details-young.component.scss'],
+    selector: 'app-details-young',
+    templateUrl: './details-young.component.html',
+    styleUrls: ['./details-young.component.scss'],
+    standalone: false
 })
 export class DetailsYoungComponent implements OnInit {
   young: Young = !window?.history?.state?._id ? null : window?.history?.state;

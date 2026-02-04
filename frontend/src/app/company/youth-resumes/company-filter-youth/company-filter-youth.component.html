@@ -1,36 +1,59 @@
-<mat-accordion>
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title> Filters </mat-panel-title>
-    </mat-expansion-panel-header>
-    <form [formGroup]="FILTER_FORM" (submit)="FILTER_FORM.dirty && filter()" autocomplete="off">
-      <div class="container">
-        <div class="row justify-content-between">
-          <div class="col">
-            <app-select-input
-              [formControl]="FILTER_FORM.controls['association']"
-              [label]="'Association'"
-              [multiple]="true"
-              [isObservable]="true"
-              [optionDisplay]="'raisonSocial'"
-              [options]="(association$ | async)"
-            ></app-select-input>
-          </div>
-          <div class="col">
-            <app-select-input
-              [formControl]="FILTER_FORM.controls['youngCity']"
-              [label]="'Ville'"
-              [multiple]="true"
-              [options]="CITIES"
-            ></app-select-input>
-          </div>
-          <div class="col mt-2">
-            <button mat-raised-button class="w-100" color="primary" type="submit">
-              Rechercher
-            </button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </mat-expansion-panel>
-</mat-accordion>
+<div class="filter-bar">
+  <form
+    [formGroup]="FILTER_FORM"
+    (submit)="FILTER_FORM.dirty && filter()"
+    autocomplete="off"
+    class="filter-form"
+  >
+    <!-- Association Dropdown -->
+    <div class="filter-item dropdown" *ngIf="association$ | async as associations">
+      <mat-select
+        [formControl]="FILTER_FORM.controls['association']"
+        placeholder="Association"
+        multiple
+        panelClass="filter-dropdown-panel"
+      >
+        <mat-option *ngFor="let assoc of associations" [value]="assoc._id">
+          {{ assoc.raisonSocial }}
+        </mat-option>
+      </mat-select>
+    </div>
+
+    <!-- City Dropdown -->
+    <div class="filter-item dropdown">
+      <mat-select
+        [formControl]="FILTER_FORM.controls['youngCity']"
+        placeholder="Ville"
+        multiple
+        panelClass="filter-dropdown-panel"
+      >
+        <mat-option *ngFor="let city of CITIES" [value]="city">
+          {{ city }}
+        </mat-option>
+      </mat-select>
+    </div>
+
+    <!-- Search Button -->
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      class="search-button"
+    >
+      <mat-icon>search</mat-icon>
+      Rechercher
+    </button>
+
+    <!-- Reset Button -->
+    <button
+      mat-button
+      type="button"
+      class="reset-button"
+      (click)="resetFilters()"
+      *ngIf="hasActiveFilters()"
+    >
+      <mat-icon>close</mat-icon>
+      Réinitialiser
+    </button>
+  </form>
+</div>

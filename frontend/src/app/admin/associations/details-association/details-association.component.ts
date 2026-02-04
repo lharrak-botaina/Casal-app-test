@@ -7,13 +7,14 @@ import { pipe, throwError } from 'rxjs';
 import { AssociationService } from 'src/app/core/services/association.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { DeleteAssociationComponent } from '../delete-association/delete-association.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-details-association',
-  templateUrl: './details-association.component.html',
-  styleUrls: ['./details-association.component.scss'],
+    selector: 'app-details-association',
+    templateUrl: './details-association.component.html',
+    styleUrls: ['./details-association.component.scss'],
+    standalone: false
 })
 export class DetailsAssociationComponent implements OnInit, OnDestroy {
   association: Association = !window?.history?.state?._id ? null : window?.history?.state ;
@@ -26,7 +27,9 @@ export class DetailsAssociationComponent implements OnInit, OnDestroy {
     private associationService: AssociationService,
     private toastrService: ToastrService,
     private activatedRoute : ActivatedRoute,
-    private dialog : MatDialog
+    private dialog : MatDialog,
+      
+ 
   ) {}
 
   ngOnInit() {

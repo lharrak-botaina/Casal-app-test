@@ -7,9 +7,10 @@ import { first, tap, catchError } from 'rxjs/operators';
 import { AssociationService } from 'src/app/core/services/association.service';
 
 @Component({
-  selector: 'app-delete-association',
-  templateUrl: './delete-association.component.html',
-  styleUrls: ['./delete-association.component.scss'],
+    selector: 'app-delete-association',
+    templateUrl: './delete-association.component.html',
+    styleUrls: ['./delete-association.component.scss'],
+    standalone: false
 })
 export class DeleteAssociationComponent implements OnInit {
   constructor(

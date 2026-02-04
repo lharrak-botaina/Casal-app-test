@@ -5,6 +5,14 @@
     </div>
   </div>
   <div class="row justify-content-start" *ngIf="passwork$ | async as result">
+    <!-- No Data State -->
+    <div class="col-12" *ngIf="!result.passworks || result.passworks.length === 0">
+      <div class="no-data-container">
+        <img src="assets/noData.png" alt="No data available" class="no-data-image" />
+        <p class="no-data-text">Aucune donnée disponible</p>
+      </div>
+    </div>
+
     <div
       class="col-12 col-sm-6 col-md-4 p-2"
       *ngFor="let passwork of result.passworks"
@@ -31,14 +39,17 @@
       </mat-card>
     </div>
   </div>
-  <div class="row" [class.hidden]="(passwork$ | async) ? false : true">
-    <div class="col align-self-end p-2">
-      <mat-paginator
-        [length]="(passwork$ | async)?.totalCount"
-        [pageSize]="PAGE_SIZE"
-        [pageSizeOptions]="[5, 10, 20, 50]"
-      >
-      </mat-paginator>
+  <div class="pagination-container" *ngIf="(passwork$ | async)?.totalCount > 0">
+    <div class="pagination-info">
+      Total: {{ (passwork$ | async)?.totalCount }}
     </div>
+    <p-paginator
+      [rows]="pageSize"
+      [totalRecords]="(passwork$ | async)?.totalCount"
+      [rowsPerPageOptions]="[5, 10, 20, 50]"
+      [first]="first"
+      (onPageChange)="onPageChange($event)"
+      [showCurrentPageReport]="false"
+    ></p-paginator>
   </div>
 </div>

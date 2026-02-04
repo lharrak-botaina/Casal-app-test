@@ -60,12 +60,24 @@ export class JobService {
     return this.http.put(`jobs/company/${id}`, payload);
   }
 
+  addByAssociation(payload) {
+    return this.http.post('jobs/association', payload);
+  }
+
+  editByAssociation(id, payload) {
+    return this.http.put(`jobs/association/${id}`, payload);
+  }
+
   archive(id, payload) {
     return this.http.put(`jobs/${id}/archive`, payload);
   }
 
   archiveCompanyJob(id, payload) {
     return this.http.put(`jobs/company/${id}/archive`, payload);
+  }
+
+  archiveByAssociation(id, payload) {
+    return this.http.put(`jobs/association/${id}/archive`, payload);
   }
 
 }

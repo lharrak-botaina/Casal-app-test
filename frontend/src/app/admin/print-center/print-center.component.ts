@@ -8,9 +8,10 @@ import { DocumentService } from 'src/app/core/services/document.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-print-center',
-  templateUrl: './print-center.component.html',
-  styleUrls: ['./print-center.component.scss'],
+    selector: 'app-print-center',
+    templateUrl: './print-center.component.html',
+    styleUrls: ['./print-center.component.scss'],
+    standalone: false
 })
 export class PrintCenterComponent implements OnInit {
   PAGE_INDEX = 0;

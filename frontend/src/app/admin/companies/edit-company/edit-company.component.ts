@@ -1,6 +1,6 @@
 import { EditCompanyPasswordComponent } from './edit-company-password/edit-company-password.component';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
@@ -13,9 +13,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditCompanyLogoComponent } from './edit-company-logo/edit-company-logo.component';
 
 @Component({
-  selector: 'app-edit-company',
-  templateUrl: './edit-company.component.html',
-  styleUrls: ['./edit-company.component.scss'],
+    selector: 'app-edit-company',
+    templateUrl: './edit-company.component.html',
+    styleUrls: ['./edit-company.component.scss'],
+    standalone: false
 })
 export class EditCompanyComponent implements OnInit {
   company: Company = !window?.history?.state?._id
@@ -57,7 +58,7 @@ export class EditCompanyComponent implements OnInit {
     private toastrService: ToastrService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialog: MatDialog
   ) {}
 

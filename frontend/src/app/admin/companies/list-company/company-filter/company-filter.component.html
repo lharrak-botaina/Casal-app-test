@@ -1,49 +1,81 @@
-<mat-accordion>
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title> Filters </mat-panel-title>
-    </mat-expansion-panel-header>
-    <form
-      [formGroup]="FILTER_FORM"
-      (submit)="FILTER_FORM.dirty && filter()"
-      autocomplete="off"
+<div class="filter-bar">
+  <form
+    [formGroup]="FILTER_FORM"
+    (submit)="FILTER_FORM.dirty && filter()"
+    autocomplete="off"
+    class="filter-form"
+  >
+    <!-- Search Input -->
+    <div class="filter-item search-input">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input
+        type="text"
+        [formControl]="FILTER_FORM.controls['filter']"
+        placeholder="Nom"
+        class="search-field"
+      />
+    </div>
+
+    <!-- City Dropdown -->
+    <div class="filter-item dropdown">
+      <mat-select
+        [formControl]="FILTER_FORM.controls['city']"
+        placeholder="Ville"
+        multiple
+        panelClass="filter-dropdown-panel"
+      >
+        <mat-option *ngFor="let city of CITIES" [value]="city">
+          {{ city }}
+        </mat-option>
+      </mat-select>
+    </div>
+
+    <!-- Activity Area Dropdown -->
+    <div class="filter-item dropdown">
+      <mat-select
+        [formControl]="FILTER_FORM.controls['activity_area']"
+        placeholder="Secteur d'activité"
+        multiple
+        panelClass="filter-dropdown-panel"
+      >
+        <mat-option *ngFor="let area of ACTIVITY_AREA" [value]="area">
+          {{ area }}
+        </mat-option>
+      </mat-select>
+    </div>
+
+    <!-- Date Range -->
+    <div class="filter-item date-range">
+      <mat-icon class="date-icon">date_range</mat-icon>
+      <mat-date-range-input [rangePicker]="datePicker" class="date-range-input">
+        <input matStartDate [formControl]="FILTER_FORM.controls['dateFrom']" placeholder="Du">
+        <input matEndDate [formControl]="FILTER_FORM.controls['dateTo']" placeholder="Au">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+      <mat-date-range-picker #datePicker></mat-date-range-picker>
+    </div>
+
+    <!-- Search Button -->
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      class="search-button"
     >
-      <div class="container">
-        <div class="row justify-content-between">
-          <div class="col">
-            <app-text-input
-              [formControl]="FILTER_FORM.controls['filter']"
-              [label]="'Nom'"
-            ></app-text-input>
-          </div>
-          <div class="col">
-            <app-select-input
-              [formControl]="FILTER_FORM.controls['city']"
-              [label]="'Ville'"
-              [multiple]="true"
-              [options]="CITIES"
-            ></app-select-input>
-          </div>
-          <div class="col">
-            <app-select-input
-              [formControl]="FILTER_FORM.controls['activity_area']"
-              [label]="'Secteur d\'activité'"
-              [multiple]="true"
-              [options]="ACTIVITY_AREA"
-            ></app-select-input>
-          </div>
-          <div class="col mt-2">
-            <button
-              mat-raised-button
-              class="w-100"
-              color="primary"
-              type="submit"
-            >
-              Rechercher
-            </button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </mat-expansion-panel>
-</mat-accordion>
+      <mat-icon>search</mat-icon>
+      Rechercher
+    </button>
+
+    <!-- Reset Button -->
+    <button
+      mat-button
+      type="button"
+      class="reset-button"
+      (click)="resetFilters()"
+      *ngIf="hasActiveFilters()"
+    >
+      <mat-icon>close</mat-icon>
+      Réinitialiser
+    </button>
+  </form>
+</div>

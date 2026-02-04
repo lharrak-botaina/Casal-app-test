@@ -3,9 +3,10 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 
 @Component({
-  selector: 'app-date-input',
-  templateUrl: './date-input.component.html',
-  styleUrls: ['./date-input.component.scss']
+    selector: 'app-date-input',
+    templateUrl: './date-input.component.html',
+    styleUrls: ['./date-input.component.scss'],
+    standalone: false
 })
 export class DateInputComponent implements ControlValueAccessor {
   @Input() label: string;

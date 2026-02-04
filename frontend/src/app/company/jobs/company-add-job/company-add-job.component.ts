@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormGroupDirective, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
@@ -11,9 +11,10 @@ import { AssociationService } from 'src/app/core/services/association.service';
 import { JobService } from 'src/app/core/services/job.service';
 
 @Component({
-  selector: 'app-company-add-job',
-  templateUrl: './company-add-job.component.html',
-  styleUrls: ['./company-add-job.component.scss']
+    selector: 'app-company-add-job',
+    templateUrl: './company-add-job.component.html',
+    styleUrls: ['./company-add-job.component.scss'],
+    standalone: false
 })
 export class CompanyAddJobComponent implements OnInit {
   associations$: Observable<Association[]>;
@@ -34,7 +35,7 @@ export class CompanyAddJobComponent implements OnInit {
   @ViewChild('form') form: FormGroupDirective;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private jobService: JobService,
     private associationService: AssociationService,
     private toastrService: ToastrService,

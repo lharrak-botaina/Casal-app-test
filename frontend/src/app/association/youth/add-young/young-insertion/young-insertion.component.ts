@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ControlContainer, FormArray, FormBuilder } from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ControlContainer, UntypedFormArray, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { takeWhile, tap } from 'rxjs/operators';
 import { YoungFormService } from 'src/app/core/helpers/young-form.service';
@@ -10,15 +10,17 @@ import { CompanyService } from 'src/app/core/services/company.service';
 import { JobService } from 'src/app/core/services/job.service';
 
 @Component({
-  selector: 'app-young-insertion',
-  templateUrl: './young-insertion.component.html',
-  styleUrls: ['./young-insertion.component.scss'],
+    selector: 'app-young-insertion',
+    templateUrl: './young-insertion.component.html',
+    styleUrls: ['./young-insertion.component.scss'],
+    standalone: false,
+    encapsulation: ViewEncapsulation.None
 })
 export class YoungInsertionComponent implements OnInit, OnDestroy {
   public Data = Data;
 
   CONTRACT_TYPE = [...Data.FORMELLE_CONTRACT];
-  public INSERTION: FormArray;
+  public INSERTION: UntypedFormArray;
   public companies$: Observable<CompanyResult>;
   public jobs$: Observable<Job>;
   private alive : boolean = true;
@@ -32,7 +34,7 @@ export class YoungInsertionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.INSERTION = <FormArray>this.controlContainer.control;
+    this.INSERTION = <UntypedFormArray>this.controlContainer.control;
     this.companies$ = this.getCompanies();
     this.jobs$ = this.getJobs();
     this.isInsertionValid()
@@ -49,13 +51,13 @@ export class YoungInsertionComponent implements OnInit, OnDestroy {
   addBeforeInsertion(index) {
     (this.INSERTION.controls['list']['controls'][index]['controls'][
       'tracking_before'
-    ] as FormArray).push(this.young.trackingBeforeForm());
+    ] as UntypedFormArray).push(this.young.trackingBeforeForm());
   }
 
   removeBeforeInsertion(index1, index2) {
     (this.INSERTION.controls['list']['controls'][index1]['controls'][
       'tracking_before'
-    ] as FormArray).removeAt(index2);
+    ] as UntypedFormArray).removeAt(index2);
   }
 
   onChangeCategory(event : any){

@@ -1,0 +1,167 @@
+// ===================================
+// CAPACITY BUILDING FORM STYLES
+// ===================================
+
+$primary-color: #03644e;
+$primary-light: #e1ecea;
+$text-dark: #1a1a2e;
+$text-muted: #6c757d;
+$border-color: #e0e0e0;
+$danger-color: #e2574c;
+
+// Section container
+.form-section {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid $border-color;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+// Section header with icon
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+
+  .section-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: $primary-light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    flex-shrink: 0;
+
+    mat-icon {
+      color: $primary-color;
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: $text-dark;
+    margin: 0;
+    letter-spacing: -0.3px;
+  }
+}
+
+// Form grid layout
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 24px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-field-full {
+  grid-column: 1 / -1;
+}
+
+// Dynamic item card
+.dynamic-item-card {
+  background: #fafbfc;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  position: relative;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: darken($border-color, 10%);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed $border-color;
+
+  .item-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: $primary-color;
+    margin: 0;
+
+    .item-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: $primary-light;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+  }
+
+  .item-actions {
+    display: flex;
+    gap: 4px;
+
+    .btn-add,
+    .btn-remove {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .btn-add {
+      background: $primary-light;
+      color: $primary-color;
+
+      &:hover {
+        background: $primary-color;
+        color: white;
+      }
+    }
+
+    .btn-remove {
+      background: #fde8e6;
+      color: $danger-color;
+
+      &:hover {
+        background: $danger-color;
+        color: white;
+      }
+    }
+  }
+}

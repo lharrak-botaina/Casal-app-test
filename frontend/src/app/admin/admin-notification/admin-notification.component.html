@@ -1,0 +1,83 @@
+<article class="notification">
+    <header class="notification__header">
+        <h1 class="notification__title">Centre de notifications</h1>
+        <div class="notification__actions">
+            <button mat-stroked-button (click)="markAllAsRead()" [disabled]="loading">
+                <mat-icon>done_all</mat-icon>
+                Tout marquer comme lu
+            </button>
+        </div>
+    </header>
+
+    <div class="notification__filters">
+        <mat-button-toggle-group [value]="currentFilter" (change)="onFilterChange($event.value)">
+            <mat-button-toggle value="all">Tous</mat-button-toggle>
+            <mat-button-toggle value="unread">Non lus</mat-button-toggle>
+            <mat-button-toggle value="read">Lus</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+
+    <div class="notification__loading" *ngIf="loading">
+        <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <main class="notification__profiles" *ngIf="!loading">
+        <div class="notification__empty" *ngIf="notifications.length === 0">
+            <mat-icon>notifications_off</mat-icon>
+            <p>Aucune notification</p>
+        </div>
+
+        <article class="notification__profile"
+                 *ngFor="let notification of notifications"
+                 (click)="navigateToJob(notification)"
+                 [class.viewed]="notification?.viewed"
+                 [class.unread]="!notification?.viewed">
+            <span class="notification__unread-dot" *ngIf="!notification?.viewed"></span>
+            <div class="notification__icon-container">
+                <mat-icon class="notification__icon" [class]="notification?.actionType">
+                    {{ getActionIcon(notification?.actionType) }}
+                </mat-icon>
+            </div>
+            <div class="notification__content">
+                <span class="notification__name">{{ getActionMessage(notification) }}</span>
+                <span class="notification__job-info" *ngIf="getJobReference(notification)">
+                    {{ getJobReference(notification) }} - {{ getJobTitle(notification) }}
+                </span>
+                <span class="notification__shared">
+                    <mat-icon>groups</mat-icon> {{ getSharedWithNames(notification) }}
+                </span>
+                <span class="notification__time">{{ notification?.createdAt | timeago }}</span>
+            </div>
+            <div class="notification__buttons">
+                <span class="notification__status" *ngIf="notification?.viewed">
+                    <mat-icon matTooltip="Lu">visibility</mat-icon>
+                </span>
+                <button mat-icon-button
+                        *ngIf="!notification?.viewed"
+                        (click)="markAsRead(notification, $event)"
+                        matTooltip="Marquer comme lu">
+                    <mat-icon>check_circle_outline</mat-icon>
+                </button>
+                <button mat-icon-button
+                        (click)="deleteNotification(notification, $event)"
+                        matTooltip="Supprimer">
+                    <mat-icon>delete_outline</mat-icon>
+                </button>
+            </div>
+        </article>
+    </main>
+
+    <div class="pagination-container" *ngIf="totalCount > pageSize">
+        <div class="pagination-info">
+            Total: {{ totalCount }}
+        </div>
+        <p-paginator
+            [rows]="pageSize"
+            [totalRecords]="totalCount"
+            [rowsPerPageOptions]="[5, 10, 20]"
+            [first]="first"
+            (onPageChange)="onPaginatorChange($event)"
+            [showCurrentPageReport]="false"
+        ></p-paginator>
+    </div>
+</article>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Association } from 'src/app/core/models/association';
@@ -7,9 +7,10 @@ import { Data } from 'src/app/core/models/dropdown_data';
 import { AssociationService } from 'src/app/core/services/association.service';
 
 @Component({
-  selector: 'app-company-filter-youth',
-  templateUrl: './company-filter-youth.component.html',
-  styleUrls: ['./company-filter-youth.component.scss']
+    selector: 'app-company-filter-youth',
+    templateUrl: './company-filter-youth.component.html',
+    styleUrls: ['./company-filter-youth.component.scss'],
+    standalone: false
 })
 export class CompanyFilterYouthComponent implements OnInit {
   association$ : Observable<Association[]>;
@@ -22,7 +23,7 @@ export class CompanyFilterYouthComponent implements OnInit {
   });
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private associationService : AssociationService
@@ -39,8 +40,19 @@ export class CompanyFilterYouthComponent implements OnInit {
       skipLocationChange: true,
     });
   }
-  
+
   getAssociations(){
     return this.associationService.findLight();
+  }
+
+  resetFilters() {
+    this.FILTER_FORM.reset({ association: '', youngCity: '' });
+    this.filter();
+  }
+
+  hasActiveFilters(): boolean {
+    const values = this.FILTER_FORM.value;
+    return (values.association && values.association.length > 0) ||
+           (values.youngCity && values.youngCity.length > 0);
   }
 }

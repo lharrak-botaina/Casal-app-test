@@ -1,143 +1,254 @@
-.description {
-  position: relative;
-  top: -36px;
-  font-weight: 500;
+$primary-green: #03644e;
+$light-green: #e8f5f1;
+$orange: #d4a04a;
+$text-dark: #333;
+$text-gray: #666;
+$border-radius: 16px;
+
+.youth-cards-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 600px));
+  gap: 20px;
+  padding: 20px 0;
+  justify-content: center;
 }
 
-.spinner {
-  position: absolute;
-  margin-inline: -30px;
-}
-
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,800italic,400,600,700,800);
-
-img {
-  max-width: 100%;
-}
-
-.profile-card {
-  position: relative;
-  width: 240px;
-  margin: 0 auto;
-  margin-top: 65px;
-  padding: 40px 30px 30px;
-  background: #fff;
-  border: 5px solid rgba(255, 255, 255, 0.7);
+// No Data State
+.no-data-container {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
   text-align: center;
-  border-radius: 4px;
-  transition: all 200ms ease;
+
+  .no-data-image {
+    max-width: 500px;
+    height: auto;
+    opacity: 0.9;
+  }
+
+  .no-data-text {
+    margin-top: 20px;
+    font-size: 18px;
+    color: $text-gray;
+    font-weight: 500;
+  }
 }
-.mask-shadow {
-  z-index: -1 !important;
-  width: 95%;
-  height: 12px;
-  background: #000;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
+
+.youth-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: $border-radius;
+  padding: 24px 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  gap: 24px;
+  border: 2px solid transparent;
+  position: relative;
+
+  &:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+
+  // Urgent card highlight
+  &.urgent {
+    border-color: $orange;
+    background: linear-gradient(135deg, #fffcf8 0%, #fff 100%);
+    box-shadow: 0 4px 20px rgba($orange, 0.1);
+
+    &:hover {
+      box-shadow: 0 8px 30px rgba($orange, 0.15);
+    }
+
+    .profile-photo {
+      border-color: $orange;
+    }
+  }
+}
+
+// Urgent Badge
+.urgent-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: $orange;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
   position: absolute;
-  border-radius: 4px;
-  opacity: 0;
-  transition: all 400ms ease-in;
-}
-.profile-card:hover {
-  box-shadow: 0px 30px 60px -5px rgba(55, 55, 71, 0.3);
-  transform: translate3d(0, -5px, 0);
-  .mask-shadow {
-    opacity: 1;
-    box-shadow: 0px 30px 60px -5px rgba(55, 55, 71, 0.3);
-    position: absolute;
+  top: 12px;
+  right: 12px;
+  animation: pulse 2s infinite;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
   }
 }
-.profile-card header {
-  display: block;
-  margin-bottom: 10px;
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
 }
-.profile-card header a {
-  width: 150px;
-  height: 150px;
-  display: block;
-  border-radius: 100%;
-  margin: -100px auto 0;
-  box-shadow: 0 0 0 5px #03644e;
+
+// Profile Section
+.profile-section {
+  flex-shrink: 0;
 }
-.profile-card header a img {
+
+.profile-photo {
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  width: 150px;
-  height: 150px;
+  border: 4px solid $primary-green;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
-.profile-card:hover header a,
-.profile-card header a:hover {
-  animation: bounceOut 0.4s linear;
-  -webkit-animation: bounceOut 0.4s linear;
+// Info Section
+.info-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
-.profile-card header h1 {
-  font-size: 20px;
-  color: #444;
-  text-transform: uppercase;
-  margin-bottom: 5px;
+
+.name-status {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
-.profile-card header h2 {
-  font-size: 14px;
-  color: #03644e;
-  text-transform: uppercase;
+
+.last-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: $primary-green;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.first-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: $primary-green;
   margin: 0;
 }
 
-.profile-social-links {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.profile-social-links li {
-  display: inline-block;
-  margin: 0 10px;
+// Skills Section
+.skills-section {
+  display: flex;
+  gap: 44px;
+  align-items: flex-end;
 }
 
-/*animation hover effect*/
-@-webkit-keyframes bounceOut {
-  0% {
-    box-shadow: 0 0 0 4px #03644e;
-    opacity: 1;
-  }
-  25% {
-    box-shadow: 0 0 0 1px #03644e;
-    opacity: 1;
-  }
-  50% {
-    box-shadow: 0 0 0 7px #03644e;
-    opacity: 1;
-  }
-  75% {
-    box-shadow: 0 0 0 4px #03644e;
-    opacity: 1;
-  }
-  100% {
-    box-shadow: 0 0 0 5px #03644e;
-    opacity: 1;
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.skill-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid $primary-green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $primary-green;
+
+  svg {
+    width: 20px;
+    height: 20px;
   }
 }
-@keyframes bounceOut {
-  0% {
-    box-shadow: 0 0 0 6px #03644e;
-    opacity: 1;
+
+.skill-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: $text-dark;
+}
+
+// Responsive Design
+@media (max-width: 1400px) {
+  .youth-card {
+    padding: 20px;
+    gap: 16px;
   }
-  25% {
-    box-shadow: 0 0 0 2px #03644e;
-    opacity: 1;
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
   }
-  50% {
-    box-shadow: 0 0 0 9px #03644e;
-    opacity: 1;
+
+  .last-name {
+    font-size: 18px;
   }
-  75% {
-    box-shadow: 0 0 0 3px #03644e;
-    opacity: 1;
+
+  .first-name {
+    font-size: 14px;
   }
-  100% {
-    box-shadow: 0 0 0 5px #03644e;
-    opacity: 1;
+}
+
+@media (max-width: 1200px) {
+  .youth-cards-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .youth-card {
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+
+  .profile-section {
+    flex-basis: 80px;
+  }
+
+  .info-section {
+    flex: 1;
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .youth-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 16px;
+  }
+
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .name-status {
+    align-items: center;
+  }
+
+  .skills-section {
+    justify-content: center;
   }
 }

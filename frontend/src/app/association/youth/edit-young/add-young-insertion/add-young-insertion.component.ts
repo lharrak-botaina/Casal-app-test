@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
@@ -14,15 +14,16 @@ import { JobService } from 'src/app/core/services/job.service';
 import { YoungService } from 'src/app/core/services/young.service';
 
 @Component({
-  selector: 'app-add-young-insertion',
-  templateUrl: './add-young-insertion.component.html',
-  styleUrls: ['./add-young-insertion.component.scss'],
+    selector: 'app-add-young-insertion',
+    templateUrl: './add-young-insertion.component.html',
+    styleUrls: ['./add-young-insertion.component.scss'],
+    standalone: false
 })
 export class AddYoungInsertionComponent implements OnInit {
   public Data = Data;
   
   CONTRACT_TYPE = [...Data.FORMELLE_CONTRACT];
-  public INSERTION: FormGroup;
+  public INSERTION: UntypedFormGroup;
   public companies$: Observable<CompanyResult>;
   private currentId;
   public jobs$: Observable<Job>;
@@ -54,13 +55,13 @@ export class AddYoungInsertionComponent implements OnInit {
   }
 
   addBeforeInsertion() {
-    (this.INSERTION.controls['tracking_before'] as FormArray).push(
+    (this.INSERTION.controls['tracking_before'] as UntypedFormArray).push(
       this.youngFormBuilder.trackingBeforeForm()
     );
   }
 
   removeBeforeInsertion(index) {
-    (this.INSERTION.controls['tracking_before'] as FormArray).removeAt(index);
+    (this.INSERTION.controls['tracking_before'] as UntypedFormArray).removeAt(index);
   }
 
   async addInsertion() {

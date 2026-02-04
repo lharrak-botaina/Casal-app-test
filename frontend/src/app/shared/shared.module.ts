@@ -9,7 +9,7 @@ import { DirectiveModule } from '../core/directives/directives.module';
 import { TextInputComponent } from './forms/text-input/text-input.component';
 import { SelectInputComponent } from './forms/select-input/select-input.component';
 import { DateInputComponent } from './forms/date-input/date-input.component';
-import { MaterialFileInputModule } from 'ngx-material-file-input';
+
 import { PrimeNgModule } from './prime-ng/prime-ng.module';
 import { TimeagoModule } from 'ngx-timeago';
 import { FileInputComponent } from './forms/file-input/file-input.component';
@@ -56,7 +56,6 @@ import { JobFilterComponent } from '../admin/jobs/list-job/job-filter/job-filter
     NgxSpinnerModule,
     ToastrModule.forRoot(),
     DirectiveModule,
-    MaterialFileInputModule,
     PrimeNgModule,
     TimeagoModule.forRoot(),
     NgxChartsModule,
@@ -74,7 +73,7 @@ import { JobFilterComponent } from '../admin/jobs/list-job/job-filter/job-filter
     TextInputComponent,
     SelectInputComponent,
     DateInputComponent,
-    MaterialFileInputModule,
+    // MaterialFileInputModule,
     PrimeNgModule,
     TimeagoModule,
     FileInputComponent,

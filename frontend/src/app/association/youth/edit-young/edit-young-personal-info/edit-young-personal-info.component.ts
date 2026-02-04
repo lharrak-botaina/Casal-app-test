@@ -4,8 +4,9 @@ import {
   Input,
   OnInit,
   OnDestroy,
+  ViewEncapsulation,
 } from '@angular/core';
-import { ControlContainer, FormGroup } from '@angular/forms';
+import { ControlContainer, UntypedFormGroup } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
 import { takeWhile, tap } from 'rxjs/operators';
@@ -13,15 +14,17 @@ import { Data } from 'src/app/core/models/dropdown_data';
 import { EditPhotoDialogComponent } from '../edit-photo-dialog/edit-photo-dialog.component';
 
 @Component({
-  selector: 'app-edit-young-personal-info',
-  templateUrl: './edit-young-personal-info.component.html',
-  styleUrls: ['./edit-young-personal-info.component.scss'],
+    selector: 'app-edit-young-personal-info',
+    templateUrl: './edit-young-personal-info.component.html',
+    styleUrls: ['./edit-young-personal-info.component.scss'],
+    standalone: false,
+    encapsulation: ViewEncapsulation.None
 })
 export class EditYoungPersonalInfoComponent implements OnInit, OnDestroy {
   @Input() currentUserId;
   public maxDate = new Date();
   public Data = Data;
-  public PERSONAL_INFO: FormGroup;
+  public PERSONAL_INFO: UntypedFormGroup;
   public hobbies = [];
   readonly separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
   private alive: boolean = true;
@@ -32,7 +35,7 @@ export class EditYoungPersonalInfoComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.PERSONAL_INFO = <FormGroup>this.controlContainer?.control;
+    this.PERSONAL_INFO = <UntypedFormGroup>this.controlContainer?.control;
     this.setHobbies()
   }
 

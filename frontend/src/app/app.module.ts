@@ -6,15 +6,17 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SharedModule } from './shared/shared.module';
+import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AllowCredentialsInterceptor } from './core/interceptors/allowCredentials.interceptor';
 import { HttpXSRFInterceptor } from './core/interceptors/csrf.interceptor';
 import { APIInterceptor } from './core/interceptors/APIInterceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
-import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { CvGeneratorComponent } from './cv-generator/cv-generator.component';
 import { ReportsComponent } from './reports/reports.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core'; // optional if you use datepicker
 
 @NgModule({
   declarations: [AppComponent, SignInComponent, ToolbarComponent, CvGeneratorComponent, ReportsComponent],
@@ -23,13 +25,17 @@ import { ReportsComponent } from './reports/reports.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
-  ],
+    ReactiveFormsModule,
+    MatNativeDateModule
+    ],
   providers: [
+
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AllowCredentialsInterceptor,
       multi: true,
     },
+    
     { provide: HTTP_INTERCEPTORS, useClass: HttpXSRFInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: APIInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
@@ -37,4 +43,4 @@ import { ReportsComponent } from './reports/reports.component';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

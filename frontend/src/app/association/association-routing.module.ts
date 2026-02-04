@@ -4,6 +4,12 @@ import { AssociationGuard } from '../core/guards/association.guard';
 import { CvGeneratorComponent } from '../cv-generator/cv-generator.component';
 import { AssociationJobsDetailsComponent } from './association-jobs/association-jobs-details/association-jobs-details.component';
 import { AssociationJobsComponent } from './association-jobs/association-jobs.component';
+import { AssociationAddJobComponent } from './association-jobs/association-add-job/association-add-job.component';
+import { AssociationEditJobComponent } from './association-jobs/association-edit-job/association-edit-job.component';
+import { AssociationListCompanyComponent } from './association-companies/association-list-company/association-list-company.component';
+import { AssociationAddCompanyComponent } from './association-companies/association-add-company/association-add-company.component';
+import { AssociationDetailsCompanyComponent } from './association-companies/association-details-company/association-details-company.component';
+import { AssociationEditCompanyComponent } from './association-companies/association-edit-company/association-edit-company.component';
 import { NotificationComponent } from './notification/notification.component';
 import { StatsComponent } from './stats/stats.component';
 import { AddYoungComponent } from './youth/add-young/add-young.component';
@@ -27,7 +33,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            component : ListYoungComponent
+            component: ListYoungComponent
           },
           {
             path: 'add',
@@ -52,23 +58,52 @@ const routes: Routes = [
         ],
       },
       {
-        path : 'stats',
-        component : StatsComponent
+        path: 'stats',
+        component: StatsComponent
       },
       {
-        path : 'notification',
-        component : NotificationComponent
+        path: 'notification',
+        component: NotificationComponent
       },
       {
-        path : 'jobs',
-        children : [
+        path: 'jobs',
+        children: [
           {
-            path : '',
-            component : AssociationJobsComponent
+            path: '',
+            component: AssociationJobsComponent
           },
           {
-            path : ':id',
-            component : AssociationJobsDetailsComponent
+            path: 'add',
+            component: AssociationAddJobComponent
+          },
+          {
+            path: ':id',
+            component: AssociationJobsDetailsComponent
+          },
+          {
+            path: ':id/edit',
+            component: AssociationEditJobComponent
+          }
+        ]
+      },
+      {
+        path: 'companies',
+        children: [
+          {
+            path: '',
+            component: AssociationListCompanyComponent
+          },
+          {
+            path: 'add',
+            component: AssociationAddCompanyComponent
+          },
+          {
+            path: ':id',
+            component: AssociationDetailsCompanyComponent
+          },
+          {
+            path: ':id/edit',
+            component: AssociationEditCompanyComponent
           }
         ]
       }

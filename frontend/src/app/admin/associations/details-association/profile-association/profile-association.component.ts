@@ -3,9 +3,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Association } from 'src/app/core/models/association';
 
 @Component({
-  selector: 'app-profile-association',
-  templateUrl: './profile-association.component.html',
-  styleUrls: ['./profile-association.component.scss']
+    selector: 'app-profile-association',
+    templateUrl: './profile-association.component.html',
+    styleUrls: ['./profile-association.component.scss'],
+    standalone: false
 })
 export class ProfileAssociationComponent implements OnInit {
   @Input() association : Association;

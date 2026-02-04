@@ -4,7 +4,8 @@ import { User } from '../models/user';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Directive({
-  selector: '[rbacAllow]'
+    selector: '[rbacAllow]',
+    standalone: false
 })
 export class RbacAllowDirective implements OnDestroy {
 

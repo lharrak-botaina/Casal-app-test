@@ -1,7 +1,6 @@
-<mat-form-field appearance="outline" class="w-100">
+<mat-form-field appearance="outline" class="w-100" floatLabel="always">
   <mat-label>{{ label }}</mat-label>
-  <ngx-mat-file-input [formControl]="ngControl.control" [accept]="accept" [disabled]="disabled">
-  </ngx-mat-file-input>
+  <input matInput type="file" (change)="onFileChange($event)" [accept]="accept" [disabled]="disabled">
   <mat-icon matSuffix>attach_file</mat-icon>
   <mat-hint align="start">
     <strong *ngIf="accept != '.pdf'">Nous n'acceptons que les fichiers PNG ou JPEG</strong>

@@ -1,0 +1,77 @@
+<div class="container">
+  <button
+    mat-icon-button
+    matTooltip="Back to detail page"
+    matTooltipPosition="right"
+    [routerLink]="['./..']"
+    class="back--button"
+  >
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
+  <h2 class="text-center p-2">Modifier l'offre d'emploi</h2>
+  <mat-card class="example-card">
+    <h4 class="subtitle"><strong>Informations générales</strong></h4>
+    <mat-card-content>
+      <form
+        id="jobForm"
+        [formGroup]="JOB_FORM"
+        (submit)="JOB_FORM.valid && JOB_FORM.dirty && edit()"
+        #form="ngForm"
+        autocomplete="off"
+      >
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-text-input
+              [formControl]="JOB_FORM.controls['title']"
+              [label]="'Titre*'"
+            ></app-text-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-select-input [formControl]="JOB_FORM.controls['activity_area']" [label]="'Secteur d\'activité'"
+              [options]="ACTIVITY_AREA" [bold]="true"></app-select-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-select-input [formControl]="JOB_FORM.controls['company']" [label]="'Entreprise'"
+              [options]="(companies$ | async)?.companies" [isObservable]="true" [optionDisplay]="'name'"></app-select-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-text-input
+              [formControl]="JOB_FORM.controls['location']"
+              [label]="'Adresse'"
+            ></app-text-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-select-input [formControl]="JOB_FORM.controls['type_contrat']" [label]="'Type du Contrat'"
+              [options]="CONTRACT" [bold]="true" [textTransform]="'uppercase'"></app-select-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-select-input [formControl]="JOB_FORM.controls['sharedWith']" [label]="'Associations'"
+              [options]="(associations$ | async)" [multiple]="true" [isObservable]="true" [optionDisplay]="'raisonSocial'"
+              [deselectValue]="false"></app-select-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <app-textarea-input [formControl]="JOB_FORM.controls['description']" [label]="'Description'"
+              [placeholder]="'Mettez votre description ici...'"></app-textarea-input>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="submit-button" align="right">
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="!JOB_FORM.valid || !JOB_FORM.dirty"
+        form="jobForm"
+        color="primary"
+      >
+        Enregistrer
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { first, takeWhile, tap } from 'rxjs/operators';
@@ -10,19 +9,19 @@ import { YoungService } from 'src/app/core/services/young.service';
 import { ColaborationTypeComponent } from '../dialogs/colaboration-type/colaboration-type.component';
 
 @Component({
-  selector: 'app-youth-resumes',
-  templateUrl: './youth-resumes.component.html',
-  styleUrls: ['./youth-resumes.component.scss'],
+    selector: 'app-youth-resumes',
+    templateUrl: './youth-resumes.component.html',
+    styleUrls: ['./youth-resumes.component.scss'],
+    standalone: false
 })
-export class YouthResumesComponent implements OnInit {
-  PAGE_INDEX = 0;
-  PAGE_SIZE = 10;
+export class YouthResumesComponent implements OnInit, OnDestroy {
+  first = 0;
+  pageSize = 10;
 
   filterQuery;
   youth$: Observable<YoungResult>;
   private alive: boolean = true;
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   constructor(
     private youngService: YoungService,
     private activatedRoute: ActivatedRoute,
@@ -32,23 +31,14 @@ export class YouthResumesComponent implements OnInit {
 
   ngOnInit(): void {
     this.ListenToQueryParamsChange();
-
     this.setColaborationType();
   }
 
-  ngAfterViewInit(): void {
-    this.paginator?.page
-      .pipe(
-        takeWhile(() => this.alive),
-        tap(() =>
-          this.loadYouth(
-            this.paginator.pageIndex,
-            this.paginator.pageSize,
-            this.filterQuery
-          )
-        )
-      )
-      .subscribe();
+  onPageChange(event: any) {
+    this.first = event.first;
+    this.pageSize = event.rows;
+    const pageIndex = event.page;
+    this.loadYouth(pageIndex, this.pageSize, this.filterQuery);
   }
 
   loadYouth(page, limit, filterQuery) {
@@ -59,11 +49,11 @@ export class YouthResumesComponent implements OnInit {
     this.activatedRoute.queryParams
       .pipe(
         takeWhile(() => this.alive),
-        tap((_) => (this.paginator ? (this.paginator.pageIndex = 0) : 0))
+        tap((_) => (this.first = 0))
       )
       .subscribe((queryPrams) => {
         this.filterQuery = queryPrams;
-        this.loadYouth(this.PAGE_INDEX, this.PAGE_SIZE, queryPrams);
+        this.loadYouth(0, this.pageSize, queryPrams);
       });
   }
 

@@ -2,8 +2,9 @@ const validation = require('../middleware/validate');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const company = require('../middleware/company');
+const association = require('../middleware/association');
 const checkCsrfToken = require('../middleware/csrf');
-const { Company, validate, validateUpdatePassword, validateUpdateLogo, validateUpdateColaboration } = require("../models/company");
+const { Company, validate, validateUpdateBody, validateUpdatePassword, validateUpdateLogo, validateUpdateColaboration } = require("../models/company");
 const filterQuery = require("../helpers/filter-query-generator");
 const account = require("../services/account");
 const fs = require("fs");
@@ -29,7 +30,32 @@ router.post('/', [auth, checkCsrfToken, admin, validation(validate)], async (req
 
         user = await account.add(req.body?.email, req.body?.password, 'company');
 
-        company = await add(req.body, user?._id);
+        company = await add(req.body, user?._id, req.user);
+
+        return res.status(204).send({ message: 'Ok' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message);
+    }
+});
+
+router.post('/association', [auth, checkCsrfToken, association, validation(validate)], async (req, res) => {
+    try {
+        let comp = await findCompanyByName(req.body?.name);
+        if (comp)
+            return res.status(400).send({ message: 'Company already Exist' });
+
+        comp = await findCompanyByEmail(req.body?.email);
+        if (comp)
+            return res.status(400).send({ message: 'Company already Exist' });
+
+        let user = await account.isExist(req.body?.email);
+        if (user)
+            return res.status(400).send({ message: 'Email already used' });
+
+        user = await account.add(req.body?.email, req.body?.password, 'company');
+
+        comp = await addByAssociation(req.body, user?._id, req.user.sub);
 
         return res.status(204).send({ message: 'Ok' });
     } catch (error) {
@@ -49,6 +75,46 @@ router.get('/', [auth, checkCsrfToken], async (req, res) => {
         if (companies && companies.length) return res.status(200).send(companies[0]);
 
         return res.status(200).send(companies);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message);
+    }
+});
+
+router.get('/association', [auth, checkCsrfToken, association], async (req, res) => {
+    try {
+        const page = parseInt(req.query.pageNumber) || 0;
+        const limit = parseInt(req.query.pageSize) || 10;
+        let filter = filterQuery.generator(req.query);
+
+        const ObjectId = mongoose.Types.ObjectId;
+        filter.$and ? filter.$and.push({ createdBy: new ObjectId(req.user.sub) }) : filter = { createdBy: new ObjectId(req.user.sub) };
+
+        let companies = await find(page, limit, filter);
+
+        if (companies && companies.length) return res.status(200).send(companies[0]);
+
+        return res.status(200).send(companies);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message);
+    }
+});
+
+router.get('/association/:id', [auth, checkCsrfToken, association], async (req, res) => {
+    try {
+        if (!mongoose.Types.ObjectId.isValid(req.params.id))
+            return res.status(400).send({ message: 'Invalid company ID' });
+
+        const comp = await findCompanyById(req.params.id);
+
+        if (!comp)
+            return res.status(404).send({ message: 'Company not found' });
+
+        if (!comp.createdBy || comp.createdBy.toString() !== req.user.sub)
+            return res.status(403).send({ message: 'Access denied.' });
+
+        return res.status(200).send(comp);
     } catch (error) {
         console.log(error);
         res.status(500).send(error.message);
@@ -95,6 +161,90 @@ router.put('/colaboration', [auth, checkCsrfToken, company, validation(validateU
             return res.status(404).send({ message: `Company not found.` });
 
         return res.status(204).send({ message: 'Updated' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message);
+    }
+});
+
+router.put('/association/:id', [auth, checkCsrfToken, association, validation(validateUpdateBody)], async (req, res) => {
+    try {
+        const comp = await findCompanyById(req.params.id);
+        if (!comp)
+            return res.status(404).send({ message: 'Company not found' });
+
+        if (!comp.createdBy || comp.createdBy.toString() !== req.user.sub)
+            return res.status(403).send({ message: 'Access denied.' });
+
+        const result = await update(req.params.id, req.body);
+        if (result.n <= 0)
+            return res.status(404).send({ message: `Company not found.` });
+
+        return res.status(204).send({ message: 'Updated' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message);
+    }
+});
+
+router.put('/association/:id/password', [auth, checkCsrfToken, association, validation(validateUpdatePassword)], async (req, res) => {
+    try {
+        let comp = await findCompanyById(req.params.id);
+        if (!comp)
+            return res.status(404).send({ message: 'Company not found' });
+
+        if (!comp.createdBy || comp.createdBy.toString() !== req.user.sub)
+            return res.status(403).send({ message: 'Access denied.' });
+
+        const result = await account.update(comp.userId, req.body?.password);
+        if (result.n <= 0)
+            return res.status(404).send({ message: `Failed to update.` });
+
+        return res.status(204).send({ message: 'Updated' });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+router.put('/association/:id/upload_photo', [auth, checkCsrfToken, association, validation(validateUpdateLogo)], async (req, res) => {
+    try {
+        let comp = await findCompanyById(req.params.id);
+        if (!comp)
+            return res.status(404).send({ message: 'Company not found' });
+
+        if (!comp.createdBy || comp.createdBy.toString() !== req.user.sub)
+            return res.status(403).send({ message: 'Access denied.' });
+
+        const photo = await fileManager.savePicture(req.body.logo, comp.name, 'CompanyLogo');
+        const result = await update(req.params.id, { logo: photo });
+        if (comp.logo) deletePicture(comp.logo);
+
+        if (result.n <= 0)
+            return res.status(404).send({ message: `Company not found.` });
+
+        return res.status(204).send({ message: 'Updated' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message);
+    }
+});
+
+router.delete('/association/:id', [auth, checkCsrfToken, association], async (req, res) => {
+    try {
+        let comp = await findCompanyById(req.params.id);
+        if (!comp)
+            return res.status(404).send({ message: 'Company not found' });
+
+        if (!comp.createdBy || comp.createdBy.toString() !== req.user.sub)
+            return res.status(403).send({ message: 'Access denied.' });
+
+        await account.remove(comp?.userId);
+
+        const result = await remove(comp._id);
+        if (result.n <= 0)
+            return res.status(404).send({ message: `Failed to delete.` });
+
+        return res.status(204).send({ message: 'Deleted' });
     } catch (error) {
         console.log(error);
         res.status(500).send(error.message);
@@ -189,8 +339,27 @@ async function findCompanyByUserId(id) {
     return await Company.findOne({userId : id});
 }
 
-async function add(data, userId) {
+async function add(data, userId, reqUser) {
     data.userId = userId;
+
+    if (reqUser.role === 'association') {
+        data.createdByAssociation = reqUser.associationId;
+    }
+
+    data.logo = await fileManager.savePicture(
+      data.logo,
+      data.name,
+      'CompanyLogo'
+    );
+
+    const company = new Company({ ...data });
+    return await company.save();
+}
+
+
+async function addByAssociation(data, userId, createdBy) {
+    data.userId = userId;
+    data.createdBy = createdBy;
     data.logo = await fileManager.savePicture(data.logo, data.name, 'CompanyLogo');
 
     const company = new Company({ ...data });
@@ -233,9 +402,11 @@ async function remove(id) {
 }
 
 function deletePicture(pictureName) {
-    const picturePath = `${path.join(__dirname, '../public')}/companies/`;
+    const picturePath = path.join(__dirname, '../public', 'companies', pictureName);
 
-    return fs.unlinkSync(picturePath + pictureName);
+    if (fs.existsSync(picturePath)) {
+        return fs.unlinkSync(picturePath);
+    }
 }
 
 module.exports = router;

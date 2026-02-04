@@ -25,7 +25,19 @@ npm run lint         # Run TSLint
 cd backend
 npm install          # Install dependencies
 node index.js        # Start server on port 3000
+npm run seed         # Seed database with sample data
 ```
+
+**Seeder Details:**
+Running `npm run seed` populates the database with sample data:
+- 8 users (1 admin, 4 association admins, 3 company admins)
+- 3 associations with contact persons
+- 5 companies with recruiters
+- 5 training programs (passworks)
+- 10 job listings
+- 15 youth profiles with skills, training, and employment data
+
+See `backend/SEEDER_GUIDE.md` for customizing seeder counts, clearing data, and test credentials.
 
 ### Environment Configuration
 Backend uses `config` package. Set environment variables:

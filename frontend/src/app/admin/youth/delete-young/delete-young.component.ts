@@ -7,9 +7,10 @@ import { catchError, first, tap } from 'rxjs/operators';
 import { YoungService } from 'src/app/core/services/young.service';
 
 @Component({
-  selector: 'app-delete-young',
-  templateUrl: './delete-young.component.html',
-  styleUrls: ['./delete-young.component.scss'],
+    selector: 'app-delete-young',
+    templateUrl: './delete-young.component.html',
+    styleUrls: ['./delete-young.component.scss'],
+    standalone: false
 })
 export class DeleteYoungComponent implements OnInit {
   constructor(

@@ -2,6 +2,7 @@ const validation = require('../middleware/validate');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const company = require('../middleware/company');
+const association = require('../middleware/association');
 const checkCsrfToken = require('../middleware/csrf');
 const { Job, validate } = require("../models/job");
 const { Association } = require("../models/association");
@@ -28,6 +29,19 @@ router.post('/', [auth, checkCsrfToken, admin, validation(validate)], async (req
 router.post('/company', [auth, checkCsrfToken, company, validation(validate)], async (req, res) => {
     try {
         const job = await addByCompany(req.body, req.user);
+
+        await addNotification(job);
+
+        return res.status(204).send({ message: 'Ok' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message);
+    }
+});
+
+router.post('/association', [auth, checkCsrfToken, association, validation(validate)], async (req, res) => {
+    try {
+        const job = await addByAssociation(req.body, req.user);
 
         await addNotification(job);
 
@@ -91,10 +105,10 @@ router.get('/company/:id', [auth, checkCsrfToken, company], async (req, res) => 
     }
 });
 
-router.get('/association', [auth, checkCsrfToken], async (req, res) => {
+router.get('/association', [auth, checkCsrfToken, association], async (req, res) => {
     try {
         const page = parseInt(req.query.pageNumber) || 0;
-        const limit = parseInt(req.query.pageSize) || 10; 
+        const limit = parseInt(req.query.pageSize) || 10;
 
         const jobs = await findAssociationJobs(page, limit, req.user.sub);
 
@@ -107,8 +121,11 @@ router.get('/association', [auth, checkCsrfToken], async (req, res) => {
     }
 });
 
-router.get('/association/:id', [auth, checkCsrfToken], async (req, res) => {
+router.get('/association/:id', [auth, checkCsrfToken, association], async (req, res) => {
     try {
+        if (!ObjectId.isValid(req.params.id))
+            return res.status(400).send({ message: 'Invalid job ID' });
+
         const job = await findAssociationJobById(req.params.id, req.user.sub);
 
         if (!job)
@@ -160,6 +177,12 @@ router.put('/:id', [auth, checkCsrfToken, admin, validation(validate)], async (r
         if (result.n <= 0)
             return res.status(404).send({ message: `Job not found.` });
 
+        // Create notification for job update
+        const job = await Job.findById(req.params.id);
+        if (job) {
+            await addNotification(job, 'updated');
+        }
+
         return res.status(204).send({ message: 'Updated' });
     } catch (error) {
         console.log(error);
@@ -173,6 +196,31 @@ router.put('/company/:id', [auth, checkCsrfToken, company, validation(validate)]
         if (result.n <= 0)
             return res.status(404).send({ message: `Job not found.` });
 
+        // Create notification for job update
+        const job = await Job.findById(req.params.id);
+        if (job) {
+            await addNotification(job, 'updated');
+        }
+
+        return res.status(204).send({ message: 'Updated' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message);
+    }
+});
+
+router.put('/association/:id', [auth, checkCsrfToken, association, validation(validate)], async (req, res) => {
+    try {
+        const result = await updateAssociationJob(req.params.id, req.user.sub, req.body);
+        if (result.n <= 0)
+            return res.status(404).send({ message: `Job not found.` });
+
+        // Create notification for job update
+        const job = await Job.findById(req.params.id);
+        if (job) {
+            await addNotification(job, 'updated');
+        }
+
         return res.status(204).send({ message: 'Updated' });
     } catch (error) {
         console.log(error);
@@ -182,9 +230,17 @@ router.put('/company/:id', [auth, checkCsrfToken, company, validation(validate)]
 
 router.put('/:id/archive', [auth, checkCsrfToken, admin], async (req, res) => {
     try {
+        // Get job before archiving to access sharedWith
+        const job = await Job.findById(req.params.id);
+
         const result = await archive(req.params.id);
         if (result.n <= 0)
             return res.status(404).send({ message: `Job not found.` });
+
+        // Create notification for job archive
+        if (job) {
+            await addNotification(job, 'archived');
+        }
 
         return res.status(204).send({ message: 'Archived' });
     } catch (error) {
@@ -195,9 +251,38 @@ router.put('/:id/archive', [auth, checkCsrfToken, admin], async (req, res) => {
 
 router.put('/company/:id/archive', [auth, checkCsrfToken, company], async (req, res) => {
     try {
+        // Get job before archiving to access sharedWith
+        const job = await Job.findById(req.params.id);
+
         const result = await archiveByCompany(req.params.id, req.user.sub);
         if (result.n <= 0)
             return res.status(404).send({ message: `Job not found.` });
+
+        // Create notification for job archive
+        if (job) {
+            await addNotification(job, 'archived');
+        }
+
+        return res.status(204).send({ message: 'Archived' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message);
+    }
+});
+
+router.put('/association/:id/archive', [auth, checkCsrfToken, association], async (req, res) => {
+    try {
+        // Get job before archiving to access sharedWith
+        const job = await Job.findById(req.params.id);
+
+        const result = await archiveByAssociation(req.params.id, req.user.sub);
+        if (result.n <= 0)
+            return res.status(404).send({ message: `Job not found.` });
+
+        // Create notification for job archive
+        if (job) {
+            await addNotification(job, 'archived');
+        }
 
         return res.status(204).send({ message: 'Archived' });
     } catch (error) {
@@ -220,7 +305,10 @@ async function findAssociationJobsLight(userId) {
     if(!association) return [];
 
     return await Job.find({ $and : [
-        {sharedWith: { $in: [association._id] }},
+        { $or: [
+            {sharedWith: { $in: [association._id] }},
+            {createdBy: new ObjectId(userId)}
+        ]},
         {status : 'active'}
     ]}).select("_id reference")
 }
@@ -231,7 +319,10 @@ async function findAssociationJobs(page, limit, userId) {
     if(!association) return [];
 
     let filter =  { $and : [
-        {sharedWith: { $in: [association._id] }},
+        { $or: [
+            {sharedWith: { $in: [association._id] }},
+            {createdBy: new ObjectId(userId)}
+        ]},
         {status : 'active'}
     ]};
 
@@ -244,9 +335,12 @@ async function findAssociationJobById(id, userId) {
 
     return await Job.find({ $and : [
         {_id : id},
-        {sharedWith: { $in: [association._id] }},
+        { $or: [
+            {sharedWith: { $in: [association._id] }},
+            {createdBy: new ObjectId(userId)}
+        ]},
         {status : 'active'}
-    ]}).populate('company', 'name').select('-sharedWith');
+    ]}).populate('company', 'name').populate('sharedWith', 'raisonSocial');
 }
 
 async function findAdminJobs(userId) {
@@ -265,17 +359,18 @@ async function add(data, user) {
     return await job.save();
 }
 
-async function addNotification(job) {
-    const notif = new Notification(
-        {
-           company : job?.company,
-           jobId : job?._id,
-           date : new Date(),
-           createdBy : job?.createdBy,
-           sharedWith : job?.sharedWith,
-           viewedBy : []
-        }
-    )
+async function addNotification(job, actionType = 'created') {
+    // Always create notification so admins and associations can see all job activities
+    const notif = new Notification({
+        company: job?.company,
+        jobId: job?._id,
+        date: new Date(),
+        createdBy: job?.createdBy,
+        actionType: actionType,
+        sharedWith: job?.sharedWith || [],
+        viewedBy: [],
+        viewedByAdmin: []
+    });
 
     return await notif.save();
 }
@@ -293,6 +388,35 @@ async function addByCompany(data, user) {
     const job = new Job({ ...data });
 
     return await job.save();
+}
+
+async function addByAssociation(data, user) {
+    const counter = await jobCounter();
+
+    data.createdBy = user.sub;
+    data.reference = `EO-${counter + 1}`;
+
+    const job = new Job({ ...data });
+
+    return await job.save();
+}
+
+async function updateAssociationJob(id, userId, job) {
+    return await Job.updateOne({ "_id": id, "createdBy": new ObjectId(userId) },
+        {
+            $set: job
+        },
+        { new: true });
+}
+
+async function archiveByAssociation(id, userId) {
+    return await Job.updateOne({ "_id": id, "createdBy": new ObjectId(userId) },
+        {
+            $set: {
+                status: 'inactive'
+            }
+        },
+        { new: true });
 }
 
 async function find(page, limit, filterQuery) {

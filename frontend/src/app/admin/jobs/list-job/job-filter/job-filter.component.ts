@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-job-filter',
-  templateUrl: './job-filter.component.html',
-  styleUrls: ['./job-filter.component.scss']
+    selector: 'app-job-filter',
+    templateUrl: './job-filter.component.html',
+    styleUrls: ['./job-filter.component.scss'],
+    standalone: false
 })
 export class JobFilterComponent implements OnInit {
   STATUS = ['active', 'inactive'];
@@ -15,7 +16,7 @@ export class JobFilterComponent implements OnInit {
   });
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
@@ -30,4 +31,13 @@ export class JobFilterComponent implements OnInit {
     });
   }
 
+  resetFilters() {
+    this.FILTER_FORM.reset({ filter: '', status: 'active' });
+    this.filter();
+  }
+
+  hasActiveFilters(): boolean {
+    const values = this.FILTER_FORM.value;
+    return values.filter !== '' || values.status !== 'active';
+  }
 }

@@ -5,9 +5,10 @@ import { AssociationService } from '../core/services/association.service';
 import { StatsService } from '../core/services/stats.service';
 
 @Component({
-  selector: 'app-reports',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.scss'],
+    selector: 'app-reports',
+    templateUrl: './reports.component.html',
+    styleUrls: ['./reports.component.scss'],
+    standalone: false
 })
 export class ReportsComponent implements OnInit {
   associations$ : Observable<AssociationResult>

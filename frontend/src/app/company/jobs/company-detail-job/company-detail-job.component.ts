@@ -9,9 +9,10 @@ import { JobService } from 'src/app/core/services/job.service';
 import { CompanyArchiveJobComponent } from '../company-archive-job/company-archive-job.component';
 
 @Component({
-  selector: 'app-company-detail-job',
-  templateUrl: './company-detail-job.component.html',
-  styleUrls: ['./company-detail-job.component.scss'],
+    selector: 'app-company-detail-job',
+    templateUrl: './company-detail-job.component.html',
+    styleUrls: ['./company-detail-job.component.scss'],
+    standalone: false
 })
 export class CompanyDetailJobComponent implements OnInit {
   job: Job = !window?.history?.state?._id ? null : window?.history?.state;

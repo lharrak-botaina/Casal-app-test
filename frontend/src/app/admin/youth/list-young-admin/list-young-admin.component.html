@@ -7,14 +7,17 @@
 
   <app-young-card [youth$]="youth$"></app-young-card>
 
-  <div class="row" [class.hidden]="(youth$ | async) ? false : true">
-    <div class="col align-self-end p-2">
-      <mat-paginator
-        [length]="(youth$ | async)?.totalCount"
-        [pageSize]="PAGE_SIZE"
-        [pageSizeOptions]="[5, 10, 20, 50]"
-      >
-      </mat-paginator>
+  <div class="pagination-container" *ngIf="(youth$ | async)?.totalCount > 0">
+    <div class="pagination-info">
+      Total Arrivals: {{ (youth$ | async)?.totalCount }}
     </div>
+    <p-paginator
+      [rows]="pageSize"
+      [totalRecords]="(youth$ | async)?.totalCount"
+      [rowsPerPageOptions]="[5, 10, 20, 50]"
+      [first]="first"
+      (onPageChange)="onPageChange($event)"
+      [showCurrentPageReport]="false"
+    ></p-paginator>
   </div>
 </div>

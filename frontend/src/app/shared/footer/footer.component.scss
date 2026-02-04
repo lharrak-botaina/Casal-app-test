@@ -1,15 +1,78 @@
-.div {
-    background-color: white !important;
+.app-footer {
+  background-color: #fff;
+  border-top: 1px solid #e8e8e8;
+  padding: 19px 24px;
 }
 
-.logo_1 {
-  width: 50px;
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 
-.logo_2 {
-  width: 150px;
+.footer-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #888;
+  white-space: nowrap;
 }
 
-.logo_3 {
-  width: 150px;
+.footer-logos {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.footer-logo {
+  display: block;
+  object-fit: contain;
+  height: 32px;
+  width: auto;
+}
+
+.logo--caixa {
+  height: 28px;
+}
+
+.logo--incorpora {
+  height: 22px;
+}
+
+.logo--casal {
+  height: 34px;
+}
+
+.footer-divider {
+  width: 1px;
+  height: 24px;
+  background-color: #ddd;
+}
+
+@media (max-width: 576px) {
+  .footer-inner {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-logos {
+    gap: 16px;
+  }
+
+  .footer-logo {
+    height: 26px;
+  }
+
+  .logo--caixa {
+    height: 22px;
+  }
+
+  .logo--incorpora {
+    height: 18px;
+  }
+
+  .logo--casal {
+    height: 28px;
+  }
 }

@@ -1,0 +1,386 @@
+// Insertions Container
+.insertions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.insertion-block {
+  position: relative;
+}
+
+.insertion-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e0e0e0;
+
+  .insertion-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #03644e 0%, #024835 100%);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(3, 100, 78, 0.3);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #2d3748;
+  }
+}
+
+// Info Cards
+.info-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin-bottom: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-bottom: 1px solid #e0e0e0;
+
+  mat-icon {
+    color: #03644e;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d3748;
+    flex: 1;
+  }
+
+  .badge {
+    background: #03644e;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  &.success-header {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+
+    mat-icon {
+      color: #2e7d32;
+    }
+  }
+}
+
+.card-body {
+  padding: 24px;
+}
+
+// Interviews Grid
+.interviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.interview-card {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #416788;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateX(4px);
+  }
+}
+
+.interview-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #416788;
+  color: white;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.interview-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.interview-main {
+  margin-bottom: 8px;
+
+  h4 {
+    margin: 0 0 4px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3748;
+  }
+
+  .company-name {
+    font-size: 13px;
+    color: #718096;
+  }
+}
+
+.interview-meta {
+  margin-bottom: 8px;
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #718096;
+
+    mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+      color: #a0aec0;
+    }
+  }
+}
+
+.interview-comment {
+  margin: 0;
+  padding-top: 8px;
+  border-top: 1px dashed #e0e0e0;
+  font-size: 13px;
+  color: #4a5568;
+  font-style: italic;
+}
+
+// Insertion Summary
+.insertion-summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px;
+  background: linear-gradient(135deg, #f0f7f5 0%, #e8f5e9 100%);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.summary-main {
+  .position-title {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #2d3748;
+  }
+
+  .company-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #03644e;
+    font-weight: 500;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.contract-badge {
+  padding: 8px 20px;
+  background: linear-gradient(135deg, #03644e 0%, #024835 100%);
+  color: white;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+// Info Sections
+.info-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.info-section {
+  h5 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #03644e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e0e0e0;
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.info-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-size: 14px;
+  color: #2d3748;
+  font-weight: 500;
+
+  &.highlight {
+    color: #03644e;
+    font-weight: 600;
+  }
+}
+
+// Status Row
+.status-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #ffebee;
+  border-radius: 8px;
+  color: #c62828;
+  font-size: 13px;
+  font-weight: 500;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &.active {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+}
+
+.justification-info {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+
+  .info-label {
+    font-size: 13px;
+  }
+
+  .info-value {
+    font-size: 13px;
+  }
+}
+
+.pdf-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #ef5350 0%, #c62828 100%);
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(198, 40, 40, 0.3);
+  }
+}
+
+// Empty State
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  color: #a0aec0;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+}

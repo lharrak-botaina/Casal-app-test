@@ -42,6 +42,7 @@ import { EditCompanyPasswordComponent } from './companies/edit-company/edit-comp
 import { EditCompanyLogoComponent } from './companies/edit-company/edit-company-logo/edit-company-logo.component';
 import { PrintCenterComponent } from './print-center/print-center.component';
 import { AddDocumentComponent } from './print-center/add-document/add-document.component';
+import { AdminNotificationComponent } from './admin-notification/admin-notification.component';
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { AddDocumentComponent } from './print-center/add-document/add-document.c
     EditCompanyPasswordComponent,
     EditCompanyLogoComponent,
     PrintCenterComponent,
-    AddDocumentComponent
+    AddDocumentComponent,
+    AdminNotificationComponent
   ],
   imports: [
     CommonModule,

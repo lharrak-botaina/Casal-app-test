@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LayoutModule } from '@angular/cdk/layout';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,8 +11,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule  } from '@angular/material/core';
-import { MatPaginatorModule  } from '@angular/material/paginator';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -21,11 +22,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    LayoutModule,
     MatCardModule,
     MatFormFieldModule,
     MatIconModule,
@@ -46,9 +50,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatProgressSpinnerModule,
     MatDividerModule,
     MatChipsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatButtonToggleModule,
+    MatBadgeModule
   ],
-  exports : [
+  exports: [
+    LayoutModule,
     MatCardModule,
     MatFormFieldModule,
     MatIconModule,
@@ -69,7 +76,18 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatProgressSpinnerModule,
     MatDividerModule,
     MatChipsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatButtonToggleModule,
+    MatBadgeModule
+  ],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'fill',
+        floatLabel: 'auto'
+      }
+    }
   ]
 })
 export class MaterialModule { }
