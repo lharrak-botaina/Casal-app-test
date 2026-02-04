@@ -1,0 +1,345 @@
+<div class="container-fluid">
+  <ng-container [formGroup]="SKILLS_ASSESSMENT.controls['level_of_study']">
+    <h4 class="subtitle"><strong>Niveau d'étude</strong></h4>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <app-select-input
+          [formControl]="
+            SKILLS_ASSESSMENT.get('level_of_study')['controls']['level']
+          "
+          [label]="'Niveau d\'étude'"
+          [options]="Data.LEVEL_OF_STUDIES"
+        ></app-select-input>
+      </div>
+      <div class="col-12 col-md-6">
+        <app-textarea-input
+          [formControl]="
+            SKILLS_ASSESSMENT.get('level_of_study')['controls']['description']
+          "
+          [label]="'Détail de la formation'"
+          [placeholder]="'Remplir vos données...'"
+        ></app-textarea-input>
+      </div>
+    </div>
+  </ng-container>
+  <h4 class="subtitle"><strong>Langues</strong></h4>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <app-select-input
+        [formControl]="SKILLS_ASSESSMENT.controls['languages']"
+        [label]="'Langues'"
+        [multiple]="true"
+        [options]="Data.LANGUAGES"
+      ></app-select-input>
+    </div>
+    <div class="col-12 col-md-6" *ngIf="showLanguageComment">
+      <app-text-input
+        [formControl]="SKILLS_ASSESSMENT.controls['languages_comment']"
+        [label]="'Commentaire'"
+      ></app-text-input>
+    </div>
+  </div>
+  <h4 class="subtitle"><strong>Formation</strong></h4>
+  <ng-container
+    *ngFor="
+      let item of SKILLS_ASSESSMENT.controls['professional_training'][
+        'controls'
+      ];
+      let i = index
+    "
+  >
+    <ng-container
+      [formGroup]="
+        SKILLS_ASSESSMENT.controls['professional_training']['controls'][i]
+      "
+    >
+      <div class="row">
+        <div class="col-6">
+          <h6 class="sub_subtitle">
+            <strong>Formation {{ i + 1 }} : </strong>
+          </h6>
+        </div>
+        <div class="col-6 text-end">
+          <button
+            type="button"
+            mat-icon-button
+            color="primary"
+            (click)="addProfessionalTraining()"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            type="button"
+            *ngIf="i != 0"
+            mat-icon-button
+            color="warn"
+            (click)="removeProfessionalTraining(i)"
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              SKILLS_ASSESSMENT.get('professional_training')['controls'][i][
+                'controls'
+              ]['type_formation']
+            "
+            [label]="'Type de formation'"
+            [options]="Data.LEVEL_OF_STUDY"
+          ></app-select-input>
+        </div>
+        <div class="col-12 col-md-6">
+          <app-text-input
+            [formControl]="
+              SKILLS_ASSESSMENT.get('professional_training')['controls'][i][
+                'controls'
+              ]['specialty']
+            "
+            [label]="'Spécialité'"
+          ></app-text-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-text-input
+            [formControl]="
+              SKILLS_ASSESSMENT.get('professional_training')['controls'][i][
+                'controls'
+              ]['institution']
+            "
+            [label]="'Etablissement'"
+          ></app-text-input>
+        </div>
+        <div class="col-12 col-md-6">
+          <app-text-input
+            [formControl]="
+              SKILLS_ASSESSMENT.get('professional_training')['controls'][i][
+                'controls'
+              ]['cetificate']
+            "
+            [label]="'Certificat ou Diplôme'"
+          ></app-text-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-date-input
+            [formControl]="
+              SKILLS_ASSESSMENT.get('professional_training')['controls'][i][
+                'controls'
+              ]['start_date']
+            "
+            [label]="'Date début'"
+          ></app-date-input>
+        </div>
+        <div class="col-12 col-md-6">
+          <app-date-input
+            [formControl]="
+              SKILLS_ASSESSMENT.get('professional_training')['controls'][i][
+                'controls'
+              ]['end_date']
+            "
+            [label]="'Date fin'"
+          ></app-date-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <app-textarea-input
+            [formControl]="
+              SKILLS_ASSESSMENT.get('professional_training')['controls'][i][
+                'controls'
+              ]['comment']
+            "
+            [label]="'Commentaire'"
+          ></app-textarea-input>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <h4 class="subtitle"><strong>Expériences professionnelles</strong></h4>
+  <ng-container
+    *ngFor="
+      let item of SKILLS_ASSESSMENT.controls['professional_experience'][
+        'controls'
+      ];
+      let i = index
+    "
+  >
+    <ng-container
+      [formGroup]="
+        SKILLS_ASSESSMENT.controls['professional_experience']['controls'][i]
+      "
+    >
+      <div class="row">
+        <div class="col-6">
+          <h6 class="sub_subtitle">
+            <strong>Expérience {{ i + 1 }} : </strong>
+          </h6>
+        </div>
+        <div class="col-6 text-end">
+          <button
+            type="button"
+            mat-icon-button
+            color="primary"
+            (click)="addProfessionalExperience()"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            type="button"
+            *ngIf="i != 0"
+            mat-icon-button
+            color="warn"
+            (click)="removeProfessionalExperience(i)"
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              SKILLS_ASSESSMENT.get('professional_experience')['controls'][i][
+                'controls'
+              ]['genre']
+            "
+            [label]="'Stage / Emploi'"
+            [options]="Data.WORK_TYPE"
+          ></app-select-input>
+        </div>
+        <div class="col-12 col-md-6">
+          <app-text-input
+            [formControl]="
+              SKILLS_ASSESSMENT.get('professional_experience')['controls'][i][
+                'controls'
+              ]['institution']
+            "
+            [label]="'Etablissement'"
+          ></app-text-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-text-input
+            [formControl]="
+              SKILLS_ASSESSMENT.get('professional_experience')['controls'][i][
+                'controls'
+              ]['function']
+            "
+            [label]="'Poste'"
+          ></app-text-input>
+        </div>
+        <div class="col-12 col-md-6">
+          <app-select-input
+          [formControl]="
+              SKILLS_ASSESSMENT.get('professional_experience')['controls'][i][
+                'controls'
+              ]['duration']
+            "
+            [label]="'Période d\'experience'"
+            [options]="Data.JOB_DURATION"
+          ></app-select-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-date-input
+            [formControl]="
+              SKILLS_ASSESSMENT.get('professional_experience')['controls'][i][
+                'controls'
+              ]['start_date']
+            "
+            [label]="'Date début'"
+          ></app-date-input>
+        </div>
+        <div class="col-12 col-md-6">
+          <app-date-input
+            [formControl]="
+              SKILLS_ASSESSMENT.get('professional_experience')['controls'][i][
+                'controls'
+              ]['end_date']
+            "
+            [label]="'Date fin'"
+          ></app-date-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <app-textarea-input
+            [formControl]="
+              SKILLS_ASSESSMENT.get('professional_experience')['controls'][i][
+                'controls'
+              ]['comment']
+            "
+            [label]="'Commentaire'"
+          ></app-textarea-input>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-container [formGroup]="SKILLS_ASSESSMENT.controls['tip_interview']">
+    <h4 class="subtitle"><strong>Entretien TIP</strong></h4>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <app-date-input
+          [formControl]="
+            SKILLS_ASSESSMENT.get('tip_interview')['controls']['date']
+          "
+          [label]="'Date d\'entretien'"
+        ></app-date-input>
+      </div>
+      <div class="col-12 col-md-6">
+        <app-textarea-input
+          [formControl]="
+            SKILLS_ASSESSMENT.get('tip_interview')['controls']['comment']
+          "
+          [label]="'Conclusion de l\'entretien avec l\'usager du TIP'"
+          [placeholder]="'Remplir vos données...'"
+        ></app-textarea-input>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container [formGroup]="SKILLS_ASSESSMENT.controls['skills']">
+    <h4 class="subtitle"><strong>Compétences</strong></h4>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <app-select-input
+          [formControl]="
+            SKILLS_ASSESSMENT.get('skills')['controls']['hard_skills']
+          "
+          [label]="'Compétences techniques (Hard Skills)'"
+          [multiple]="true"
+          [isGrouped]="true"
+          [options]="Data.HARD_SKILLS"
+        ></app-select-input>
+      </div>
+      <div class="col-12 col-md-6">
+        <app-select-input
+          [formControl]="
+            SKILLS_ASSESSMENT.get('skills')['controls']['soft_skills']
+          "
+          [label]="'Compétences relationnelles (Soft Skills)'"
+          [multiple]="true"
+          [options]="Data.SOFT_SKILLS"
+        ></app-select-input>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <app-select-input
+          [formControl]="
+            SKILLS_ASSESSMENT.get('skills')['controls']['life_skills']
+          "
+          [label]="'Compétences essentielles (Life Skills)'"
+          [multiple]="true"
+          [options]="Data.LIFE_SKILLS"
+        ></app-select-input>
+      </div>
+    </div>
+  </ng-container>
+</div>

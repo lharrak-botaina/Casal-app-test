@@ -1,0 +1,256 @@
+<div class="container-fluid">
+  <ng-container [formGroup]="INSERTION">
+    <h4 class="subtitle mt-1"><strong>Entretiens d'embauche</strong></h4>
+    <ng-container
+      *ngFor="
+        let item of INSERTION.controls['tracking_before']['controls'];
+        let j = index
+      "
+    >
+      <ng-container
+        [formGroup]="INSERTION.controls['tracking_before']['controls'][j]"
+      >
+        <div class="row">
+          <div class="col-6">
+            <h6 class="sub_subtitle">
+              <strong>Entretien {{ j + 1 }} : </strong>
+            </h6>
+          </div>
+          <div class="col-6 text-end">
+            <button
+              type="button"
+              mat-icon-button
+              color="primary"
+              (click)="addBeforeInsertion(i)"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+            <button
+              type="button"
+              *ngIf="j != 0"
+              mat-icon-button
+              color="warn"
+              (click)="removeBeforeInsertion(i, j)"
+            >
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-date-input
+              [formControl]="
+                INSERTION.controls['tracking_before']['controls'][j][
+                  'controls'
+                ]['interview_date']
+              "
+              [label]="'Date d\'entretien'"
+            ></app-date-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-select-input
+              [formControl]="
+                INSERTION.controls['tracking_before']['controls'][j][
+                  'controls'
+                ]['companyId']
+              "
+              [label]="'Employeur'"
+              [options]="(companies$ | async)?.companies"
+              [isObservable]="true"
+              [optionDisplay]="'name'"
+            ></app-select-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-text-input
+              [formControl]="
+                INSERTION.controls['tracking_before']['controls'][j][
+                  'controls'
+                ]['job_position']
+              "
+              [label]="'Poste'"
+            ></app-text-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-textarea-input
+              [formControl]="
+                INSERTION.controls['tracking_before']['controls'][j][
+                  'controls'
+                ]['comment']
+              "
+              [label]="'Commentaire'"
+            ></app-textarea-input>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+    <h4 class="subtitle"><strong>Insertion</strong></h4>
+    <ng-container [formGroup]="INSERTION.controls['tracking_after']">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['category']
+            "
+            [label]="'Catégorie'"
+            [options]="Data.CATEGORIES"
+            (valueChange)=onChangeCategory($event);
+          ></app-select-input>
+        </div>
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['contract_type']
+            "
+            [label]="'Type de contrat'"
+            [options]="CONTRACT_TYPE"
+          ></app-select-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['companyId']
+            "
+            [label]="'Entreprise'"
+            [options]="(companies$ | async)?.companies"
+            [isObservable]="true"
+            [optionDisplay]="'name'"
+          ></app-select-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <mat-slide-toggle #isJobExists           
+          [formControl]="
+            INSERTION.controls['tracking_after']['controls']['isJobExists']
+        ">Offre existante</mat-slide-toggle>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="isJobExists?.checked">
+          <app-select-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['jobId']
+            "
+            [label]="'Offre d\'emploi'"
+            [options]="(jobs$ | async)"
+            [isObservable]="true"
+            [optionDisplay]="'reference'"
+          ></app-select-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-date-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['start_date']
+            "
+            [label]="'Date début'"
+          ></app-date-input>
+        </div>
+        <div class="col-12 col-md-6">
+          <app-date-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['end_date']
+            "
+            [label]="'Date fin'"
+          ></app-date-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['function_type']
+            "
+            [label]="'Type de poste'"
+            [options]="Data.JOB_TYPES"
+          ></app-select-input>
+        </div>
+        <div class="col-12 col-md-6">
+          <app-text-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['function']
+            "
+            [label]="'Poste'"
+          ></app-text-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['insertion_type']
+            "
+            [label]="'Insertion'"
+            [options]="Data.INSERTION_TYPE"
+          ></app-select-input>
+        </div> 
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['duration']
+            "
+            [label]="'Durée'"
+            [options]="Data.JOB_DURATION"
+          ></app-select-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['salary']
+            "
+            [label]="'Salaire'"
+            [options]="Data.SALARIES"
+          ></app-select-input>
+        </div>
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['cnss']
+            "
+            [label]="'CNSS'"
+            [options]="Data.YES_OR_NO"
+            [deselectValue]="false"
+          ></app-select-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 col-md-6">
+          <app-select-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['justificative_type']
+            "
+            [label]="'Type de justification'"
+            [options]="Data.JUSTIFICATIVE_TYPE"
+          ></app-select-input>
+        </div>
+        <div class="col-12 col-md-6">
+          <app-file-input
+            [formControl]="
+              INSERTION.controls['tracking_after']['controls']['justification']
+            "
+            [label]="'Justificatif'"
+            [accept]="'.pdf'"
+          ></app-file-input>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <mat-card-actions class="submit-button">
+    <button
+      mat-raised-button
+      type="submit"
+      [disabled]="!this.INSERTION.valid"
+      color="primary"
+      (click)="addInsertion()"
+    >
+      Save
+    </button>
+  </mat-card-actions>
+  <strong *ngIf="!this.INSERTION.valid" style="color: red;">** Veuillez remplir tous les champs d'insertion pour activer l'envoie de formulaire.</strong>
+
+</div>

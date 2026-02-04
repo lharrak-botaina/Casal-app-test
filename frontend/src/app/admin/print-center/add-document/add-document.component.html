@@ -1,0 +1,42 @@
+<div class="container">
+  <h2 class="text-center p-2">Nouveau document</h2>
+  <mat-card class="example-card">
+    <h4 class="subtitle"><strong>Informations Générales</strong></h4>
+    <mat-card-content>
+      <form
+        id="jobForm"
+        [formGroup]="DOC_FORM"
+        (submit)="DOC_FORM.valid && add()"
+        #form="ngForm"
+        autocomplete="off"
+      >
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-text-input
+              [formControl]="DOC_FORM.controls['name']"
+              [label]="'Nom*'"
+            ></app-text-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-file-input
+              [formControl]="DOC_FORM.controls['document']"
+              [label]="'Document'"
+              [accept]="'.pdf'"
+            ></app-file-input>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="submit-button" align="right">
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="!DOC_FORM.valid"
+        form="jobForm"
+        color="primary"
+      >
+        Enregistrer
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

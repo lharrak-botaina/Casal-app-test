@@ -1,0 +1,83 @@
+<div class="container-fluid">
+  <form [formGroup]="YONG_FORM" (submit)="this.YONG_FORM.valid && add()">
+    <mat-horizontal-stepper #stepper>
+      <mat-step
+        #step1
+        formGroupName="personal_info"
+        [stepControl]="YONG_FORM.controls['personal_info']"
+      >
+        <ng-template matStepLabel>Renseignements personnels</ng-template>
+        <app-young-personal-info
+          [formGroup]="YONG_FORM.controls['personal_info']"
+        ></app-young-personal-info>
+        <div class="text-end">
+          <button mat-button color="primary" type="button" matStepperNext>Suivant</button>
+        </div>
+      </mat-step>
+      <mat-step
+        #step2
+        formGroupName="skills_assessment"
+        [stepControl]="YONG_FORM.controls['skills_assessment']"
+      >
+        <ng-template matStepLabel>Bilan de compétences</ng-template>
+        <app-young-skills-assessment
+          *ngIf="step1.interacted"
+          [formGroup]="YONG_FORM.controls['skills_assessment']"
+        ></app-young-skills-assessment>
+        <div class="text-end">
+          <button mat-button color="primary" type="button" matStepperNext>Suivant</button>
+        </div>
+      </mat-step>
+      <mat-step
+        #step3
+        formGroupName="capacity_building"
+        [stepControl]="YONG_FORM.controls['capacity_building']"
+      >
+        <ng-template matStepLabel>Ateliers de renforcement de capacités</ng-template>
+        <app-young-capacity-building
+          *ngIf="step2.interacted"
+          [formGroup]="YONG_FORM.controls['capacity_building']"
+        ></app-young-capacity-building>
+        <div class="text-end">
+          <button mat-button color="primary" type="button" matStepperNext>Suivant</button>
+        </div>
+      </mat-step>
+      <mat-step
+        #step4
+        formGroupName="passwork"
+        [stepControl]="YONG_FORM.controls['passwork']"
+      >
+        <ng-template matStepLabel>Formations professionnelles PASSWORK</ng-template>
+        <app-young-passwork
+          *ngIf="step3.interacted"
+          [formGroup]="YONG_FORM.controls['passwork']"
+        ></app-young-passwork>
+        <div class="text-end">
+          <button mat-button color="primary" type="button" matStepperNext>Suivant</button>
+        </div>
+      </mat-step>
+      <mat-step
+        #step5
+        formGroupName="insertion"
+        [stepControl]="YONG_FORM.controls['insertion']"
+      >
+        <ng-template matStepLabel>Insertion</ng-template>
+        <app-young-insertion
+          *ngIf="step4.interacted"
+          [formGroup]="YONG_FORM.controls['insertion']"
+        ></app-young-insertion>
+        <div class="text-end">
+          <button mat-button color="primary" type="button" matStepperNext>Suivant</button>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Finaliser</ng-template>
+        <p>Voulez-vous soumettre les données?</p>
+        <div class="text-end">
+          <button mat-button matStepperPrevious>Retour</button>
+          <button mat-raised-button color="primary" [disabled]="!YONG_FORM.valid" type="submit">Soumettre</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </form>
+</div>

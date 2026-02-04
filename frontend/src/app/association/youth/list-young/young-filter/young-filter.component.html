@@ -1,0 +1,47 @@
+<mat-accordion>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Filters </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form
+      [formGroup]="FILTER_FORM"
+      (submit)="FILTER_FORM.dirty && filter()"
+      autocomplete="off"
+    >
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <app-text-input
+              [formControl]="FILTER_FORM.controls['filter']"
+              [label]="'Nom / CIN'"
+            ></app-text-input>
+          </div>
+          <div class="col">
+            <app-select-input
+              [formControl]="FILTER_FORM.controls['youngStatus']"
+              [label]="'Inséré(e)'"
+              [options]="Data.YES_OR_NO"
+            ></app-select-input>
+          </div>
+          <div class="col">
+            <app-select-input
+              [formControl]="FILTER_FORM.controls['level_of_study']"
+              [label]="'Niveau d\'études'"
+              [options]="Data.LEVEL_OF_STUDIES"
+            ></app-select-input>
+          </div>
+          <div class="col mt-2">
+            <button
+              mat-raised-button
+              class="w-100"
+              color="primary"
+              type="submit"
+            >
+              Rechercher
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>

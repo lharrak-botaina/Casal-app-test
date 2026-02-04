@@ -1,0 +1,52 @@
+<div class="container-fluid p-2">
+  <div class="row">
+    <div *ngIf="!isSmallScreen" class="col-12 col-md-4">
+      <app-profile-association
+        [association]="association"
+      ></app-profile-association>
+    </div>
+    <div class="col-12 col-md-8">
+      <div class="row">
+        <div class="col-12 button--group">
+          <button
+            class="m-1 edit--button"
+            mat-stroked-button
+            *rbacAllow="['admin']"
+            color="accent"
+            [routerLink]="[ './edit']" [state]="association"
+          >
+            Modifier<mat-icon>edit</mat-icon>
+          </button>
+          <button
+            class="m-1 delete--button"
+            mat-stroked-button
+            *rbacAllow="['admin']"
+            color="warn"
+            (click)="remove()"
+          >
+            Supprimer<mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <mat-tab-group backgroundColor="primary">
+            <mat-tab label="Profile" class="p-2" *ngIf="isSmallScreen">
+              <app-profile-association
+                [association]="association"
+              ></app-profile-association>
+            </mat-tab>
+            <mat-tab label="Informations générales" class="p-2">
+              <app-info-association
+                [association]="association"
+              ></app-info-association>
+            </mat-tab>
+            <mat-tab label="TIP information">
+              <app-info-tip [association]="association"></app-info-tip>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

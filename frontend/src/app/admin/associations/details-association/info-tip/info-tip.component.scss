@@ -1,0 +1,14 @@
+.image-tip {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+
+  object-fit: cover;
+  object-position: center right;
+}
+
+@media only screen and (max-width: 575px) {
+  .align--text {
+    text-align: center;
+  }
+}

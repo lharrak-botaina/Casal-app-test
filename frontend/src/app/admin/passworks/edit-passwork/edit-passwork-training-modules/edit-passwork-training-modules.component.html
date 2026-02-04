@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>
+  Modifier Modules de formation
+</h1>
+<div mat-dialog-content>
+  <div class="container">
+    <form
+      id="fileForm"
+      [formGroup]="FILE_FORM"
+      (submit)="this.FILE_FORM.valid && editTrainingModules()"
+      #form="ngForm"
+      autocomplete="off"
+    >
+      <div class="row">
+        <div class="col-12">
+            <app-file-input
+              [formControl]="FILE_FORM.controls['training_modules']"
+              [label]="'Modules de formation*'"
+              [accept]="'.pdf'"
+            ></app-file-input>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div mat-dialog-actions class="float-right">
+  <button mat-button mat-dialog-close>Fermer</button>
+  <button
+    mat-raised-button
+    type="submit"
+    [disabled]="!this.FILE_FORM.valid"
+    form="fileForm"
+    color="primary"
+  >
+    Enregistrer
+  </button>
+</div>

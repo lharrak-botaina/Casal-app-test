@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>Changer {{data?.description == "TipPhoto" ? 'Tip photo' : 'Logo'}}</h1>
+<div mat-dialog-content>
+  <div class="container">
+    <form
+      id="photoForm"
+      [formGroup]="PHOTO_FORM"
+      (submit)="this.PHOTO_FORM.valid && editPhoto()"
+      #form="ngForm"
+      autocomplete="off"
+    >
+      <div class="row">
+        <div class="col-12">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Picture*</mat-label>
+              <ngx-mat-file-input formControlName="photo" [accept]="accept">
+              </ngx-mat-file-input>
+              <mat-icon matSuffix>attach_file</mat-icon>
+              <mat-hint align="start"
+                ><strong>Nous n'acceptons que les fichiers PNG ou JPEG</strong></mat-hint
+              >
+              <mat-error
+                *ngIf="PHOTO_FORM.get('photo').hasError('maxSize')"
+              >
+                La taille d'image doit être inférieure à <strong>2 Mb</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div mat-dialog-actions class="float-right">
+  <button mat-button mat-dialog-close>Fermer</button>
+  <button
+    mat-raised-button
+    type="submit"
+    [disabled]="!this.PHOTO_FORM.valid"
+    form="photoForm"
+    color="primary"
+  >
+    Enregister
+  </button>
+</div>

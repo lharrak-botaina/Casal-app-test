@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="col-12 col-md-4 card card p-0 m-2">
+    <div class="header px-3 pt-3">
+      <h2>Education</h2>
+    </div>
+    <div class="content p-4">
+      <p><strong>Niveau d'étude :</strong> {{skillsAssessment?.level_of_study?.level | titlecase}}</p>
+      <p><strong>Détails de la formation :</strong>{{skillsAssessment?.level_of_study?.description | titlecase}}</p>
+    </div>
+  </div>
+  <div class="col-12 col-md-7 card p-0 m-2">
+    <div class="header px-3 pt-3">
+      <h2>Langues</h2>
+    </div>
+    <div class="content p-4">
+      <ul>
+        <li *ngFor="let language of skillsAssessment?.languages">{{language | titlecase}}</li>
+        <li *ngIf="skillsAssessment?.languages_comment">{{skillsAssessment?.languages_comment | titlecase}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-md-4 card p-0 m-2">
+    <div class="header px-3 pt-3">
+      <h2>Formations</h2>
+    </div>
+    <div class="content p-4">
+      <ng-container  *ngFor="let training of skillsAssessment?.professional_training; index as i; last as last">
+        <h6 class="sub_subtitle"><strong>Formation {{i + 1}}</strong></h6>
+        <p><strong>Type de formation: </strong>{{training?.type_formation | titlecase}}</p>
+        <p><strong>Spécialité :</strong> {{training?.specialty | titlecase}}</p>
+        <p><strong>Etablissement :</strong> {{training?.institution | titlecase}}</p>
+        <p><strong>Certificat / Diplôme : </strong>{{training?.cetificate | titlecase}}</p>
+        <p><strong>Date début : </strong>{{training?.start_date | date: "dd-MM-yyyy"}}</p>
+        <p><strong>Date fin :</strong> {{training?.end_date | date: "dd-MM-yyyy"}}</p>
+        <p><strong>Commentaire :</strong> {{training?.comment | titlecase}}</p>
+        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+      </ng-container>
+    </div>
+  </div>
+  <div class="col-12 col-md-7 card p-0 m-2">
+    <div class="header px-3 pt-3">
+      <h2>Expériences professionnelles</h2>
+    </div>
+    <div class="content p-4">
+      <ng-container *ngFor="let experience of skillsAssessment?.professional_experience; index as i; last as last">
+        <h6 class="sub_subtitle"><strong>Expérience {{i + 1}}</strong></h6>
+        <p><strong>Type d'expérience : </strong>{{experience?.genre | titlecase}}</p>
+        <p><strong>Etablissement : </strong>{{experience?.institution | titlecase}}</p>
+        <p><strong>Poste (Domaine) : </strong>{{experience?.function | titlecase}}</p>
+        <p><strong>Date début : </strong>{{experience?.start_date | date: "dd-MM-yyyy"}}</p>
+        <p><strong>Date fin : </strong>{{experience?.end_date | date: "dd-MM-yyyy"}}</p>
+        <p><strong>Période d'experience : </strong>{{experience?.duration}}</p>
+        <p><strong>Commentaire (cause de départ) :</strong> {{experience?.comment | titlecase}}</p>
+        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-md-4 card p-0 m-2" *ngIf="!isCompany">
+    <div class="header px-3 pt-3">
+      <h2>Entretien TIP</h2>
+    </div>
+    <div class="content p-4">
+      <p><strong>Date d'entretien: </strong>{{skillsAssessment?.tip_interview?.date | date: "dd-MM-yyyy"}}</p>
+      <p><strong>Conclusion de l'entretien avec l'usage du TIP : </strong>{{skillsAssessment?.tip_interview?.comment | titlecase}}</p>
+    </div>
+  </div>
+  <div class="col-12 col-md-7 card p-0 m-2">
+    <div class="header px-3 pt-3">
+      <h2>Compétences</h2>
+    </div>
+    <div class="content p-4">
+      <p><strong>Compétences techniques: </strong>{{skillsAssessment?.skills?.hard_skills}}</p>
+      <p><strong>Compétences relationnelles : </strong>{{skillsAssessment?.skills?.soft_skills}}</p>
+      <p><strong>Compétences essentielles: </strong>{{skillsAssessment?.skills?.life_skills}}</p>
+    </div>
+  </div>
+</div>

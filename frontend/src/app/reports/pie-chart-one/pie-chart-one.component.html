@@ -1,0 +1,41 @@
+<mat-expansion-panel (opened)="opened()" class="my-1">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <strong>{{ title }}</strong>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="col-12" *ngIf="associations">
+    <app-select-input
+      [formControl]="FORM.controls['association']"
+      [label]="'Associations'"
+      [options]="associations?.associations"
+      [isObservable]="true"
+      [optionDisplay]="'raisonSocial'"
+      [displayDefaultOption]="true"
+      [deselectValue]="false"
+      (valueChange)="onChangeAssociation($event)"
+    ></app-select-input>
+  </div>
+  <p>{{description}}</p>
+  <div #report>
+    <h4>
+      Moyen Age : <strong>{{ (data$ | async)?.avgAge?.toFixed(2) }}</strong> ans
+    </h4>
+    <ngx-charts-advanced-pie-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="(data$ | async)?.nbrByGenre"
+      [gradient]="gradient"
+    >
+    </ngx-charts-advanced-pie-chart>
+  </div>
+
+  <button
+    mat-raised-button
+    [disabled]="!(data$ | async)"
+    color="primary"
+    (click)="downloadPDF()"
+  >
+    Télécharger
+  </button>
+</mat-expansion-panel>

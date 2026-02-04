@@ -1,0 +1,82 @@
+<div class="row" *ngIf="youth$ | async as result">
+  <div
+    class="col col-sm-6 col-md-4 col-lg-3"
+    *ngFor="let young of result.youth"
+  >
+    <aside
+      class="profile-card"
+      (click)="navigate(young)"
+    >
+      <div class="mask-shadow"></div>
+      <header>
+        <a>
+          <img
+            [src]="
+              young?.personal_info?.photo
+                ? host + 'youth/photos/' + young?.personal_info?.photo
+                : 'assets/no_picture_available.png'
+            "
+          />
+        </a>
+        <h1>{{ young?.personal_info?.fullname | titlecase }}</h1>
+        <h2 *ngIf="young?.personal_info?.isPriority">
+          <mat-icon>notifications_active </mat-icon>
+          <strong> Besoin d'insertion immédiat !</strong>
+        </h2>
+      </header>
+
+      <ul class="profile-social-links" *ngIf="isFull">
+        <li matTooltip="Informations Personnelles" matTooltipPosition="left">
+          <img src="assets/spinner.PNG" class="spinner" />
+          <mat-spinner
+            [mode]="'determinate'"
+            diameter="50"
+            [value]="young?.personal_info?.rate"
+          >
+          </mat-spinner>
+          <div class="description">{{ young?.personal_info?.rate }}%</div>
+        </li>
+        <li matTooltip="Bilan de compétance" matTooltipPosition="right">
+          <img src="assets/spinner.PNG" class="spinner" />
+          <mat-spinner
+            [mode]="'determinate'"
+            diameter="50"
+            [value]="young?.skills_assessment?.rate"
+          >
+          </mat-spinner>
+          <div class="description">{{ young?.skills_assessment?.rate }}%</div>
+        </li>
+        <li matTooltip="Ateliers de renforcement" matTooltipPosition="left">
+          <img src="assets/spinner.PNG" class="spinner" />
+          <mat-spinner
+            [mode]="'determinate'"
+            diameter="50"
+            [value]="young?.capacity_building?.rate"
+          >
+          </mat-spinner>
+          <div class="description">{{ young?.capacity_building?.rate }}%</div>
+        </li>
+        <li matTooltip="Formations Passwork" matTooltipPosition="right">
+          <img src="assets/spinner.PNG" class="spinner" />
+          <mat-spinner
+            [mode]="'determinate'"
+            diameter="50"
+            [value]="young?.passwork?.rate"
+          >
+          </mat-spinner>
+          <div class="description">{{ young?.passwork?.rate }}%</div>
+        </li>
+        <li matTooltip="Insertion" matTooltipPosition="left">
+          <img src="assets/spinner.PNG" class="spinner" />
+          <mat-spinner
+            [mode]="'determinate'"
+            diameter="50"
+            [value]="young?.insertion?.rate"
+          >
+          </mat-spinner>
+          <div class="description">{{ young?.insertion?.rate }}%</div>
+        </li>
+      </ul>
+    </aside>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+mat-card {
+    min-height: 80px;
+    cursor: pointer;
+}
+
+.example-header-image {
+  background-image: url("../../../assets/file.png");
+  background-size: cover;
+  border-radius: 0px !important;
+}
+
+.hidden {
+    display: none;
+}

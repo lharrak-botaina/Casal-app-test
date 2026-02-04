@@ -1,0 +1,44 @@
+<div class="container-fluid p-4">
+  <div class="row">
+    <div class="col">
+      <app-job-filter></app-job-filter>
+    </div>
+  </div>
+  <div class="row justify-content-start" *ngIf="jobs$ | async as result">
+    <div class="col-12 col-sm-6 col-md-4 p-2" *ngFor="let job of result.jobs">
+      <mat-card
+        class="card"
+        matTooltip="Show details"
+        [routerLink]="['./', job._id]"
+        [state]="job"
+        [class.inactive--card]="job?.status === 'inactive'"
+      >
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title class="card-title pointer"
+            >{{ job?.title | titlecase
+            }}<span *ngIf="job?.status == 'inactive'" class="inactive">
+              (Inactive)
+            </span>
+          </mat-card-title>
+          <mat-card-subtitle>
+            <p>{{ job?.company?.name }}</p>
+          </mat-card-subtitle>
+          <mat-card-subtitle>
+            <p>{{ job?.createdAt | timeago }}</p>
+          </mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row" [class.hidden]="(jobs$ | async) ? false : true">
+    <div class="col align-self-end p-2">
+      <mat-paginator
+        [length]="(jobs$ | async)?.totalCount"
+        [pageSize]="PAGE_SIZE"
+        [pageSizeOptions]="[5, 10, 20, 50]"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+mat-card {
+  min-height: 120px;
+  cursor: pointer;
+}
+
+.example-header-image {
+  background-image: url("../../../../assets/suitcase.png");
+  background-size: cover;
+  border-radius: 0px !important;
+}
+
+.inactive {
+  color: rgba(0,0,0,.54);
+  font-size: 14px;
+}
+
+.inactive--card{
+  background-color: lightgrey;
+}

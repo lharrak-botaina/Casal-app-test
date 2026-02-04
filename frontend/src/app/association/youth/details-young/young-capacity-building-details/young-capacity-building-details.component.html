@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-12 card p-0 m-2">
+    <div class="header px-3 pt-3">
+      <h2>Ateliers</h2>
+    </div>
+    <div class="row content p-4">
+      <div class="col-12 col-sm-6" *ngFor="let training of capacityBuilding?.training; index as i">
+        <h6 class="sub_subtitle"><strong>Atelier {{i + 1}}</strong></h6>
+        <p><strong>Type d'atelier: </strong>{{training?.title | titlecase}}</p>
+        <p><strong>Date début :</strong> {{training?.start_date | date: "dd-MM-yyyy"}}</p>
+        <p><strong>Status : </strong>{{training?.status | titlecase}}</p>
+        <mat-divider [inset]="true"></mat-divider>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 card p-0 m-2">
+    <div class="header px-3 pt-3">
+      <h2>Commentaire global</h2>
+    </div>
+    <div class="content p-4">
+      <p><strong>Commentaire: </strong>{{capacityBuilding?.comment | titlecase}}</p>
+    </div>
+  </div>
+</div>

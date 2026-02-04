@@ -1,0 +1,19 @@
+img {
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    border : 4px solid #03644E;
+}
+
+.picture-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    width: 400px;
+    background: #fff;
+}
+
+h4 {
+    color: darkslategray;
+}

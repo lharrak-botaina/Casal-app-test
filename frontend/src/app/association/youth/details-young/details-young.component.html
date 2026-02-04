@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 button--group">
+      <button
+        class="m-1 edit--button"
+        mat-stroked-button
+        color="accent"
+        [routerLink]="['./edit']"
+        [state]="young"
+      >
+        Modifier<mat-icon>edit</mat-icon>
+      </button>
+      <button
+        *rbacAllow="['admin']"
+        class="m-1 delete--button"
+        mat-stroked-button
+        color="warn"
+        (click)="remove()"
+      >
+        Supprimer<mat-icon>delete</mat-icon>
+      </button>
+      <button
+        class="m-1 cv--button"
+        mat-stroked-button
+        [routerLink]="['./cv']"
+        [state]="young"
+      >
+      Générer CV<mat-icon>camera_front</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="row my-1">
+    <div class="col-12">
+      <mat-tab-group color="primary" backgroundColor="primary">
+        <mat-tab label="Informations personnelles">
+          <app-young-personal-info-details
+            [personalInfo]="young?.personal_info"
+            [status]="young?.status"
+          ></app-young-personal-info-details>
+        </mat-tab>
+        <mat-tab label="Bilan Compétances">
+          <app-young-skills-assessment-details
+            [skillsAssessment]="young?.skills_assessment"
+          ></app-young-skills-assessment-details
+        ></mat-tab>
+        <mat-tab label="Ateliers de renforcement">
+          <app-young-capacity-building-details
+            [capacityBuilding]="young?.capacity_building"
+          ></app-young-capacity-building-details
+        ></mat-tab>
+        <mat-tab label="Formations Passwork">
+          <app-young-passwork-details
+            [passwork]="young?.passwork"
+          ></app-young-passwork-details>
+        </mat-tab>
+        <mat-tab label="Insertion">
+          <app-young-insertion-details
+            [insertions]="young?.insertion"
+          ></app-young-insertion-details
+        ></mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

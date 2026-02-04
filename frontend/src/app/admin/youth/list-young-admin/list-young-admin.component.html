@@ -1,0 +1,20 @@
+<div class="container-fluid p-4">
+  <div class="row">
+    <div class="col">
+      <app-young-admin-filter></app-young-admin-filter>
+    </div>
+  </div>
+
+  <app-young-card [youth$]="youth$"></app-young-card>
+
+  <div class="row" [class.hidden]="(youth$ | async) ? false : true">
+    <div class="col align-self-end p-2">
+      <mat-paginator
+        [length]="(youth$ | async)?.totalCount"
+        [pageSize]="PAGE_SIZE"
+        [pageSizeOptions]="[5, 10, 20, 50]"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+.header {
+  font-size: 60px;
+  font-weight: 100;
+  font-family: "Pacifico", cursive !important;
+  color: #3f51b5;
+}
+
+.description {
+  font-family: "Pacifico", cursive !important;
+  font-size: 30px;
+  font-weight: normal;
+}
+
+.button {
+  font-size: medium;
+  font-weight: bold;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .logo {
+    width: 100%;
+  }
+}

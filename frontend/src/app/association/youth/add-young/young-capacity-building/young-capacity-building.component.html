@@ -1,0 +1,85 @@
+<div class="container-fluid">
+  <h4 class="subtitle"><strong>Ateliers de renforcement des capacités</strong></h4>
+  <ng-container
+    *ngFor="
+      let item of CAPACITY_BUILDING.controls['training']['controls'];
+      let i = index
+    "
+  >
+    <ng-container
+      [formGroup]="CAPACITY_BUILDING.controls['training']['controls'][i]"
+    >
+      <div class="row">
+        <div class="col-6">
+          <h6 class="sub_subtitle">
+            <strong>Atelier {{ i + 1 }} : </strong>
+          </h6>
+        </div>
+        <div class="col-6 text-end">
+          <button
+            type="button"
+            mat-icon-button
+            color="primary"
+            (click)="addCapacityTraining()"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <button
+            type="button"
+            *ngIf="i != 0"
+            mat-icon-button
+            color="warn"
+            (click)="removeCapacityTraining(i)"
+          >
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              CAPACITY_BUILDING.get('training')['controls'][i]['controls'][
+                'title'
+              ]
+            "
+            [label]="'Atelier'"
+            [options]="Data.WORKSHOPS"
+          ></app-select-input>
+        </div>
+        <div class="col-12 col-md-6">
+          <app-date-input
+            [formControl]="
+              CAPACITY_BUILDING.get('training')['controls'][i]['controls'][
+                'start_date'
+              ]
+            "
+            [label]="'Date début'"
+          ></app-date-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <app-select-input
+            [formControl]="
+              CAPACITY_BUILDING.get('training')['controls'][i]['controls'][
+                'status'
+              ]
+            "
+            [label]="'Status'"
+            [options]="Data.STATUS"
+          ></app-select-input>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <h4 class="subtitle"><strong>Commentaire global</strong></h4>
+  <div class="row">
+    <div class="col-12">
+      <app-textarea-input
+        [formControl]="CAPACITY_BUILDING.controls['comment']"
+        [label]="'Commentaire'"
+      ></app-textarea-input>
+    </div>
+  </div>
+</div>

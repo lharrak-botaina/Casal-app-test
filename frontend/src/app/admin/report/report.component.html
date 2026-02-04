@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="text-center p-5">
+    <h1><strong>Rapport Global</strong></h1>
+    <button mat-raised-button color="primary" (click)="donwloadReport()">
+      Télécharger
+    </button>
+  </div>
+  <div *ngFor="let chart of chartsList; let i = index">
+    <div *ngIf="chart?.type == 1" #pieChartOne>
+      <h4>
+        Moyen Age :
+        <strong>{{ (chart?.data$ | async)?.avgAge?.toFixed(2) }}</strong> ans
+      </h4>
+      <ngx-charts-advanced-pie-chart
+        [view]="[700, 400]"
+        [scheme]="colorScheme"
+        [results]="(chart?.data$ | async)?.nbrByGenre"
+        [gradient]="true"
+        [animations]="false"
+      >
+      </ngx-charts-advanced-pie-chart>
+    </div>
+    <div *ngIf="chart?.type == 2" #pieChartTwo>
+      <ngx-charts-advanced-pie-chart
+        [view]="[700, 400]"
+        [scheme]="colorScheme"
+        [results]="chart?.data$ | async"
+        [gradient]="true"
+        [animations]="false"
+      >
+      </ngx-charts-advanced-pie-chart>
+    </div>
+  </div>
+</div>

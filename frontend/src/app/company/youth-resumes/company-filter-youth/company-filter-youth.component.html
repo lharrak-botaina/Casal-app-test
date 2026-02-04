@@ -1,0 +1,36 @@
+<mat-accordion>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Filters </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form [formGroup]="FILTER_FORM" (submit)="FILTER_FORM.dirty && filter()" autocomplete="off">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <app-select-input
+              [formControl]="FILTER_FORM.controls['association']"
+              [label]="'Association'"
+              [multiple]="true"
+              [isObservable]="true"
+              [optionDisplay]="'raisonSocial'"
+              [options]="(association$ | async)"
+            ></app-select-input>
+          </div>
+          <div class="col">
+            <app-select-input
+              [formControl]="FILTER_FORM.controls['youngCity']"
+              [label]="'Ville'"
+              [multiple]="true"
+              [options]="CITIES"
+            ></app-select-input>
+          </div>
+          <div class="col mt-2">
+            <button mat-raised-button class="w-100" color="primary" type="submit">
+              Rechercher
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>

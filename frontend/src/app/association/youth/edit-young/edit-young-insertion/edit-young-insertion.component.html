@@ -1,0 +1,318 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 text-end">
+      <button
+        mat-flat-button
+        color="accent"
+        type="button"
+        routerLink="./insertion"
+      >
+        Ajouter nouvelle insertion
+      </button>
+    </div>
+  </div>
+
+  <ng-container
+    *ngFor="
+      let item of INSERTION['controls']['list']['controls'];
+      let i = index
+    "
+  >
+    <h3 class="subtitle mt-2">
+      <strong>Insertion {{ i + 1 }}</strong>
+    </h3>
+    <ng-container [formGroup]="INSERTION['controls']['list']['controls'][i]">
+      <h4 class="subtitle mt-1">
+        <strong>Entretien d'embauche {{ i + 1 }}</strong>
+      </h4>
+      <ng-container
+        *ngFor="
+          let item of INSERTION.controls['list']['controls'][i]['controls'][
+            'tracking_before'
+          ]['controls'];
+          let j = index
+        "
+      >
+        <ng-container
+          [formGroup]="
+            INSERTION.controls['list']['controls'][i]['controls'][
+              'tracking_before'
+            ]['controls'][j]
+          "
+        >
+          <div class="row">
+            <div class="col-6">
+              <h6 class="sub_subtitle">
+                <strong>Entretien {{ j + 1 }} : </strong>
+              </h6>
+            </div>
+            <div class="col-6 text-end">
+              <button
+                type="button"
+                mat-icon-button
+                color="primary"
+                (click)="addBeforeInsertion(i)"
+              >
+                <mat-icon>add</mat-icon>
+              </button>
+              <button
+                type="button"
+                *ngIf="j != 0"
+                mat-icon-button
+                color="warn"
+                (click)="removeBeforeInsertion(i, j)"
+              >
+                <mat-icon>clear</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <app-date-input
+                [formControl]="
+                  INSERTION.controls['list']['controls'][i]['controls'][
+                    'tracking_before'
+                  ]['controls'][j]['controls']['interview_date']
+                "
+                [label]="'Date d\'entretien'"
+              ></app-date-input>
+            </div>
+            <div class="col-12 col-md-6">
+              <p-dropdown
+                [options]="(companies$ | async)?.companies"
+                [formControl]="
+                  INSERTION.controls['list']['controls'][i]['controls'][
+                    'tracking_before'
+                  ]['controls'][j]['controls']['companyId']
+                "
+                placeholder="Sélectionnez une entreprise"
+                optionLabel="name"
+                defaultLabel="Entreprise"
+                filter="true"
+                optionValue="_id"
+              ></p-dropdown>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <app-text-input
+                [formControl]="
+                  INSERTION.controls['list']['controls'][i]['controls'][
+                    'tracking_before'
+                  ]['controls'][j]['controls']['job_position']
+                "
+                [label]="'Poste'"
+              ></app-text-input>
+            </div>
+            <div class="col-12 col-md-6">
+              <app-textarea-input
+                [formControl]="
+                  INSERTION.controls['list']['controls'][i]['controls'][
+                    'tracking_before'
+                  ]['controls'][j]['controls']['comment']
+                "
+                [label]="'Commentaire'"
+              ></app-textarea-input>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <h4 class="subtitle">
+        <strong>Insertion {{ i + 1 }}</strong>
+      </h4>
+      <ng-container
+        [formGroup]="
+          INSERTION.controls['list']['controls'][i]['controls'][
+            'tracking_after'
+          ]
+        "
+      >
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-select-input
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls'][
+                  'tracking_after'
+                ]['controls']['category']
+              "
+              [label]="'Catégorie'"
+              [options]="Data.CATEGORIES"
+              (valueChange)=onChangeCategory($event);
+            ></app-select-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-select-input
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls'][
+                  'tracking_after'
+                ]['controls']['contract_type']
+              "
+              [label]="'Type de contrat'"
+              [options]="CONTRACT_TYPE"
+            ></app-select-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-select-input
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls'][
+                  'tracking_after'
+                ]['controls']['companyId']
+              "
+              [label]="'Entreprise'"
+              [options]="(companies$ | async)?.companies"
+              [isObservable]="true"
+              [optionDisplay]="'name'"
+            ></app-select-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <mat-slide-toggle
+              #isJobExists
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls'][
+                  'tracking_after'
+                ]['controls']['isJobExists']
+              "
+              >Offre existante</mat-slide-toggle
+            >
+          </div>
+          <div class="col-12 col-md-6" *ngIf="isJobExists?.checked">
+            <app-select-input
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls'][
+                  'tracking_after'
+                ]['controls']['jobId']
+              "
+              [label]="'Offre d\'emploi'"
+              [options]="jobs$ | async"
+              [isObservable]="true"
+              [optionDisplay]="'reference'"
+            ></app-select-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-date-input
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls'][
+                  'tracking_after'
+                ]['controls']['start_date']
+              "
+              [label]="'Date début'"
+            ></app-date-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-date-input
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls'][
+                  'tracking_after'
+                ]['controls']['end_date']
+              "
+              [label]="'Date fin'"
+            ></app-date-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-select-input
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls'][
+                  'tracking_after'
+                ]['controls']['function_type']
+              "
+              [label]="'Type de poste'"
+              [options]="Data.JOB_TYPES"
+            ></app-select-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-text-input
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls'][
+                  'tracking_after'
+                ]['controls']['function']
+              "
+              [label]="'Poste'"
+            ></app-text-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-select-input
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls']['tracking_after']['controls'][
+                  'insertion_type'
+                ]
+              "
+              [label]="'Insertion'"
+              [options]="Data.INSERTION_TYPE"
+            ></app-select-input>
+          </div> 
+          <div class="col-12 col-md-6">
+            <app-select-input
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls'][
+                  'tracking_after'
+                ]['controls']['duration']
+              "
+              [label]="'Durée'"
+              [options]="Data.JOB_DURATION"
+            ></app-select-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-select-input
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls'][
+                  'tracking_after'
+                ]['controls']['salary']
+              "
+              [label]="'Salaire'"
+              [options]="Data.SALARIES"
+            ></app-select-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-select-input
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls'][
+                  'tracking_after'
+                ]['controls']['cnss']
+              "
+              [label]="'CNSS'"
+              [options]="Data.YES_OR_NO"
+              [deselectValue]="false"
+            ></app-select-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 col-md-6">
+            <app-select-input
+              [formControl]="
+                INSERTION.controls['list']['controls'][i]['controls'][
+                  'tracking_after'
+                ]['controls']['justificative_type']
+              "
+              [label]="'Type de justification'"
+              [options]="Data.JUSTIFICATIVE_TYPE"
+            ></app-select-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button
+              mat-flat-button
+              color="primary"
+              type="button"
+              (click)="editJustification(i)"
+            >
+              Modifier la justification d'insertion {{ i + 1 }}
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>

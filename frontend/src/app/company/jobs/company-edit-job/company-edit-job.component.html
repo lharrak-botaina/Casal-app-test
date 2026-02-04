@@ -1,0 +1,91 @@
+<div class="container">
+  <button
+    mat-icon-button
+    matTooltip="Back to detail page"
+    matTooltipPosition="right"
+    [routerLink]="['./..']"
+    class="back--button"
+  >
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
+  <h2 class="text-center p-2">Modifier l'offre d'emploi</h2>
+  <mat-card class="example-card">
+    <h4 class="subtitle"><strong>Informations générales</strong></h4>
+    <mat-card-content>
+      <form
+        id="jobForm"
+        [formGroup]="JOB_FORM"
+        (submit)="JOB_FORM.valid && JOB_FORM.dirty && edit()"
+        #form="ngForm"
+        autocomplete="off"
+      >
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-text-input
+              [formControl]="JOB_FORM.controls['title']"
+              [label]="'Titre*'"
+            ></app-text-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-select-input
+              [formControl]="JOB_FORM.controls['activity_area']"
+              [label]="'Secteur d\'activité'"
+              [options]="ACTIVITY_AREA"
+            ></app-select-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-text-input
+              [formControl]="JOB_FORM.controls['location']"
+              [label]="'Adresse'"
+            ></app-text-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-select-input
+              [formControl]="JOB_FORM.controls['type_contrat']"
+              [label]="'Type du contrat'"
+              [options]="CONTRACT"
+            ></app-select-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p-multiSelect
+              #sel
+              [options]="(associations$ | async)"
+              [formControl]="JOB_FORM.controls['sharedWith']"
+              optionLabel="raisonSocial"
+              optionValue="_id"
+              defaultLabel="Associations"
+              (onChange)="updateMultiSelectLabel()"
+            ></p-multiSelect>
+          </div>
+        </div>
+        <div class="row p-2">
+          <div class="col-12">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Description</mat-label>
+              <textarea
+                matInput
+                placeholder="Mettez votre description ici..."
+                [formControl]="JOB_FORM.controls['description']"
+              ></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="submit-button" align="right">
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="!JOB_FORM.valid || !JOB_FORM.dirty"
+        form="jobForm"
+        color="primary"
+      >
+        Enregistrer
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

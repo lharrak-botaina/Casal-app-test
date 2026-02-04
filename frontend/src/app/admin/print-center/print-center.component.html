@@ -1,0 +1,28 @@
+<div class="container-fluid p-4">
+  <div class="row justify-content-start" *ngIf="documents$ | async as result">
+    <div class="col-12 col-sm-6 col-md-3 p-2" *ngFor="let document of result.documents">
+      <mat-card
+        class="card"
+        matTooltip="Télécharger"
+        (click)="download(document?.document)"
+      >
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title class="card-title pointer"
+            >{{ document?.name | titlecase}}
+          </mat-card-title>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row" [class.hidden]="(documents$ | async) ? false : true">
+    <div class="col align-self-end p-2">
+      <mat-paginator
+        [length]="(documents$ | async)?.totalCount"
+        [pageSize]="PAGE_SIZE"
+        [pageSizeOptions]="[5, 10, 20, 50]"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

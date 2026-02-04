@@ -1,0 +1,42 @@
+<div class="container p-4 align--text">
+  <div class="row my-2">
+    <div class="col-sm-5">
+      <strong>Email :</strong>
+    </div>
+    <div class="col-sm-7">
+      <strong>{{ association?.email }}</strong>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-sm-5">
+      <strong>Adresse :</strong>
+    </div>
+    <div class="col-sm-7">
+      <strong>{{ association?.address }}</strong>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-sm-5">
+      <strong>Ville :</strong>
+    </div>
+    <div class="col-sm-7">
+      <strong>{{ association?.city }}</strong>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-sm-5">
+      <strong>Date de collaboration :</strong>
+    </div>
+    <div class="col-sm-7">
+      <strong>{{ association?.collaborationDate | date: "dd-MM-yyyy" }}</strong>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-sm-5">
+      <strong>Date de creation :</strong>
+    </div>
+    <div class="col-sm-7">
+      <strong>{{ association?.creationDate | date: "dd-MM-yyyy" }}</strong>
+    </div>
+  </div>
+</div>

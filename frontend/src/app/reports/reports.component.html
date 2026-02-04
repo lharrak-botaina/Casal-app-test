@@ -1,0 +1,237 @@
+<section class="container my-2">
+  <mat-accordion *ngIf="(associations$ | async) as associations">
+    <app-pie-chart-one
+      [title]="'Nombre de jeunes accueillis par les GIP'"
+      [data$]="numberOfYoungAddedStats$"
+      [id]="1"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+      [description]="'Les jeunes, filles et garçons, en recherche d\'emploi, prioritairement sont des NEET, sont accueillis et informés sur les services assurés par les Guichets d\'Insertion Professionnelle (GIP).'"
+    ></app-pie-chart-one>
+  
+    <app-pie-chart-one
+      [title]="
+        '
+        Nombre de jeunes bénéficiaires des ateliers de renforcement de capacités
+      (min 4)
+      '
+      "
+      [data$]="numberOfYouthHaveMoreThanThreeCapacityBuildingStats$"
+      [id]="2"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+      [description]="'Les jeunes accueillis auparavant par les TIP, et ayant bénéficié d\'un bilan de compétences personnelles et professionnelles.'"
+    ></app-pie-chart-one>
+  
+    <app-pie-chart-one
+      [title]="
+        '
+        Nombre de jeunes bénéficiaires des formations professionnelles PW
+      '
+      "
+      [data$]="numberOfYouthHavePassworkTrainingStats$"
+      [id]="3"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+      [description]="'Les jeunes inscrits dans la base de données des GIP, ayant besoin d\'une formation professionnelle avant d\'être insérés en entreprises.'"
+    ></app-pie-chart-one>
+  
+    <app-pie-chart-one
+      [title]="'
+        Nombre d’insertions formelle
+      '"
+      [data$]="numberOfFormalInsertionStats$"
+      [id]="4"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+      [description]="'Les jeunes insérés en entreprises avec contrat de travail formel à durée minimale de 3 mois , déclaré à la CNSS, ayant un salaire plus ou égale au SMIG.'"
+    ></app-pie-chart-one>
+  
+    <app-pie-chart-one
+      [title]="'
+        Nombre d’insertions Informelle
+      '"
+      [data$]="numberOfInformalInsertionStats$"
+      [id]="5"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+      [description]="'Les jeunes insérés en entreprises sans contrats de travail, ou non déclarés à la CNSS.'"
+    ></app-pie-chart-one>
+  
+    <app-pie-chart-two
+      [title]="'
+        Nombre d\'insertions par secteur d\'activités
+      '"
+      [data$]="numberOfInsertionsByActivityAreaStats$"
+      [id]="6"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+      [description]="'Répartition de l\'ensemble des insertions effectuées par les TIP par secteur d\'activités.'"
+    ></app-pie-chart-two>
+  
+    <app-pie-chart-two
+      [title]="'
+        Pourcentage d\’insertion selon le type de contrat
+      '"
+      [data$]="numberOfInsertionsByContractTypeStats$"
+      [id]="7"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+      [description]="'Répartition de l\'ensemble des insertions effectuées par les TIP selon le type de contrat signé.'"
+    ></app-pie-chart-two>
+  
+    <app-pie-chart-two
+      [title]="'
+        Pourcentage d\’insertions par durée de contrat
+      '"
+      [data$]="numberOfInsertionsByContractDurationStats$"
+      [id]="8"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+      [description]="'Répartition de l\'ensemble des insertions effectuées par les TIP selon la durée de contrat signé.'"
+    ></app-pie-chart-two>
+  
+    <app-pie-chart-two
+      [title]="'
+        Insertions par fourchette de salaire
+      '"
+      [data$]="numberOfInsertionsBySalaryStats$"
+      [id]="9"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+      [description]="'Répartition de l\'ensemble des insertions effectuées par les TIP selon le montant des salaires.'"
+    ></app-pie-chart-two>
+  
+    <app-basic-stats
+      [title]="'
+        Nombre d\'entreprises rencontrées
+      '"
+      [data$]="numberOfCompanies$"
+      [id]="10"
+      [associations]="associations"
+      [displayFilter]=false
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+      [description]="'Ce sont des entreprises identifiées en présentiel par les TIP, sensibilisées et informées par rapport aux services et aux activités des GIP.'"
+    >
+    </app-basic-stats>
+  
+    <app-pie-chart-two
+      [title]="'
+        Nombre d\'entreprises impliquées
+      '"
+      [data$]="numberOfInvolvedCompaniesStats$"
+      [id]="11"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+      [description]="'Ce sont des entreprises impliquées dans l\'insertion professionnelle des jeunes, dans les stages, dans la formation passwork, ou elles collaborent dans d\'autres actions en relation avec l\'emplyabilité des jeunes.'"
+    ></app-pie-chart-two>
+  
+    <app-basic-stats
+      [title]="'
+        Nombre de formations professionnelles réalisées
+      '"
+      [data$]="numberOfPassworks$"
+      [id]="12"
+      [associations]="associations"
+      [displayFilter]=false
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+      [description]="'L\'ensemble des formations professionnelles planifiées et exécutées par les GIP au profit des jeunes NEET. Elles sont réalisées sur une durée minimale de 3 mois (théorie et pratique), en partenariat formelle avec au moins une entreprise.'"
+    >
+    </app-basic-stats>
+  
+    <app-pie-chart-one
+      [title]="'
+        Pourcentages d’insertion en CDI
+      '"
+      [data$]="numberOfInsertionByCDIContract$"
+      [id]="13"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+    ></app-pie-chart-one>
+  
+    <app-pie-chart-one
+      [title]="'
+        Pourcentages d’insertion en CDD
+      '"
+      [data$]="numberOfInsertionByCDDContract$"
+      [id]="14"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+    ></app-pie-chart-one>
+  
+    <app-pie-chart-one
+      [title]="'
+        Pourcentages d’insertion en CTT
+      '"
+      [data$]="numberOfInsertionByCTTContract$"
+      [id]="15"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+    ></app-pie-chart-one>
+  
+    <app-pie-chart-one
+      [title]="'
+        Pourcentages d’insertion en Anapec
+      '"
+      [data$]="numberOfInsertionByAnapecContract$"
+      [id]="16"
+      [associations]="associations"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+    ></app-pie-chart-one>
+  
+    <app-basic-stats
+      [title]="'
+        Pourcentage des insertions par rapport aux jeunes accueillis
+      '"
+      [data$]="percentageInsertionByTotalYouth$"
+      [id]="17"
+      [associations]="associations"
+      [extraText]="'%'"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+    >
+    </app-basic-stats>
+  
+    <app-basic-stats
+      [title]="'
+        Pourcentage des insertions par rapport aux jeunes bénéficiaires des ateliers RC
+      '"
+      [data$]="percentageInsertionByCapacityBuilding$"
+      [id]="18"
+      [associations]="associations"
+      [extraText]="'%'"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+    >
+    </app-basic-stats>
+  
+    <app-basic-stats
+      [title]="'
+        Pourcentage des insertions par rapport aux jeunes bénéficiaires des formations PW
+      '"
+      [data$]="percentageInsertionByPasswork$"
+      [id]="19"
+      [associations]="associations"
+      [extraText]="'%'"
+      (panelOpened)="loadStats($event)"
+      (associationChanged)="onChangeAssociation($event)"
+    >
+    </app-basic-stats>
+  </mat-accordion>  
+</section>

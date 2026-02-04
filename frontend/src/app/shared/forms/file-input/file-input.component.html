@@ -1,0 +1,13 @@
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>{{ label }}</mat-label>
+  <ngx-mat-file-input [formControl]="ngControl.control" [accept]="accept" [disabled]="disabled">
+  </ngx-mat-file-input>
+  <mat-icon matSuffix>attach_file</mat-icon>
+  <mat-hint align="start">
+    <strong *ngIf="accept != '.pdf'">Nous n'acceptons que les fichiers PNG ou JPEG</strong>
+    <strong *ngIf="accept == '.pdf'">Nous n'acceptons que les fichiers PDF</strong>
+  </mat-hint>
+  <mat-error *ngIf="ngControl.control.errors?.maxContentSize">
+    La taille d'image doit être inférieure à <strong>1 Mb</strong>
+  </mat-error>
+</mat-form-field>

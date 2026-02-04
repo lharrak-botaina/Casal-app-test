@@ -1,0 +1,36 @@
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>{{ label }}</mat-label>
+  <input
+    [type]="type"
+    matInput
+    placeholder="{{ label }}"
+    [formControl]="ngControl.control"
+  />
+  <mat-error
+    *ngIf="
+      ngControl.control.errors?.minlength && !ngControl.control.errors?.required
+    "
+  >
+    Le nom doit être supérieur à
+    {{ ngControl.control.errors?.minlength?.requiredLength }} lettres
+  </mat-error>
+  <mat-error *ngIf="ngControl.control.errors?.required">
+    {{ label }} est <strong> obligatoire</strong>
+  </mat-error>
+  <mat-error
+    *ngIf="
+      ngControl.control.errors?.email && !ngControl.control.errors?.required
+    "
+  >
+    mettez une adresse email valide
+  </mat-error>
+  <mat-error
+    *ngIf="
+      ngControl.control.errors?.notSame &&
+      !ngControl.control.errors?.required &&
+      !ngControl.control.errors?.minlength
+    "
+  >
+    Les mots de passe ne correspondent pas
+  </mat-error>
+</mat-form-field>

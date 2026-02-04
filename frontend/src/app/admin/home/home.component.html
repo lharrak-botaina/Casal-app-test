@@ -1,0 +1,118 @@
+<div class="container-fluid">
+  <div class="row py-2">
+    <div class="col-12 col-sm-12 col-md-5">
+      <mat-card class="example-card">
+        <mat-card-title class="text-center"
+          >Nombre de jeunes accueillis</mat-card-title
+        >
+        <mat-card-content>
+          <div class="row">
+            <div class="col-12">
+              <ngx-charts-number-card
+                [scheme]="colorScheme"
+                [results]="TotalYoungAdded | async"
+                [cardColor]="cardColor"
+              >
+              </ngx-charts-number-card>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <ngx-charts-number-card
+                [scheme]="colorScheme"
+                [results]="(numberOfYoungAddedStats$ | async)?.nbrByGenre"
+                [cardColor]="cardColor"
+              >
+              </ngx-charts-number-card>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <mat-card-subtitle>Top 3 associations</mat-card-subtitle>
+            <div class="col-12">
+              <ngx-charts-number-card
+                [scheme]="colorScheme"
+                [results]="topThreeAssociationsStats$ | async"
+                [cardColor]="cardColor"
+              >
+              </ngx-charts-number-card>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-12 col-sm-12 col-md-7">
+      <div class="row py-1">
+        <div class="col-12">
+          <mat-card class="example-card">
+            <mat-card-title class="text-center"
+              >Nombre de jeunes insérés</mat-card-title
+            >
+            <mat-card-content>
+              <ngx-charts-advanced-pie-chart
+                [view]="[700, 235]"
+                [scheme]="colorScheme"
+                [results]="numberOfInsertionStats$ | async"
+                [gradient]="cardColor"
+              >
+              </ngx-charts-advanced-pie-chart>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      <div class="row py-1">
+        <div class="col-6 col-sm-6 col-md-4">
+          <mat-card class="example-card">
+            <mat-card-title class="text-center">Passworks</mat-card-title>
+            <br>
+            <mat-card-content>
+              <div class="row">
+                <div class="col-12">
+                  <ngx-charts-number-card
+                    [scheme]="colorScheme"
+                    [results]="numberOfPassworks$ | async"
+                    [cardColor]="cardColor"
+                  >
+                  </ngx-charts-number-card>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-6 col-sm-6 col-md-4">
+          <mat-card class="example-card">
+            <mat-card-title class="text-center">Jeunes / Passwork</mat-card-title>
+            <mat-card-content>
+              <div class="row">
+                <div class="col-12">
+                  <ngx-charts-number-card
+                    [scheme]="colorScheme"
+                    [results]="numberOfYouthHavePassworkTrainingStats$ | async"
+                    [cardColor]="cardColor"
+                  >
+                  </ngx-charts-number-card>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-6 col-sm-6 col-md-4">
+          <mat-card class="example-card">
+            <mat-card-title class="text-center">Entreprises impliquées</mat-card-title>
+            <mat-card-content>
+              <div class="row">
+                <div class="col-12">
+                  <ngx-charts-number-card
+                    [scheme]="colorScheme"
+                    [results]="numberOfInvolvedCompaniesStats$ | async"
+                    [cardColor]="cardColor"
+                  >
+                  </ngx-charts-number-card>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

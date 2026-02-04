@@ -1,0 +1,49 @@
+<div class="container-fluid" *ngFor="let insertion of insertions?.list; index as i">
+  <div class="row" >
+    <div class="col-12 card p-0 m-2">
+      <div class="header px-3 pt-3">
+        <h2>Entretien d'embauche {{i + 1}}</h2>
+      </div>
+      <div class="row content p-4">
+        <div class="col-12 col-sm-6" *ngFor="let beforeInsertion of insertion?.tracking_before; index as j">
+          <h6 class="sub_subtitle"><strong>Entretien {{j + 1}}</strong></h6>
+          <p><strong>Date d'entretien: </strong>{{beforeInsertion?.interview_date | date: "dd-MM-yyyy"}}</p>
+          <p><strong>Employer: </strong>{{beforeInsertion?.companyName | titlecase}}</p>
+          <p><strong>Post : </strong>{{beforeInsertion?.job_position | titlecase}}</p>
+          <p><strong>Commentaire : </strong>{{beforeInsertion?.comment | titlecase}}</p>
+          <mat-divider [inset]="true"></mat-divider>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 card p-0 m-2">
+      <div class="header px-3 pt-3">
+        <h2>Insertion {{ i + 1}}</h2>
+      </div>
+      <div class="content p-4">
+        <p><strong>Type de contrat: </strong>{{insertion?.tracking_after.contract_type | titlecase}}</p>
+        <p><strong>Entreprise : </strong>{{insertion?.tracking_after.companyName | titlecase}}</p>
+        <p><strong>Insertion : </strong>{{insertion?.tracking_after?.insertion_type | titlecase}}</p>
+        <p><strong>Offre existante : </strong>{{insertion?.tracking_after?.isJobExists ?  "Oui" : "Non"}}</p>
+        <p *ngIf="insertion?.tracking_after?.isJobExists"><strong>Offre d'emploi : </strong>{{insertion?.tracking_after?.jobName | titlecase}}</p>
+        <p><strong>Date début : </strong>{{insertion?.tracking_after.start_date | date: "dd-MM-yyyy"}}</p>
+        <p><strong>Date fin : </strong>{{insertion?.tracking_after.end_date | date: "dd-MM-yyyy"}}</p>
+        <p><strong>Type de post : </strong>{{insertion?.tracking_after.function_type | titlecase}}</p>
+        <p><strong>Post : </strong>{{insertion?.tracking_after.function | titlecase}}</p>
+        <p><strong>Catégorie : </strong>{{insertion?.tracking_after.category | titlecase}}</p>
+        <p><strong>Durée : </strong>{{insertion?.tracking_after.duration | titlecase}}</p>
+        <p><strong>Salaire : </strong>{{insertion?.tracking_after.salary | titlecase}}</p>
+        <p><strong>CNSS : </strong>{{insertion?.tracking_after.cnss ? "Oui" : "Non"}}</p>
+        <p><strong>Type de justification : </strong>{{insertion?.tracking_after?.justificative_type }}</p>
+        <p><strong>Justification : </strong>{{insertion?.tracking_after.justification ? "Oui" : "Non"}}</p>
+        <p *ngIf="insertion?.tracking_after.justification">
+          <a href="{{ host + insertion?.tracking_after.justification }}" target="_blank"
+            ><mat-icon> picture_as_pdf </mat-icon></a
+          >
+        </p>
+      </div>
+    </div>
+  </div>  
+</div>

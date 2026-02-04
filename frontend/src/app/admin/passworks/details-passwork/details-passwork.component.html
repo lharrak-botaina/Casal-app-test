@@ -1,0 +1,101 @@
+<div class="container p-2">
+  <div class="row">
+    <div class="col-12 button--group">
+      <button
+        class="m-1 edit--button"
+        mat-stroked-button
+        color="accent"
+        [routerLink]="['./edit']"
+        [state]="passwork"
+      >
+        Modifier<mat-icon>edit</mat-icon>
+      </button>
+      <button
+        class="m-1 delete--button"
+        mat-stroked-button
+        color="warn"
+        (click)="archive()"
+      >
+        Archiver<mat-icon>work_off</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <mat-card>
+        <mat-card-header class="header p-3">
+          <mat-card-title class="text-center">{{
+            passwork?.title
+          }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row p-2">
+            <div class="col-4"><strong>Module :</strong></div>
+            <div class="col-8">{{ passwork?.module }}</div>
+          </div>
+          <div class="row p-2">
+            <div class="col-4"><strong>Entreprise :</strong></div>
+            <div class="col-8">{{ passwork?.company?.name }}</div>
+          </div>
+          <div class="row p-2">
+            <div class="col-12"><strong>Centre de formation :</strong></div>
+          </div>
+          <ng-container>
+            <div class="row p-2 ml-2">
+              <div class="col-4"><strong>Nom :</strong></div>
+              <div class="col-8">{{ passwork?.training_center?.name }}</div>
+            </div>
+            <div class="row p-2 ml-2">
+              <div class="col-4"><strong>Adresse :</strong></div>
+              <div class="col-8">{{ passwork?.training_center?.address }}</div>
+            </div>
+            <div class="row p-2 ml-2">
+              <div class="col-4"><strong>Téléphone :</strong></div>
+              <div class="col-8">{{ passwork?.training_center?.phone }}</div>
+            </div>
+            <div class="row p-2 ml-2">
+              <div class="col-4"><strong>Email :</strong></div>
+              <div class="col-8">{{ passwork?.training_center?.email }}</div>
+            </div>
+          </ng-container>
+          <div class="row p-2">
+            <div class="col-8 col-md-4"><strong>Nombre de bénéficiaires :</strong></div>
+            <div class="col-4 col-md-8">{{ passwork?.nbr_beneficiaries }}</div>
+          </div>
+          <div class="row p-2">
+            <div class="col-4"><strong>Date début :</strong></div>
+            <div class="col-8">
+              {{ passwork?.start_date | date: "dd-MM-yyyy" }}
+            </div>
+          </div>
+          <div class="row p-2">
+            <div class="col-4"><strong>Date fin :</strong></div>
+            <div class="col-8">
+              {{ passwork?.end_date | date: "dd-MM-yyyy" }}
+            </div>
+          </div>
+          <div class="row p-2">
+            <div class="col-4"><strong>Statut :</strong></div>
+            <div class="col-8">{{ passwork?.status | titlecase }}</div>
+          </div>
+          <div class="row p-2">
+            <div class="col-4"><strong>Modules de formation :</strong></div>
+            <div class="col-8" *ngIf="passwork?.training_modules">
+              <a href="{{ host + passwork?.training_modules }}" target="_blank"
+                ><mat-icon> picture_as_pdf </mat-icon></a
+              >
+            </div>
+          </div>
+          <div class="row p-2">
+            <div class="col-4"><strong>Planning de formation :</strong></div>
+            <div class="col-8" *ngIf="passwork?.training_planning">
+              <a href="{{ host + passwork?.training_planning }}" target="_blank"
+                ><mat-icon> picture_as_pdf </mat-icon></a
+              >
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

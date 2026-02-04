@@ -1,0 +1,146 @@
+<div class="container">
+  <button
+    mat-icon-button
+    matTooltip="Back to detail page"
+    matTooltipPosition="right"
+    [routerLink]="['./..']"
+    class="back--button"
+  >
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
+  <h2 class="text-center p-2">Modifier Passwork</h2>
+  <div class="row">
+    <div class="col-12">
+      <button mat-stroked-button class="mx-1 mb-1" (click)="editTrainingModules()">
+        <mat-icon>workspaces</mat-icon> Modifier Modules de formation 
+      </button>
+      <button mat-stroked-button class="mx-1 mb-1" (click)="editTrainingPlanning()">
+        <mat-icon>date_range</mat-icon> Modifier Planning de formation 
+      </button>
+    </div>
+  </div>
+  <mat-card class="example-card">
+    <h4 class="subtitle"><strong>Informations générales</strong></h4>
+    <mat-card-content>
+      <form
+        id="passworkForm"
+        [formGroup]="PASSWORK_FORM"
+        (submit)="PASSWORK_FORM.valid && PASSWORK_FORM.dirty && edit()"
+        #form="ngForm"
+        autocomplete="off"
+      >
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-text-input
+              [formControl]="PASSWORK_FORM.controls['title']"
+              [label]="'Titre*'"
+            ></app-text-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-select-input
+              [formControl]="PASSWORK_FORM.controls['module']"
+              [label]="'Module'"
+              [options]="ACTIVITY_AREA"
+            ></app-select-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p-multiSelect
+              #sel
+              [options]="(associations$ | async)?.associations"
+              [formControl]="PASSWORK_FORM.controls['associations']"
+              optionLabel="raisonSocial"
+              defaultLabel="Associations"
+              optionValue="_id"
+              (onChange)="updateMultiSelectLabel()"
+            ></p-multiSelect>
+          </div>
+          <div class="col-12 col-md-6">
+            <p-dropdown
+              [options]="(companies$ | async)?.companies"
+              [formControl]="PASSWORK_FORM.controls['company']"
+              [showClear]="true"
+              placeholder="Sélectionnez une entreprise"
+              optionLabel="name"
+              defaultLabel="Entreprise"
+              filter="true"
+              optionValue="_id"
+            ></p-dropdown>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-12 col-md-6">
+            <app-text-input
+              [formControl]="PASSWORK_FORM.controls['nbr_beneficiaries']"
+              [label]="'Nombre de bénéficiaires'"
+              [type]="'number'"
+            ></app-text-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-date-input
+              [formControl]="PASSWORK_FORM.controls['start_date']"
+              [label]="'Date début'"
+            ></app-date-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-date-input
+              [formControl]="PASSWORK_FORM.controls['end_date']"
+              [label]="'Date fin'"
+            ></app-date-input>
+          </div>
+        </div>
+        <h5 class="subtitle pt-4"><strong>Centre de formation</strong></h5>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-text-input
+              [formControl]="
+                PASSWORK_FORM.get('training_center')['controls']['name']
+              "
+              [label]="'Nom du center'"
+            ></app-text-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-text-input
+              [formControl]="
+                PASSWORK_FORM.get('training_center')['controls']['address']
+              "
+              [label]="'Adresse'"
+            ></app-text-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <app-text-input
+              [formControl]="
+                PASSWORK_FORM.get('training_center')['controls']['phone']
+              "
+              [label]="'Téléphone'"
+            ></app-text-input>
+          </div>
+          <div class="col-12 col-md-6">
+            <app-text-input
+              [formControl]="
+                PASSWORK_FORM.get('training_center')['controls']['email']
+              "
+              [label]="'Email'"
+            ></app-text-input>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="submit-button" align="right">
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="!PASSWORK_FORM.valid || !PASSWORK_FORM.dirty"
+        form="passworkForm"
+        color="primary"
+      >
+        Enregistrer
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

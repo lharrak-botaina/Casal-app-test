@@ -1,0 +1,295 @@
+<div class="container-fluid">
+  <h4 class="subtitle"><strong>Informations Personnelles</strong></h4>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <app-text-input
+        [formControl]="PERSONAL_INFO.controls['fullname']"
+        [label]="'Nom et Prénom*'"
+      ></app-text-input>
+    </div>
+    <div class="col-12 col-md-6 mt-2">
+      <button mat-flat-button color="primary" type="button" (click)="editPhoto()">Changer la photo</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <app-select-input
+        [formControl]="PERSONAL_INFO.controls['connectedBy']"
+        [label]="'Comment avez-vous connu notre service ?'"
+        [options]="Data.CONNECTED_BY"
+      >
+      </app-select-input>
+    </div>
+    <div class="col-12 col-md-6">
+      <app-select-input
+        [formControl]="PERSONAL_INFO.controls['isPriority']"
+        [label]="'Prioritaire'"
+        [options]="Data.YES_OR_NO"
+        [deselectValue]="false"
+      >
+      </app-select-input>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <app-text-input
+        [formControl]="PERSONAL_INFO.controls['address']"
+        [label]="'Adresse'"
+      ></app-text-input>
+    </div>
+    <div class="col-12 col-md-6">
+      <app-select-input
+        [formControl]="PERSONAL_INFO.controls['city']"
+        [label]="'Ville'"
+        [options]="Data.CITIES"
+      >
+      </app-select-input>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <app-date-input
+        [formControl]="PERSONAL_INFO.controls['birth_date']"
+        [label]="'Date de naissance'"
+        [maxDate]="maxDate"
+      >
+      </app-date-input>
+    </div>
+    <div class="col-12 col-md-6">
+      <app-select-input
+        [formControl]="PERSONAL_INFO.controls['gendre']"
+        [label]="'Sexe'"
+        [options]="Data.GENDER"
+      >
+      </app-select-input>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <app-text-input
+        [formControl]="PERSONAL_INFO.controls['phone']"
+        [label]="'Téléphone'"
+      ></app-text-input>
+    </div>
+    <div class="col-12 col-md-6">
+      <app-text-input
+        [formControl]="PERSONAL_INFO.controls['cin_id']"
+        [label]="'CIN'"
+      ></app-text-input>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <app-text-input
+        [formControl]="PERSONAL_INFO.controls['cnss_id']"
+        [label]="'CNSS'"
+      ></app-text-input>
+    </div>
+    <div class="col-12 col-md-6">
+      <app-date-input
+        [formControl]="PERSONAL_INFO.controls['inscription_date']"
+        [label]="'Date d\'inscription'"
+        [maxDate]="maxDate"
+      >
+      </app-date-input>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <app-select-input
+        [formControl]="PERSONAL_INFO.controls['nationality']"
+        [label]="'Nationalité'"
+        [options]="Data.NATIONALITIES"
+      ></app-select-input>
+    </div>
+    <div class="col-12 col-md-6" *ngIf="isNotMoroccan()">
+      <app-textarea-input
+        [formControl]="PERSONAL_INFO.controls['nationality_comment']"
+        [label]="'Nationalité commentaire'"
+      >
+      </app-textarea-input>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <app-select-input
+        [formControl]="PERSONAL_INFO.controls['housing']"
+        [label]="'Logement'"
+        [options]="Data.HOUSING"
+      ></app-select-input>
+    </div>
+  </div>
+  <h4 class="subtitle"><strong>Situation matrimoniale</strong></h4>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <app-select-input
+        [formControl]="PERSONAL_INFO.controls['civil_status']"
+        [label]="'Etat civil'"
+        [options]="Data.CIVIL_STATUS"
+      ></app-select-input>
+    </div>
+    <div class="col-12 col-md-6">
+      <app-text-input
+        [formControl]="PERSONAL_INFO.controls['kids_nbr']"
+        [label]="'Nbr. d\'enfants'"
+        [type]="'number'"
+      ></app-text-input>
+    </div>
+  </div>
+  <h4 class="subtitle"><strong>Situation Socio Economique</strong></h4>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <app-text-input
+        [formControl]="PERSONAL_INFO.controls['people_in_charge_nbr']"
+        [label]="'Nbr de personne à charge'"
+        [type]="'number'"
+      ></app-text-input>
+    </div>
+    <div class="col-12 col-md-6">
+      <app-text-input
+        [formControl]="PERSONAL_INFO.controls['current_function']"
+        [label]="'Situation Actuelle'"
+      ></app-text-input>
+    </div>
+  </div>
+  <h4 class="subtitle"><strong>Centre d'intérêt</strong></h4>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Loisir</mat-label>
+        <mat-chip-list #chipList aria-label="Hobbies selection">
+          <mat-chip
+            *ngFor="let hobby of hobbies"
+            [selectable]="selectable"
+            [removable]="true"
+            (removed)="remove(hobby)"
+          >
+            {{ hobby }}
+            <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="Nouveau loisir..."
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="true"
+            (matChipInputTokenEnd)="addHobby($event)"
+          />
+        </mat-chip-list>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <app-select-input
+        [formControl]="PERSONAL_INFO.controls['associative_activity']"
+        [label]="'Activités associatives'"
+        [options]="Data.ASSOCIATIVE_ACTIVITY"
+      ></app-select-input>
+    </div>
+  </div>
+  <h4 class="subtitle"><strong>Etat Physique</strong></h4>
+  <ng-container [formGroup]="PERSONAL_INFO.controls['physical_state']">
+    <ng-container
+      [formGroup]="PERSONAL_INFO.get('physical_state')['controls']['addiction']"
+    >
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              PERSONAL_INFO.get('physical_state')['controls']['addiction'][
+                'controls'
+              ]['status']
+            "
+            [label]="'Le bénéficiaire souffre t-il d\'une addiction ?'"
+            [options]="Data.YES_OR_NO"
+            [deselectValue]="false"
+          ></app-select-input>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="hasAddiction()">
+          <app-textarea-input
+            [formControl]="
+              PERSONAL_INFO.get('physical_state')['controls']['addiction'][
+                'controls'
+              ]['description']
+            "
+            [label]="'Détails'"
+            [placeholder]="'Remplir vos données...'"
+          ></app-textarea-input>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container
+      [formGroup]="PERSONAL_INFO.get('physical_state')['controls']['handicap']"
+    >
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              PERSONAL_INFO.get('physical_state')['controls']['handicap'][
+                'controls'
+              ]['status']
+            "
+            [label]="'Le bénéficiaire souffre t-il d\'un handicap quelconque ?'"
+            [options]="Data.YES_OR_NO"
+            [deselectValue]="false"
+          ></app-select-input>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="hasHandicap()">
+          <app-textarea-input
+            [formControl]="
+              PERSONAL_INFO.get('physical_state')['controls']['handicap'][
+                'controls'
+              ]['description']
+            "
+            [label]="'Détails'"
+            [placeholder]="'Remplir vos données...'"
+          ></app-textarea-input>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container
+      [formGroup]="
+        PERSONAL_INFO.get('physical_state')['controls']['health_issue']
+      "
+    >
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <app-select-input
+            [formControl]="
+              PERSONAL_INFO.get('physical_state')['controls']['health_issue'][
+                'controls'
+              ]['status']
+            "
+            [label]="'Le bénéficiaire souffre t-il d\'une maladie chronique ?'"
+            [options]="Data.YES_OR_NO"
+            [deselectValue]="false"
+          ></app-select-input>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="hasHealthIssue()">
+          <app-textarea-input
+            [formControl]="
+              PERSONAL_INFO.get('physical_state')['controls']['health_issue'][
+                'controls'
+              ]['chronic_illness']
+            "
+            [label]="'Détails'"
+            [placeholder]="'Remplir vos données...'"
+          ></app-textarea-input>
+        </div>
+      </div>
+      <div class="row" *ngIf="hasHealthIssue()">
+        <div class="col-12 col-md-6">
+          <app-textarea-input
+            [formControl]="
+              PERSONAL_INFO.get('physical_state')['controls']['health_issue'][
+                'controls'
+              ]['ongoing_treatment']
+            "
+            [label]="
+              'Le bénéficiaire a-t-il eu an antécedent médical qui pourrait affecter son rendement au travai ?'
+            "
+            [placeholder]="'Remplir vos données...'"
+          ></app-textarea-input>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

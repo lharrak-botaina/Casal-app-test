@@ -1,0 +1,16 @@
+<article class="notification">    
+    <header>
+        <h1 class="notification__title">Centre de notifications</h1>
+    </header>
+
+    <main class="notification__profiles">
+      <article class="notification__profile" 
+               *ngFor="let notification of notifications$ | async" 
+               [routerLink]="['./../jobs', notification?.jobId]" 
+               [class.viewed]="notification?.viewed">
+        <img src="assets/suitcase.png" class="notification__picture">
+        <span class="notification__name">L’entreprise {{notification?.company?.name | titlecase}} a partagé une nouvelle offre d’emploi avec vous</span>
+        <span class="notification__value">{{ notification?.createdAt | timeago }}</span>
+      </article>
+    </main>
+</article>

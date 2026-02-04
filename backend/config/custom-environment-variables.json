@@ -1,0 +1,4 @@
+{
+    "jwtPrivateKey" : "CASAL_JWT",
+    "db" : "CASAL_DB"
+}

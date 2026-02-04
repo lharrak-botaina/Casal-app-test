@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="row my-1">
+    <div class="col-12">
+      <mat-tab-group color="primary" backgroundColor="primary">
+        <mat-tab label="Informations personnelles">
+          <app-young-personal-info-details
+            [personalInfo]="young?.personal_info"
+            [associationName]="young?.associationName"
+            [associationId]="young?.createdBy"
+            [status]="young?.status"
+            [isFull]="false"
+          ></app-young-personal-info-details>
+        </mat-tab>
+        <mat-tab label="Bilan Compétances">
+          <app-young-skills-assessment-details
+            [skillsAssessment]="young?.skills_assessment"
+            [isCompany]="true"
+          ></app-young-skills-assessment-details
+        ></mat-tab>
+        <mat-tab label="Ateliers de renforcement">
+          <app-young-capacity-building-details
+            [capacityBuilding]="young?.capacity_building"
+          ></app-young-capacity-building-details
+        ></mat-tab>
+        <mat-tab label="Formations Passwork">
+          <app-young-passwork-details
+            [passwork]="young?.passwork"
+          ></app-young-passwork-details>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

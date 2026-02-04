@@ -1,0 +1,126 @@
+<mat-toolbar color="primary">
+  <span class="fill-remaining-space for-mobile">
+    <button mat-icon-button [matMenuTriggerFor]="mobile">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #mobile="matMenu" [overlapTrigger]="false">
+      <ng-container>
+        <button *rbacAllow="['admin']" mat-menu-item [matMenuTriggerFor]="association"><mat-icon>groups</mat-icon> Associations</button>
+        <button *rbacAllow="['admin']" mat-menu-item [matMenuTriggerFor]="young"><mat-icon>account_box</mat-icon> Jeunes</button>
+        <button *rbacAllow="['admin']" mat-menu-item [matMenuTriggerFor]="companies"><mat-icon>business</mat-icon> Companies</button>
+        <button *rbacAllow="['admin']" mat-menu-item [matMenuTriggerFor]="jobs"><mat-icon>work</mat-icon> Jobs</button>
+        <button *rbacAllow="['admin']" mat-menu-item [matMenuTriggerFor]="passworks"><mat-icon>event</mat-icon> Passworks</button>
+        <button *rbacAllow="['admin']" [routerLink]="'casal/reports'" mat-menu-item>
+            <mat-icon>library_books</mat-icon> Rapports
+        </button>
+        <button *rbacAllow="['admin']" [routerLink]="'stats'" mat-menu-item>
+            <mat-icon>analytics</mat-icon> Statistiques
+        </button>
+        <button *rbacAllow="['admin']" mat-menu-item [matMenuTriggerFor]="printcenter"><mat-icon>print</mat-icon>Centre d'impression</button>
+      </ng-container>
+
+      <ng-container>
+        <button *rbacAllow="['association']" mat-menu-item [matMenuTriggerFor]="asc_young"><mat-icon>account_box</mat-icon> Jeunes</button>
+        <button *rbacAllow="['association']" [routerLink]="'association/jobs'" mat-menu-item><mat-icon>work</mat-icon> Jobs</button>
+        <button *rbacAllow="['association']" [routerLink]="'association/stats'" mat-menu-item>
+          <mat-icon>analytics</mat-icon> Statistiques
+        </button>
+        <button *rbacAllow="['association']" [routerLink]="'association/notification'" mat-menu-item>
+          <mat-icon>notifications</mat-icon> Centre de notifications
+        </button>
+      </ng-container>
+
+      <ng-container *rbacAllow="['company']" >
+        <button mat-menu-item [routerLink]="'company/young'"><mat-icon>account_box</mat-icon> Jeunes</button>
+        <button mat-menu-item [matMenuTriggerFor]="company_jobs"><mat-icon>work</mat-icon> Jobs</button>
+      </ng-container>
+  
+      <button *ngIf="isLoggedIn$ | async" mat-menu-item (click)="signOut()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Se déconnecter</span>
+      </button>
+      <button *ngIf="isLoggedOut$ | async" mat-menu-item>
+        <mat-icon>login</mat-icon>
+        <span>S'identifier</span>
+      </button>
+    </mat-menu>
+  </span>
+  <span *rbacAllow="['admin']"  class="fill-remaining-space title text-center" [routerLink]="'casal/home'"><img src="assets/logo_yellow.png" alt="Casal dels infants" class="logo"></span>
+  <span *rbacAllow="['association']"  class="fill-remaining-space title text-center" ><img src="assets/logo_yellow.png" alt="Casal dels infants" class="logo"></span>
+  <span *rbacAllow="['company']"  class="fill-remaining-space title text-center" ><img src="assets/logo_yellow.png" alt="Casal dels infants" class="logo"></span>
+  <div class="for-desktop">
+    <ng-container #admin>
+      <button *rbacAllow="['admin']" mat-button [matMenuTriggerFor]="association"><mat-icon>groups</mat-icon> Associations</button>
+      <mat-menu #association="matMenu">
+        <button mat-menu-item [routerLink]="'casal/association'"><mat-icon>list</mat-icon>Liste Associations</button>
+        <button mat-menu-item [routerLink]="'casal/association/add'"><mat-icon>add</mat-icon>Ajouter Association</button>
+      </mat-menu>
+      <button *rbacAllow="['admin']" mat-button [matMenuTriggerFor]="young"><mat-icon>account_box</mat-icon> Jeunes</button>
+      <mat-menu #young="matMenu">
+        <button mat-menu-item [routerLink]="'casal/young'"><mat-icon>list</mat-icon>Liste Jeunes</button>
+      </mat-menu>
+      <button *rbacAllow="['admin']" mat-button [matMenuTriggerFor]="companies"><mat-icon>business</mat-icon> Entreprises</button>
+      <mat-menu #companies="matMenu">
+        <button mat-menu-item [routerLink]="'casal/company'"><mat-icon>list</mat-icon>Liste d'entreprises</button>
+        <button mat-menu-item [routerLink]="'casal/company/add'"><mat-icon>add</mat-icon>Ajouter entreprise</button>
+      </mat-menu>
+      <button *rbacAllow="['admin']" mat-button [matMenuTriggerFor]="jobs"><mat-icon>work</mat-icon> Offres d'emploi</button>
+      <mat-menu #jobs="matMenu">
+        <button mat-menu-item [routerLink]="'casal/job'" [queryParams]="{status: 'active'}"><mat-icon>list</mat-icon>Liste d'offres d'emploi</button>
+        <button mat-menu-item [routerLink]="'casal/job/add'"><mat-icon>add</mat-icon>Ajouter offre d'emploi</button>
+      </mat-menu>
+      <button *rbacAllow="['admin']" mat-button [matMenuTriggerFor]="passworks"><mat-icon>event</mat-icon> Passworks</button>
+      <mat-menu #passworks="matMenu">
+        <button mat-menu-item [routerLink]="'casal/passwork'" [queryParams]="{status: 'active'}"><mat-icon>list</mat-icon>Liste Passworks</button>
+        <button mat-menu-item [routerLink]="'casal/passwork/add'"><mat-icon>add</mat-icon>Ajouter Passwork</button>
+      </mat-menu>
+      <a *rbacAllow="['admin']" [routerLink]="'casal/reports'" mat-button>
+          <mat-icon>library_books</mat-icon> Rapports
+      </a>
+      <a *rbacAllow="['admin']" [routerLink]="'stats'" mat-button>
+          <mat-icon>analytics</mat-icon> Statistiques
+      </a>
+      <button *rbacAllow="['admin']" mat-button [matMenuTriggerFor]="printcenter"><mat-icon>print</mat-icon>Centre d'impression</button>
+      <mat-menu #printcenter="matMenu">
+        <button mat-menu-item [routerLink]="'casal/print'"><mat-icon>list</mat-icon>Liste documents</button>
+        <button mat-menu-item [routerLink]="'casal/print/add'"><mat-icon>add</mat-icon>Ajouter un document</button>
+      </mat-menu>
+    </ng-container>
+    <ng-container #association>
+      <button *rbacAllow="['association']" mat-button [matMenuTriggerFor]="asc_young"><mat-icon>account_box</mat-icon> Jeunes</button>
+      <mat-menu #asc_young="matMenu">
+        <button mat-menu-item [routerLink]="'association/young'"><mat-icon>list</mat-icon>Liste Jeunes</button>
+        <button mat-menu-item [routerLink]="'association/young/add'"><mat-icon>add</mat-icon>Ajouter Jeune</button>
+      </mat-menu>
+      <a *rbacAllow="['association']" [routerLink]="'association/jobs'" mat-button><mat-icon>work</mat-icon> Jobs</a>
+
+      <a *rbacAllow="['association']" [routerLink]="'association/stats'" mat-button>
+        <mat-icon>analytics</mat-icon> Statistiques
+      </a>
+      <a *rbacAllow="['association']" [routerLink]="'association/notification'" mat-button>
+        <mat-icon>notifications</mat-icon> Centre de notifications
+      </a>
+    </ng-container>
+
+    <ng-container #company>
+      <button *rbacAllow="['company']" mat-button [routerLink]="'company/young'"><mat-icon>account_box</mat-icon> Jeunes</button>
+      <button *rbacAllow="['company']" mat-button [matMenuTriggerFor]="company_jobs"><mat-icon>work</mat-icon> Offres d'emploi</button>
+      <mat-menu #company_jobs="matMenu">
+        <button mat-menu-item [routerLink]="'company/job'" [queryParams]="{status: 'active'}"><mat-icon>list</mat-icon>Liste d'offres d'emploi</button>
+        <button mat-menu-item [routerLink]="'company/job/add'"><mat-icon>add</mat-icon>Ajouter offre d'emploi</button>
+      </mat-menu>
+    </ng-container>
+
+  </div>
+  <span class="fill-space"></span>
+  <div class="for-desktop">
+    <a *ngIf="isLoggedIn$ | async" mat-button (click)="signOut()">
+      <mat-icon>exit_to_app</mat-icon>
+      Se déconnecter
+    </a>
+    <a *ngIf="isLoggedOut$ | async" mat-button>
+      <mat-icon>login</mat-icon>
+      S'identifier
+    </a>
+  </div>
+</mat-toolbar>

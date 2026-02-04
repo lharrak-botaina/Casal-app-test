@@ -1,0 +1,6 @@
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>{{ label }}</mat-label>
+  <input matInput [matDatepicker]="picker" [max]="maxDate" [formControl]="ngControl.control" disabled/>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker disabled="false"></mat-datepicker>
+</mat-form-field>

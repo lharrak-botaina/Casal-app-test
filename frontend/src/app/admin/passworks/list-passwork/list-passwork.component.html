@@ -1,0 +1,44 @@
+<div class="container-fluid p-4">
+  <div class="row">
+    <div class="col">
+      <app-passwork-filter></app-passwork-filter>
+    </div>
+  </div>
+  <div class="row justify-content-start" *ngIf="passwork$ | async as result">
+    <div
+      class="col-12 col-sm-6 col-md-4 p-2"
+      *ngFor="let passwork of result.passworks"
+    >
+      <mat-card
+        class="card"
+        matTooltip="Show details"
+        [routerLink]="['./', passwork?._id]"
+        [state]="passwork"
+        [class.inactive--card]="passwork?.status === 'inactive'"
+      >
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title class="card-title pointer"
+            >{{ passwork?.title | titlecase
+            }}<span *ngIf="passwork?.status == 'inactive'" class="inactive">
+              (Inactif)
+            </span>
+          </mat-card-title>
+          <mat-card-subtitle>
+            <p>{{ passwork?.company?.name | titlecase }}</p>
+          </mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row" [class.hidden]="(passwork$ | async) ? false : true">
+    <div class="col align-self-end p-2">
+      <mat-paginator
+        [length]="(passwork$ | async)?.totalCount"
+        [pageSize]="PAGE_SIZE"
+        [pageSizeOptions]="[5, 10, 20, 50]"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

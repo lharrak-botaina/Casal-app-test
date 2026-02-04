@@ -1,0 +1,71 @@
+<section class="container my-2">
+    <mat-accordion>
+      <app-pie-chart-one
+        [title]="'Nombre de jeunes accueillis par les GIP'"
+        [data$]="numberOfYoungAddedStats$"
+        [id]="1"
+        (panelOpened)="loadStats($event)"
+      ></app-pie-chart-one>
+
+      <app-pie-chart-one
+      [title]="
+        '
+        Nombre de jeunes bénéficiaires des ateliers de renforcement de capacités
+      (min 4)
+      '
+      "
+      [data$]="numberOfYouthHaveMoreThanThreeCapacityBuildingStats$"
+      [id]="2"
+      (panelOpened)="loadStats($event)"
+    ></app-pie-chart-one>
+  
+    <app-pie-chart-one
+      [title]="
+        '
+        Nombre de jeunes bénéficiaires des formations professionnelles PW
+      '
+      "
+      [data$]="numberOfYouthHavePassworkTrainingStats$"
+      [id]="3"
+      (panelOpened)="loadStats($event)"
+    ></app-pie-chart-one>
+  
+    <app-pie-chart-one
+      [title]="'
+        Nombre d’insertions formelle
+      '"
+      [data$]="numberOfFormalInsertionStats$"
+      [id]="4"
+      (panelOpened)="loadStats($event)"
+    ></app-pie-chart-one>
+  
+    <app-pie-chart-one
+      [title]="'
+        Nombre d’insertions Informelle
+      '"
+      [data$]="numberOfInformalInsertionStats$"
+      [id]="5"
+      (panelOpened)="loadStats($event)"
+    ></app-pie-chart-one>
+  
+    <app-pie-chart-two
+      [title]="'
+        Nombre d\'insertions par secteur d\'activités
+      '"
+      [data$]="numberOfInsertionsByActivityAreaStats$"
+      [id]="6"
+      (panelOpened)="loadStats($event)"
+    ></app-pie-chart-two>
+    <app-basic-stats
+      [title]="'
+        Nombre de formations professionnelles réalisées
+      '"
+      [data$]="numberOfPassworks$"
+      [id]="7"
+      [displayFilter]=false
+      (panelOpened)="loadStats($event)"
+    >
+    </app-basic-stats>
+    </mat-accordion>  
+  </section>
+  

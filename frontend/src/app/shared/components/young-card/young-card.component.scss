@@ -1,0 +1,143 @@
+.description {
+  position: relative;
+  top: -36px;
+  font-weight: 500;
+}
+
+.spinner {
+  position: absolute;
+  margin-inline: -30px;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,800italic,400,600,700,800);
+
+img {
+  max-width: 100%;
+}
+
+.profile-card {
+  position: relative;
+  width: 240px;
+  margin: 0 auto;
+  margin-top: 65px;
+  padding: 40px 30px 30px;
+  background: #fff;
+  border: 5px solid rgba(255, 255, 255, 0.7);
+  text-align: center;
+  border-radius: 4px;
+  transition: all 200ms ease;
+}
+.mask-shadow {
+  z-index: -1 !important;
+  width: 95%;
+  height: 12px;
+  background: #000;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  position: absolute;
+  border-radius: 4px;
+  opacity: 0;
+  transition: all 400ms ease-in;
+}
+.profile-card:hover {
+  box-shadow: 0px 30px 60px -5px rgba(55, 55, 71, 0.3);
+  transform: translate3d(0, -5px, 0);
+  .mask-shadow {
+    opacity: 1;
+    box-shadow: 0px 30px 60px -5px rgba(55, 55, 71, 0.3);
+    position: absolute;
+  }
+}
+.profile-card header {
+  display: block;
+  margin-bottom: 10px;
+}
+.profile-card header a {
+  width: 150px;
+  height: 150px;
+  display: block;
+  border-radius: 100%;
+  margin: -100px auto 0;
+  box-shadow: 0 0 0 5px #03644e;
+}
+.profile-card header a img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
+
+.profile-card:hover header a,
+.profile-card header a:hover {
+  animation: bounceOut 0.4s linear;
+  -webkit-animation: bounceOut 0.4s linear;
+}
+.profile-card header h1 {
+  font-size: 20px;
+  color: #444;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.profile-card header h2 {
+  font-size: 14px;
+  color: #03644e;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.profile-social-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.profile-social-links li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+/*animation hover effect*/
+@-webkit-keyframes bounceOut {
+  0% {
+    box-shadow: 0 0 0 4px #03644e;
+    opacity: 1;
+  }
+  25% {
+    box-shadow: 0 0 0 1px #03644e;
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 0 7px #03644e;
+    opacity: 1;
+  }
+  75% {
+    box-shadow: 0 0 0 4px #03644e;
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 0 5px #03644e;
+    opacity: 1;
+  }
+}
+@keyframes bounceOut {
+  0% {
+    box-shadow: 0 0 0 6px #03644e;
+    opacity: 1;
+  }
+  25% {
+    box-shadow: 0 0 0 2px #03644e;
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 0 9px #03644e;
+    opacity: 1;
+  }
+  75% {
+    box-shadow: 0 0 0 3px #03644e;
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 0 5px #03644e;
+    opacity: 1;
+  }
+}

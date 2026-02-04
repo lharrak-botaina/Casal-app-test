@@ -1,0 +1,31 @@
+<mat-expansion-panel (opened)="opened()" class="my-1">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <strong>{{ title }}</strong>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="col-12" *ngIf="displayFilter">
+    <app-select-input
+      [formControl]="FORM.controls['association']"
+      [label]="'Associations'"
+      [options]="associations?.associations"
+      [isObservable]="true"
+      [optionDisplay]="'raisonSocial'"
+      [displayDefaultOption]="true"
+      [deselectValue]="false"
+      (valueChange)="onChangeAssociation($event)"
+    ></app-select-input>
+  </div>
+  <p>{{description}}</p>
+  <h4>
+    {{ title }} : <strong>{{ statsValue?.toFixed(0) }}</strong> {{ extraText }}
+  </h4>
+  <button
+    mat-raised-button
+    [disabled]="!statsValue && statsValue != 0"
+    color="primary"
+    (click)="downloadPDF()"
+  >
+    Télécharger
+  </button>
+</mat-expansion-panel>

@@ -1,0 +1,32 @@
+<div class="container-fluid p-4">
+  <div class="row">
+    <div class="col">
+      <app-company-filter></app-company-filter>
+    </div>
+  </div>
+  <div class="row justify-content-start" *ngIf="companies$ | async as result">
+    <div class="col-12 col-sm-6 p-2" *ngFor="let company of result.companies">
+      <mat-card class="card" matTooltip="Show details" [routerLink]="[ './',company._id]" [state]="company">
+        <img src="{{company?.logo ?  endpoint + company.logo : 'assets/no_picture_available.png'}}">
+        <mat-card-header>
+          <mat-card-title class="card-title pointer"
+            >{{ company?.name | titlecase }}
+          </mat-card-title>
+          <mat-card-subtitle>
+            <p><mat-icon>location_on</mat-icon> {{ company?.city }}</p>
+          </mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row" [class.hidden]="(companies$ | async) ? false : true">
+    <div class="col align-self-end p-2">
+      <mat-paginator
+        [length]="(companies$ | async)?.totalCount"
+        [pageSize]="PAGE_SIZE"
+        [pageSizeOptions]="[5, 10, 20, 50]"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>

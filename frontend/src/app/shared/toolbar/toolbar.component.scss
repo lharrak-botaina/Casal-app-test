@@ -1,0 +1,44 @@
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox. 
+       Every toolbar row uses a flexbox row layout. */
+  padding-right: 10px;
+}
+
+.for-mobile {
+  display: none;
+}
+
+.for-desktop {
+  display: block;
+}
+
+.fill-space {
+  flex: 1 1 auto;
+}
+
+.logo{
+  width: 100px;
+}
+
+@media only screen and (max-width: 890px) {
+  .for-mobile {
+    display: block;
+  }
+
+  .for-desktop {
+    display: none;
+  }
+
+  .fill-remaining-space {
+    /* This fills the remaining space, by using flexbox. 
+           Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+  }
+}
+
+.title {
+  font-family: "Pacifico", cursive !important;
+  font-weight: 100;
+  font-size: 30px;
+  cursor: pointer;
+}
